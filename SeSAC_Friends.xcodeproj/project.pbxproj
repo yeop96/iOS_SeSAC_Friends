@@ -9,21 +9,26 @@
 /* Begin PBXBuildFile section */
 		27522ED227970C2000C7874E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522ED127970C2000C7874E /* AppDelegate.swift */; };
 		27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522ED327970C2000C7874E /* SceneDelegate.swift */; };
-		27522ED627970C2000C7874E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522ED527970C2000C7874E /* ViewController.swift */; };
-		27522ED927970C2000C7874E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27522ED727970C2000C7874E /* Main.storyboard */; };
 		27522EDB27970C2300C7874E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27522EDA27970C2300C7874E /* Assets.xcassets */; };
 		27522EDE27970C2300C7874E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27522EDC27970C2300C7874E /* LaunchScreen.storyboard */; };
+		27522EEB2797160D00C7874E /* PhoneAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522EEA2797160D00C7874E /* PhoneAuthViewController.swift */; };
+		27522EED279716E200C7874E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522EEC279716E200C7874E /* BaseViewController.swift */; };
+		27522EF02797173100C7874E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 27522EEF2797173100C7874E /* SnapKit */; };
+		27522EF32797176200C7874E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 27522EF22797176200C7874E /* Alamofire */; };
+		27522EF62797178B00C7874E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 27522EF52797178B00C7874E /* RxCocoa */; };
+		27522EF82797178B00C7874E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 27522EF72797178B00C7874E /* RxSwift */; };
+		27522EFB279717AB00C7874E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 27522EFA279717AB00C7874E /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		27522ECE27970C2000C7874E /* SeSAC_Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27522ED127970C2000C7874E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27522ED327970C2000C7874E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		27522ED527970C2000C7874E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		27522ED827970C2000C7874E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27522EDA27970C2300C7874E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27522EDD27970C2300C7874E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27522EDF27970C2300C7874E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27522EEA2797160D00C7874E /* PhoneAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthViewController.swift; sourceTree = "<group>"; };
+		27522EEC279716E200C7874E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +36,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27522EFB279717AB00C7874E /* IQKeyboardManagerSwift in Frameworks */,
+				27522EF62797178B00C7874E /* RxCocoa in Frameworks */,
+				27522EF02797173100C7874E /* SnapKit in Frameworks */,
+				27522EF82797178B00C7874E /* RxSwift in Frameworks */,
+				27522EF32797176200C7874E /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +66,55 @@
 		27522ED027970C2000C7874E /* SeSAC_Friends */ = {
 			isa = PBXGroup;
 			children = (
-				27522ED127970C2000C7874E /* AppDelegate.swift */,
-				27522ED327970C2000C7874E /* SceneDelegate.swift */,
-				27522ED527970C2000C7874E /* ViewController.swift */,
-				27522ED727970C2000C7874E /* Main.storyboard */,
-				27522EDA27970C2300C7874E /* Assets.xcassets */,
+				27522EE7279710B000C7874E /* SupportFiles */,
+				27522EE6279710A200C7874E /* Utils */,
+				27522EE52797109600C7874E /* Extensions */,
 				27522EDC27970C2300C7874E /* LaunchScreen.storyboard */,
-				27522EDF27970C2300C7874E /* Info.plist */,
+				27522EEA2797160D00C7874E /* PhoneAuthViewController.swift */,
+				27522EEC279716E200C7874E /* BaseViewController.swift */,
 			);
 			path = SeSAC_Friends;
+			sourceTree = "<group>";
+		};
+		27522EE52797109600C7874E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		27522EE6279710A200C7874E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		27522EE7279710B000C7874E /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				27522EE92797110A00C7874E /* Images */,
+				27522EE82797110100C7874E /* Fonts */,
+				27522ED127970C2000C7874E /* AppDelegate.swift */,
+				27522ED327970C2000C7874E /* SceneDelegate.swift */,
+				27522EDA27970C2300C7874E /* Assets.xcassets */,
+				27522EDF27970C2300C7874E /* Info.plist */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		27522EE82797110100C7874E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		27522EE92797110A00C7874E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +133,13 @@
 			dependencies = (
 			);
 			name = SeSAC_Friends;
+			packageProductDependencies = (
+				27522EEF2797173100C7874E /* SnapKit */,
+				27522EF22797176200C7874E /* Alamofire */,
+				27522EF52797178B00C7874E /* RxCocoa */,
+				27522EF72797178B00C7874E /* RxSwift */,
+				27522EFA279717AB00C7874E /* IQKeyboardManagerSwift */,
+			);
 			productName = SeSAC_Friends;
 			productReference = 27522ECE27970C2000C7874E /* SeSAC_Friends.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +168,12 @@
 				Base,
 			);
 			mainGroup = 27522EC527970C2000C7874E;
+			packageReferences = (
+				27522EEE2797173100C7874E /* XCRemoteSwiftPackageReference "SnapKit" */,
+				27522EF12797176200C7874E /* XCRemoteSwiftPackageReference "Alamofire" */,
+				27522EF42797178B00C7874E /* XCRemoteSwiftPackageReference "RxSwift" */,
+				27522EF9279717AB00C7874E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = 27522ECF27970C2000C7874E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,7 +190,6 @@
 			files = (
 				27522EDE27970C2300C7874E /* LaunchScreen.storyboard in Resources */,
 				27522EDB27970C2300C7874E /* Assets.xcassets in Resources */,
-				27522ED927970C2000C7874E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +200,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27522ED627970C2000C7874E /* ViewController.swift in Sources */,
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
 				27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */,
+				27522EEB2797160D00C7874E /* PhoneAuthViewController.swift in Sources */,
+				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		27522ED727970C2000C7874E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27522ED827970C2000C7874E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		27522EDC27970C2300C7874E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -291,12 +346,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VJUS985676;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SeSAC_Friends/Info.plist;
+				INFOPLIST_FILE = SeSAC_Friends/SupportFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "새싹친구";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,7 +362,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -319,12 +375,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VJUS985676;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SeSAC_Friends/Info.plist;
+				INFOPLIST_FILE = SeSAC_Friends/SupportFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "새싹친구";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +391,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -360,6 +417,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27522EEE2797173100C7874E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		27522EF12797176200C7874E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		27522EF42797178B00C7874E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		27522EF9279717AB00C7874E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27522EEF2797173100C7874E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27522EEE2797173100C7874E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		27522EF22797176200C7874E /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27522EF12797176200C7874E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		27522EF52797178B00C7874E /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27522EF42797178B00C7874E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		27522EF72797178B00C7874E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27522EF42797178B00C7874E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		27522EFA279717AB00C7874E /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27522EF9279717AB00C7874E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 27522EC627970C2000C7874E /* Project object */;
 }
