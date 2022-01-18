@@ -22,6 +22,7 @@ class PhoneAuthViewController: BaseViewController {
         view.backgroundColor = .white
         
         textLabel.text = "새싹 서비스 이용을 위해\n휴대폰 번호를 입력해 주세요"
+        textLabel.textColor = .black
         textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
         
@@ -29,8 +30,10 @@ class PhoneAuthViewController: BaseViewController {
         phoneTextField.borderStyle = .none
         
         sendButton.setTitle("인증 문자 받기", for: .disabled)
-        sendButton.backgroundColor = .black
+        sendButton.setTitleColor(.gray3, for: .disabled)
+        sendButton.backgroundColor = .gray6
         sendButton.layer.cornerRadius = 8
+        sendButton.isEnabled = false
     }
     
     override func setupConstraints() {
