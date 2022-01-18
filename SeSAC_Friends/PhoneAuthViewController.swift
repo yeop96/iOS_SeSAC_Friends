@@ -22,6 +22,7 @@ class PhoneAuthViewController: BaseViewController {
         view.backgroundColor = .white
         
         textLabel.text = "새싹 서비스 이용을 위해\n휴대폰 번호를 입력해 주세요"
+        textLabel.font = UIFont().Display1_R20
         textLabel.textColor = .black
         textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
