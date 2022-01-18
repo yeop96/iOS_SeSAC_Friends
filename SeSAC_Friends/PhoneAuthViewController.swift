@@ -12,7 +12,7 @@ class PhoneAuthViewController: BaseViewController {
     
     let textLabel = UILabel()
     let phoneTextField = UITextField()
-    let sendButton = UIButton()
+    let sendButton = DisableButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +30,7 @@ class PhoneAuthViewController: BaseViewController {
         phoneTextField.placeholder = "휴대폰 번호(-없이 숫자만 입력)"
         phoneTextField.borderStyle = .none
         
-        sendButton.setTitle("인증 문자 받기", for: .disabled)
-        sendButton.setTitleColor(.gray3, for: .disabled)
-        sendButton.backgroundColor = .gray6
-        sendButton.layer.cornerRadius = 8
-        sendButton.isEnabled = false
+        sendButton.setTitle("인증 문자 받기", for: .normal)
     }
     
     override func setupConstraints() {

@@ -22,6 +22,7 @@
 		27522F0227972F9600C7874E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522F0127972F9600C7874E /* UIFont+Extension.swift */; };
 		27522F05279731AC00C7874E /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27522F03279731AA00C7874E /* NotoSansCJKkr-Regular.otf */; };
 		27522F06279731AC00C7874E /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27522F04279731AB00C7874E /* NotoSansCJKkr-Medium.otf */; };
+		27CBE4662797448F008290BE /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		27522F0127972F9600C7874E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		27522F03279731AA00C7874E /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		27522F04279731AB00C7874E /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
+		27CBE4652797448F008290BE /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				27522EDC27970C2300C7874E /* LaunchScreen.storyboard */,
 				27522EEA2797160D00C7874E /* PhoneAuthViewController.swift */,
 				27522EEC279716E200C7874E /* BaseViewController.swift */,
+				27CBE4652797448F008290BE /* CustomButton.swift */,
 			);
 			path = SeSAC_Friends;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
 				27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */,
 				27522EEB2797160D00C7874E /* PhoneAuthViewController.swift in Sources */,
+				27CBE4662797448F008290BE /* CustomButton.swift in Sources */,
 				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,
 				27522F002797253B00C7874E /* UIColor+Extension.swift in Sources */,
 			);
