@@ -15,6 +15,7 @@ class PhoneAuthViewController: BaseViewController {
     let phoneTextField = InputTextField()
     let sendButton = DisableButton()
     let sendButtonActive = FillButton()
+    let exception = Exception()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class PhoneAuthViewController: BaseViewController {
         phoneTextField.placeholder = "휴대폰 번호(-없이 숫자만 입력)"
         
         phoneTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
+        phoneTextField.keyboardType = .numberPad
         
         sendButton.setTitle("인증 문자 받기", for: .normal)
         sendButtonActive.setTitle("인증 문자 받기", for: .normal)
@@ -77,12 +78,12 @@ class PhoneAuthViewController: BaseViewController {
 extension PhoneAuthViewController: UITextFieldDelegate{
     @objc func textFieldDidChange(_ textfield: UITextField) {
         if let text = textfield.text {
-            if text.contains("-") {
+            if !text.allSatisfy({ $0.isNumber }) {
                 phoneTextField.errorColor = .error
                 phoneTextField.errorMessage = "-없이 숫자만 입력"
                 sendButton.isHidden = false
                 sendButtonActive.isHidden = true
-            } else if text.count == 11{
+            } else if exception.IsValidPhone(phone: text){
                 phoneTextField.errorColor = .success
                 phoneTextField.errorMessage = "성공"
                 sendButton.isHidden = true
@@ -94,4 +95,11 @@ extension PhoneAuthViewController: UITextFieldDelegate{
             }
         }
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 12 // 숫자제한
+    }
+    
 }

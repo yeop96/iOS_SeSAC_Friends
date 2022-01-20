@@ -25,6 +25,7 @@
 		27540B532797ED7200BA6416 /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B522797ED7200BA6416 /* CustomTextFields.swift */; };
 		27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B542797F1F900BA6416 /* CALayer+Extension.swift */; };
 		27540B5B2799578D00BA6416 /* SkyFloatingLabelTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 27540B5A2799578D00BA6416 /* SkyFloatingLabelTextField */; };
+		27540B5D27997B5600BA6416 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B5C27997B5600BA6416 /* Exception.swift */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		27522F04279731AB00C7874E /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
 		27540B522797ED7200BA6416 /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		27540B542797F1F900BA6416 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
+		27540B5C27997B5600BA6416 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		27CBE4652797448F008290BE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 		27522EE6279710A200C7874E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				27540B5C27997B5600BA6416 /* Exception.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27540B532797ED7200BA6416 /* CustomTextFields.swift in Sources */,
+				27540B5D27997B5600BA6416 /* Exception.swift in Sources */,
 				27522F0227972F9600C7874E /* UIFont+Extension.swift in Sources */,
 				27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */,
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
