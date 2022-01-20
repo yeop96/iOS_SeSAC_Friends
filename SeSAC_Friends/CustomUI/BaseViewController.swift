@@ -16,7 +16,6 @@ class BaseViewController: UIViewController{
     }
     
     func configure(){
-        view.backgroundColor = .white
     }
     
     func setupConstraints(){
@@ -26,3 +25,5 @@ class BaseViewController: UIViewController{
         self.view.endEditing(true)
     }
 }
+
+

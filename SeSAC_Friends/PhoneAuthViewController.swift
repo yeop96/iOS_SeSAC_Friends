@@ -7,8 +7,8 @@
 
 import UIKit
 import SnapKit
-import SkyFloatingLabelTextField
 import AnyFormatKit
+import Toast
 
 class PhoneAuthViewController: BaseViewController {
     
@@ -24,7 +24,9 @@ class PhoneAuthViewController: BaseViewController {
     }
 
     override func configure() {
+        
         view.backgroundColor = .white
+        navigationController?.changeNavigationBar(isClear: true)
         
         textLabel.text = "새싹 서비스 이용을 위해\n휴대폰 번호를 입력해 주세요"
         textLabel.font = UIFont().Display1_R20
@@ -33,12 +35,12 @@ class PhoneAuthViewController: BaseViewController {
         textLabel.textAlignment = .center
         
         phoneTextField.placeholder = "휴대폰 번호(-없이 숫자만 입력)"
-        
-        phoneTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         phoneTextField.keyboardType = .numberPad
         
         sendButton.setTitle("인증 문자 받기", for: .normal)
+        sendButton.addTarget(self, action: #selector(sendButtonClicked), for: .touchUpInside)
         sendButtonActive.setTitle("인증 문자 받기", for: .normal)
+        sendButtonActive.addTarget(self, action: #selector(sendButtonActiveClicked), for: .touchUpInside)
         
         sendButtonActive.isHidden = true
     }
@@ -55,7 +57,7 @@ class PhoneAuthViewController: BaseViewController {
         }
         
         phoneTextField.snp.makeConstraints { make in
-            make.top.equalTo(textLabel.snp.bottom).offset(64)
+            make.top.equalTo(textLabel.snp.bottom).offset(76)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
@@ -73,33 +75,22 @@ class PhoneAuthViewController: BaseViewController {
         }
         
     }
+    @objc func sendButtonClicked(){
+        let windows = UIApplication.shared.windows
+        windows.last?.makeToast("잘못된 전화번호 형식입니다.", duration: 1.0, position: .top)
+    }
     
+    @objc func sendButtonActiveClicked(){
+        let windows = UIApplication.shared.windows
+        windows.last?.makeToast("전화 번호 인증 시작", duration: 1.0, position: .top)
+        self.navigationController?.pushViewController(MessageAuthViewController(), animated: true)
+    }
 }
 
 extension PhoneAuthViewController: UITextFieldDelegate{
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if let text = textField.text {
-            if !text.allSatisfy({ $0.isLetter }) {
-                phoneTextField.errorColor = .error
-                phoneTextField.errorMessage = "-없이 숫자만 입력"
-                sendButton.isHidden = false
-                sendButtonActive.isHidden = true
-            } else if exception.IsValidPhone(phone: text){
-                phoneTextField.errorColor = .success
-                phoneTextField.errorMessage = "성공"
-                sendButton.isHidden = true
-                sendButtonActive.isHidden = false
-            } else{
-                phoneTextField.errorMessage = ""
-                sendButton.isHidden = false
-                sendButtonActive.isHidden = true
-            }
-        }
-    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        textField.formatPhoneNumber(range: range, string: string)
         
+        textField.formatPhoneNumber(range: range, string: string)
         if let text = textField.text {
             if (text.count == 13 || text.count == 12) && !exception.IsValidPhone(phone: text){
                 phoneTextField.errorColor = .error
@@ -108,7 +99,7 @@ extension PhoneAuthViewController: UITextFieldDelegate{
                 sendButtonActive.isHidden = true
             } else if exception.IsValidPhone(phone: text){
                 phoneTextField.errorColor = .success
-                phoneTextField.errorMessage = "인증 번호를 받으세요!"
+                phoneTextField.errorMessage = "인증 문자를 받으세요!"
                 sendButton.isHidden = true
                 sendButtonActive.isHidden = false
             } else{
