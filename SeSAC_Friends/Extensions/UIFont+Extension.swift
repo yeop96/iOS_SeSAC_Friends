@@ -9,7 +9,6 @@
 import UIKit
 
 //        Noto Sans CJK KR
-//        =========> NanumBaReunHiPi 나눔히피 폰트
 
 extension UIFont{
     var Display1_R20: UIFont {

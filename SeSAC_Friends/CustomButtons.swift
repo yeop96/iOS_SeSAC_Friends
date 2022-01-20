@@ -9,6 +9,7 @@ import UIKit
 
 
 class InactiveButton: UIButton {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layer.cornerRadius = 8
@@ -25,6 +26,7 @@ class InactiveButton: UIButton {
 }
 
 class FillButton: UIButton {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layer.cornerRadius = 8
