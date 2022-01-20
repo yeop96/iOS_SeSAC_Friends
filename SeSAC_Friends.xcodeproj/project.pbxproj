@@ -26,6 +26,8 @@
 		27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B542797F1F900BA6416 /* CALayer+Extension.swift */; };
 		27540B5B2799578D00BA6416 /* SkyFloatingLabelTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 27540B5A2799578D00BA6416 /* SkyFloatingLabelTextField */; };
 		27540B5D27997B5600BA6416 /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B5C27997B5600BA6416 /* Exception.swift */; };
+		27540B602799C19F00BA6416 /* AnyFormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 27540B5F2799C19F00BA6416 /* AnyFormatKit */; };
+		27540B622799C31F00BA6416 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B612799C31F00BA6416 /* UITextField+Extension.swift */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,7 @@
 		27540B522797ED7200BA6416 /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		27540B542797F1F900BA6416 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		27540B5C27997B5600BA6416 /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
+		27540B612799C31F00BA6416 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		27CBE4652797448F008290BE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27540B602799C19F00BA6416 /* AnyFormatKit in Frameworks */,
 				27522EFB279717AB00C7874E /* IQKeyboardManagerSwift in Frameworks */,
 				27522EF62797178B00C7874E /* RxCocoa in Frameworks */,
 				27522EF02797173100C7874E /* SnapKit in Frameworks */,
@@ -102,6 +106,7 @@
 				27522EFF2797253B00C7874E /* UIColor+Extension.swift */,
 				27522F0127972F9600C7874E /* UIFont+Extension.swift */,
 				27540B542797F1F900BA6416 /* CALayer+Extension.swift */,
+				27540B612799C31F00BA6416 /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				27522EF72797178B00C7874E /* RxSwift */,
 				27522EFA279717AB00C7874E /* IQKeyboardManagerSwift */,
 				27540B5A2799578D00BA6416 /* SkyFloatingLabelTextField */,
+				27540B5F2799C19F00BA6416 /* AnyFormatKit */,
 			);
 			productName = SeSAC_Friends;
 			productReference = 27522ECE27970C2000C7874E /* SeSAC_Friends.app */;
@@ -201,6 +207,7 @@
 				27522EF42797178B00C7874E /* XCRemoteSwiftPackageReference "RxSwift" */,
 				27522EF9279717AB00C7874E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				27540B592799578D00BA6416 /* XCRemoteSwiftPackageReference "SkyFloatingLabelTextField" */,
+				27540B5E2799C19F00BA6416 /* XCRemoteSwiftPackageReference "AnyFormatKit" */,
 			);
 			productRefGroup = 27522ECF27970C2000C7874E /* Products */;
 			projectDirPath = "";
@@ -236,6 +243,7 @@
 				27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */,
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
 				27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */,
+				27540B622799C31F00BA6416 /* UITextField+Extension.swift in Sources */,
 				27522EEB2797160D00C7874E /* PhoneAuthViewController.swift in Sources */,
 				27CBE4662797448F008290BE /* CustomButtons.swift in Sources */,
 				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,
@@ -495,6 +503,14 @@
 				version = 4.0.0;
 			};
 		};
+		27540B5E2799C19F00BA6416 /* XCRemoteSwiftPackageReference "AnyFormatKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/luximetr/AnyFormatKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -527,6 +543,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27540B592799578D00BA6416 /* XCRemoteSwiftPackageReference "SkyFloatingLabelTextField" */;
 			productName = SkyFloatingLabelTextField;
+		};
+		27540B5F2799C19F00BA6416 /* AnyFormatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27540B5E2799C19F00BA6416 /* XCRemoteSwiftPackageReference "AnyFormatKit" */;
+			productName = AnyFormatKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

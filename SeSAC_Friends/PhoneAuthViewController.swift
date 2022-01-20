@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SkyFloatingLabelTextField
+import AnyFormatKit
 
 class PhoneAuthViewController: BaseViewController {
     
@@ -76,9 +77,9 @@ class PhoneAuthViewController: BaseViewController {
 }
 
 extension PhoneAuthViewController: UITextFieldDelegate{
-    @objc func textFieldDidChange(_ textfield: UITextField) {
-        if let text = textfield.text {
-            if !text.allSatisfy({ $0.isNumber }) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text {
+            if !text.allSatisfy({ $0.isLetter }) {
                 phoneTextField.errorColor = .error
                 phoneTextField.errorMessage = "-없이 숫자만 입력"
                 sendButton.isHidden = false
@@ -97,9 +98,26 @@ extension PhoneAuthViewController: UITextFieldDelegate{
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return true }
-        let newLength = text.count + string.count - range.length
-        return newLength <= 12 // 숫자제한
+        textField.formatPhoneNumber(range: range, string: string)
+        
+        if let text = textField.text {
+            if (text.count == 13 || text.count == 12) && !exception.IsValidPhone(phone: text){
+                phoneTextField.errorColor = .error
+                phoneTextField.errorMessage = "잘못된 전화번호 형식입니다."
+                sendButton.isHidden = false
+                sendButtonActive.isHidden = true
+            } else if exception.IsValidPhone(phone: text){
+                phoneTextField.errorColor = .success
+                phoneTextField.errorMessage = "인증 번호를 받으세요!"
+                sendButton.isHidden = true
+                sendButtonActive.isHidden = false
+            } else{
+                phoneTextField.errorMessage = ""
+                sendButton.isHidden = false
+                sendButtonActive.isHidden = true
+            }
+        }
+        return false
     }
     
 }
