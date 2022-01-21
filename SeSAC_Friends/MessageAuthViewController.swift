@@ -8,10 +8,13 @@
 import UIKit
 import SnapKit
 import Toast
+import FirebaseAuth
 
 class MessageAuthViewController: BaseViewController {
     
     var limitTime = 300
+    var verificationID = ""
+    var credential: PhoneAuthCredential?
 
     let textLabel = UILabel()
     let subTextLabel = UILabel()
@@ -58,6 +61,9 @@ class MessageAuthViewController: BaseViewController {
         startButton.setTitle("인증하고 시작하기", for: .normal)
         startButtonActive.setTitle("인증하고 시작하기", for: .normal)
         startButtonActive.isHidden = true
+        
+        startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
+        startButtonActive.addTarget(self, action: #selector(startButtonActiveClicked), for: .touchUpInside)
         
         reSendButton.setTitle("재전송", for: .normal)
     }
@@ -111,6 +117,31 @@ class MessageAuthViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
+    }
+    
+    @objc func startButtonClicked(){
+        let windows = UIApplication.shared.windows
+        windows.last?.makeToast("인증번호를 입력해주세요.", duration: 1.0, position: .top)
+    }
+    
+    @objc func startButtonActiveClicked(){
+        
+        guard let verificationCode = authTextField.text else { return }
+        
+        credential = PhoneAuthProvider.provider().credential(
+          withVerificationID: verificationID,
+          verificationCode: verificationCode
+        )
+        
+        Auth.auth().signIn(with: credential!) { authResult, error in
+            if let error = error {
+              print(error)
+            }
+            print("authData: \(authResult)")
+            // 인증 완료 -> 로그인 진행
+        }
+        
+        //self.navigationController?.pushViewController(MessageAuthViewController(), animated: true)
     }
     
     func secToTime(sec: Int) {

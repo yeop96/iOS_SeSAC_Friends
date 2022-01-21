@@ -32,7 +32,9 @@
 		27540B682799D86100BA6416 /* MessageAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B672799D86100BA6416 /* MessageAuthViewController.swift */; };
 		27540B6A2799EB3B00BA6416 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
+		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
+		A6E83BCE4923A7B7FEB5CF38 /* Pods_SeSAC_Friends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,8 +56,12 @@
 		27540B612799C31F00BA6416 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		27540B672799D86100BA6416 /* MessageAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAuthViewController.swift; sourceTree = "<group>"; };
 		27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
+		275A99383C1CC719AF68D849 /* Pods-SeSAC_Friends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.release.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.release.xcconfig"; sourceTree = "<group>"; };
 		2782D94B279AFD4A00369B68 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		279F1984279B253C001AAC15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27CBE4652797448F008290BE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
+		8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeSAC_Friends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A78E6C0363EE460721ED57A4 /* Pods-SeSAC_Friends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.debug.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,7 @@
 				27522EF82797178B00C7874E /* RxSwift in Frameworks */,
 				27522EF32797176200C7874E /* Alamofire in Frameworks */,
 				27540B5B2799578D00BA6416 /* SkyFloatingLabelTextField in Frameworks */,
+				A6E83BCE4923A7B7FEB5CF38 /* Pods_SeSAC_Friends.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +89,8 @@
 			children = (
 				27522ED027970C2000C7874E /* SeSAC_Friends */,
 				27522ECF27970C2000C7874E /* Products */,
+				5C3BA40D56C500E9EEDAA49A /* Pods */,
+				7F1BA90A59D8FCB6854AB765 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +146,7 @@
 				27522ED327970C2000C7874E /* SceneDelegate.swift */,
 				27522EDA27970C2300C7874E /* Assets.xcassets */,
 				27522EDF27970C2300C7874E /* Info.plist */,
+				279F1984279B253C001AAC15 /* GoogleService-Info.plist */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -167,6 +177,23 @@
 			path = CustomUI;
 			sourceTree = "<group>";
 		};
+		5C3BA40D56C500E9EEDAA49A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A78E6C0363EE460721ED57A4 /* Pods-SeSAC_Friends.debug.xcconfig */,
+				275A99383C1CC719AF68D849 /* Pods-SeSAC_Friends.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7F1BA90A59D8FCB6854AB765 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -174,9 +201,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27522EE227970C2300C7874E /* Build configuration list for PBXNativeTarget "SeSAC_Friends" */;
 			buildPhases = (
+				C67FABC8FE128FFAB1D8986E /* [CP] Check Pods Manifest.lock */,
 				27522ECA27970C2000C7874E /* Sources */,
 				27522ECB27970C2000C7874E /* Frameworks */,
 				27522ECC27970C2000C7874E /* Resources */,
+				7C83701A63A215BD0CA2D7D2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,12 +275,55 @@
 			files = (
 				27522EDE27970C2300C7874E /* LaunchScreen.storyboard in Resources */,
 				27522F05279731AC00C7874E /* NotoSansCJKkr-Regular.otf in Resources */,
+				279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */,
 				27522EDB27970C2300C7874E /* Assets.xcassets in Resources */,
 				27522F06279731AC00C7874E /* NotoSansCJKkr-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7C83701A63A215BD0CA2D7D2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C67FABC8FE128FFAB1D8986E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SeSAC_Friends-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27522ECA27970C2000C7874E /* Sources */ = {
@@ -407,6 +479,7 @@
 		};
 		27522EE327970C2300C7874E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A78E6C0363EE460721ED57A4 /* Pods-SeSAC_Friends.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -436,6 +509,7 @@
 		};
 		27522EE427970C2300C7874E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 275A99383C1CC719AF68D849 /* Pods-SeSAC_Friends.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 import AnyFormatKit
 import Toast
+import FirebaseAuth
+import Firebase
 
 class PhoneAuthViewController: BaseViewController {
     
@@ -21,6 +23,7 @@ class PhoneAuthViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneTextField.delegate = self
+        Auth.auth().languageCode = "ko"
     }
 
     override func configure() {
@@ -83,8 +86,23 @@ class PhoneAuthViewController: BaseViewController {
     @objc func sendButtonActiveClicked(){
         let windows = UIApplication.shared.windows
         windows.last?.makeToast("전화 번호 인증 시작", duration: 1.0, position: .top)
-        self.navigationController?.pushViewController(MessageAuthViewController(), animated: true)
+        
+        guard let phoneNumber = phoneTextField.text else { return }
+        print(phoneNumber)
+       
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                // 에러가 없다면 사용자에게 인증코드와 verificationID(인증ID) 전달
+                let vc = MessageAuthViewController()
+                vc.verificationID = verificationID ?? ""
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
     }
+    
 }
 
 extension PhoneAuthViewController: UITextFieldDelegate{
