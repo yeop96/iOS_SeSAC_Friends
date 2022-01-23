@@ -34,6 +34,13 @@
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
+		27CE5201279D58CE00972D3E /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 27CE5200279D58CE00972D3E /* JGProgressHUD */; };
+		27CE5203279D5EB000972D3E /* NickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CE5202279D5EB000972D3E /* NickNameViewController.swift */; };
+		27D19AAA279C71ED0001CFFE /* ServerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D19AA9279C71ED0001CFFE /* ServerService.swift */; };
+		27D19AAC279C73760001CFFE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D19AAB279C73760001CFFE /* Model.swift */; };
+		27D19AAE279C788F0001CFFE /* BaseURLInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27D19AAD279C788F0001CFFE /* BaseURLInfo.plist */; };
+		27D19AB0279C79800001CFFE /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */; };
+		27D19AB3279CA1BD0001CFFE /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27D19AB2279CA1BD0001CFFE /* SwiftyJSON */; };
 		A6E83BCE4923A7B7FEB5CF38 /* Pods_SeSAC_Friends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +67,11 @@
 		2782D94B279AFD4A00369B68 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		279F1984279B253C001AAC15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27CBE4652797448F008290BE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
+		27CE5202279D5EB000972D3E /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
+		27D19AA9279C71ED0001CFFE /* ServerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerService.swift; sourceTree = "<group>"; };
+		27D19AAB279C73760001CFFE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		27D19AAD279C788F0001CFFE /* BaseURLInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BaseURLInfo.plist; sourceTree = "<group>"; };
+		27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeSAC_Friends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A78E6C0363EE460721ED57A4 /* Pods-SeSAC_Friends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.debug.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,12 +83,14 @@
 			files = (
 				27540B652799D3BC00BA6416 /* Toast in Frameworks */,
 				27540B602799C19F00BA6416 /* AnyFormatKit in Frameworks */,
+				27CE5201279D58CE00972D3E /* JGProgressHUD in Frameworks */,
 				27522EFB279717AB00C7874E /* IQKeyboardManagerSwift in Frameworks */,
 				27522EF62797178B00C7874E /* RxCocoa in Frameworks */,
 				27522EF02797173100C7874E /* SnapKit in Frameworks */,
 				27522EF82797178B00C7874E /* RxSwift in Frameworks */,
 				27522EF32797176200C7874E /* Alamofire in Frameworks */,
 				27540B5B2799578D00BA6416 /* SkyFloatingLabelTextField in Frameworks */,
+				27D19AB3279CA1BD0001CFFE /* SwiftyJSON in Frameworks */,
 				A6E83BCE4923A7B7FEB5CF38 /* Pods_SeSAC_Friends.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,6 +127,9 @@
 				27522EEA2797160D00C7874E /* PhoneAuthViewController.swift */,
 				27540B672799D86100BA6416 /* MessageAuthViewController.swift */,
 				2782D94B279AFD4A00369B68 /* HomeViewController.swift */,
+				27D19AA9279C71ED0001CFFE /* ServerService.swift */,
+				27D19AAB279C73760001CFFE /* Model.swift */,
+				27CE5202279D5EB000972D3E /* NickNameViewController.swift */,
 			);
 			path = SeSAC_Friends;
 			sourceTree = "<group>";
@@ -125,6 +142,7 @@
 				27540B542797F1F900BA6416 /* CALayer+Extension.swift */,
 				27540B612799C31F00BA6416 /* UITextField+Extension.swift */,
 				27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */,
+				27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -147,6 +165,7 @@
 				27522EDA27970C2300C7874E /* Assets.xcassets */,
 				27522EDF27970C2300C7874E /* Info.plist */,
 				279F1984279B253C001AAC15 /* GoogleService-Info.plist */,
+				27D19AAD279C788F0001CFFE /* BaseURLInfo.plist */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -221,6 +240,8 @@
 				27540B5A2799578D00BA6416 /* SkyFloatingLabelTextField */,
 				27540B5F2799C19F00BA6416 /* AnyFormatKit */,
 				27540B642799D3BC00BA6416 /* Toast */,
+				27D19AB2279CA1BD0001CFFE /* SwiftyJSON */,
+				27CE5200279D58CE00972D3E /* JGProgressHUD */,
 			);
 			productName = SeSAC_Friends;
 			productReference = 27522ECE27970C2000C7874E /* SeSAC_Friends.app */;
@@ -258,6 +279,8 @@
 				27540B592799578D00BA6416 /* XCRemoteSwiftPackageReference "SkyFloatingLabelTextField" */,
 				27540B5E2799C19F00BA6416 /* XCRemoteSwiftPackageReference "AnyFormatKit" */,
 				27540B632799D3BC00BA6416 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				27D19AB1279CA1BD0001CFFE /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 			);
 			productRefGroup = 27522ECF27970C2000C7874E /* Products */;
 			projectDirPath = "";
@@ -274,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27522EDE27970C2300C7874E /* LaunchScreen.storyboard in Resources */,
+				27D19AAE279C788F0001CFFE /* BaseURLInfo.plist in Resources */,
 				27522F05279731AC00C7874E /* NotoSansCJKkr-Regular.otf in Resources */,
 				279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */,
 				27522EDB27970C2300C7874E /* Assets.xcassets in Resources */,
@@ -331,16 +355,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				27540B682799D86100BA6416 /* MessageAuthViewController.swift in Sources */,
+				27D19AB0279C79800001CFFE /* Bundle+Extension.swift in Sources */,
 				27540B532797ED7200BA6416 /* CustomTextFields.swift in Sources */,
 				27540B5D27997B5600BA6416 /* Exception.swift in Sources */,
 				27522F0227972F9600C7874E /* UIFont+Extension.swift in Sources */,
 				27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */,
 				2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */,
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
+				27D19AAC279C73760001CFFE /* Model.swift in Sources */,
 				27540B6A2799EB3B00BA6416 /* UINavigationController+Extension.swift in Sources */,
+				27CE5203279D5EB000972D3E /* NickNameViewController.swift in Sources */,
 				27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */,
 				27540B622799C31F00BA6416 /* UITextField+Extension.swift in Sources */,
 				27522EEB2797160D00C7874E /* PhoneAuthViewController.swift in Sources */,
+				27D19AAA279C71ED0001CFFE /* ServerService.swift in Sources */,
 				27CBE4662797448F008290BE /* CustomButtons.swift in Sources */,
 				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,
 				27522F002797253B00C7874E /* UIColor+Extension.swift in Sources */,
@@ -617,6 +645,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		27D19AB1279CA1BD0001CFFE /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -659,6 +703,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27540B632799D3BC00BA6416 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		27CE5200279D58CE00972D3E /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
+		};
+		27D19AB2279CA1BD0001CFFE /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27D19AB1279CA1BD0001CFFE /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -9,12 +9,18 @@ import UIKit
 import SnapKit
 import Toast
 import FirebaseAuth
+import Alamofire
+import JGProgressHUD
 
 class MessageAuthViewController: BaseViewController {
     
+    let serverService = ServerService()
+    let progress = JGProgressHUD()
     var limitTime = 300
     var verificationID = ""
+    var phoneNumber = ""
     var credential: PhoneAuthCredential?
+    let windows = UIApplication.shared.windows
 
     let textLabel = UILabel()
     let subTextLabel = UILabel()
@@ -28,8 +34,7 @@ class MessageAuthViewController: BaseViewController {
         super.viewDidLoad()
         authTextField.delegate = self
         
-        let windows = UIApplication.shared.windows
-        windows.last?.makeToast("인증번호를 보냈습니다.", duration: 1.0, position: .top)
+        windows.last?.makeToast("인증번호 전송 60초 안에 입력해주세요.", duration: 3.0, position: .top)
     }
 
     override func configure() {
@@ -50,6 +55,7 @@ class MessageAuthViewController: BaseViewController {
         
         authTextField.placeholder = "인증번호 입력"
         authTextField.keyboardType = .numberPad
+        authTextField.textContentType = .oneTimeCode //SMS 인증 번호 자동 추천
         authTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         timerLabel.text = ""
@@ -66,6 +72,7 @@ class MessageAuthViewController: BaseViewController {
         startButtonActive.addTarget(self, action: #selector(startButtonActiveClicked), for: .touchUpInside)
         
         reSendButton.setTitle("재전송", for: .normal)
+        reSendButton.addTarget(self, action: #selector(reSendButtonClicked), for: .touchUpInside)
     }
     
     override func setupConstraints() {
@@ -129,19 +136,74 @@ class MessageAuthViewController: BaseViewController {
         guard let verificationCode = authTextField.text else { return }
         
         credential = PhoneAuthProvider.provider().credential(
-          withVerificationID: verificationID,
-          verificationCode: verificationCode
+            withVerificationID: verificationID,
+            verificationCode: verificationCode
         )
         
         Auth.auth().signIn(with: credential!) { authResult, error in
             if let error = error {
-              print(error)
+                print("에러짱 :", error)
+                self.windows.last?.makeToast("전화번호 인증 실패", duration: 3.0, position: .top)
             }
-            print("authData: \(authResult)")
-            // 인증 완료 -> 로그인 진행
+            // 인증 완료 -> 파이어베이스 아이디 토큰 요청
+            print("authData :", authResult ?? "")
+            
+            let currentUser = Auth.auth().currentUser
+            currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                if let error = error {
+                    print("에러짱 :", error)
+                    self.windows.last?.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
+                    return
+                }
+                //아이디 토큰 받기 성공 -> 서버로부터 사용자 정보 확인
+                UserDefaults.standard.set(idToken, forKey: "idtoken")
+                print("아이뒤토쿤 :", idToken ?? "")
+                self.userCheck()
+            }
         }
         
         //self.navigationController?.pushViewController(MessageAuthViewController(), animated: true)
+    }
+    
+    func userCheck() {
+        progress.show(in: view, animated: true)
+        DispatchQueue.global().async {
+            self.serverService.getUserInfo { code, json in
+                switch code{
+                case 200:
+                    print("로그인 성공", "홈 화면으로 이동")
+                    DispatchQueue.main.async {
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+                        windowScene.windows.first?.makeKeyAndVisible()
+                    }
+                case 201:
+                    print("미가입 유저","회원가입 화면으로 이동")
+                    DispatchQueue.main.async {
+                        let vc = NickNameViewController()
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                default:
+                    print("ERROR: ", code, json)
+                }
+            }
+            self.progress.dismiss(animated: true)
+        }
+        print("fetchEnd")
+    }
+    
+    
+    @objc func reSendButtonClicked(){
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
+                if let error = error {
+                    print("에러 :", error.localizedDescription)
+                    self.windows.last?.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
+                    return
+                }
+                self.verificationID = verificationID ?? ""
+                self.windows.last?.makeToast("인증 번호 재전송 60초안에 입력해주세요.", duration: 1.0, position: .top)
+            }
     }
     
     func secToTime(sec: Int) {
@@ -163,6 +225,9 @@ class MessageAuthViewController: BaseViewController {
     
     @objc func getSetTime(){
         secToTime(sec: limitTime)
+        if limitTime == limitTime - 60{
+            windows.last?.makeToast("전화번호 인증 실패 (60초 초과)", duration: 3.0, position: .top)
+        }
         limitTime -= 1
     }
     
@@ -180,7 +245,7 @@ extension MessageAuthViewController: UITextFieldDelegate{
                 authTextField.errorMessage = "숫자만 입력"
                 startButton.isHidden = false
                 startButtonActive.isHidden = true
-            } else if text.count >= 6{
+            } else if text.count == 6{
                 authTextField.errorColor = .success
                 authTextField.errorMessage = "인증하기"
                 startButton.isHidden = true

@@ -9,10 +9,10 @@ import UIKit
 import SnapKit
 import AnyFormatKit
 import Toast
-import FirebaseAuth
-import Firebase
+import FirebaseAuth //GoogleService-Info는 .gitignore한 상태
 
 class PhoneAuthViewController: BaseViewController {
+    let windows = UIApplication.shared.windows
     
     let textLabel = UILabel()
     let phoneTextField = InputTextField()
@@ -79,26 +79,24 @@ class PhoneAuthViewController: BaseViewController {
         
     }
     @objc func sendButtonClicked(){
-        let windows = UIApplication.shared.windows
         windows.last?.makeToast("잘못된 전화번호 형식입니다.", duration: 1.0, position: .top)
     }
     
     @objc func sendButtonActiveClicked(){
-        let windows = UIApplication.shared.windows
-        windows.last?.makeToast("전화 번호 인증 시작", duration: 1.0, position: .top)
         
         guard let phoneNumber = phoneTextField.text else { return }
-        print(phoneNumber)
-       
+        
         PhoneAuthProvider.provider()
             .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
-                    print(error)
+                    print("에러 :", error.localizedDescription)
+                    self.windows.last?.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
                     return
                 }
                 // 에러가 없다면 사용자에게 인증코드와 verificationID(인증ID) 전달
                 let vc = MessageAuthViewController()
                 vc.verificationID = verificationID ?? ""
+                vc.phoneNumber = phoneNumber
                 self.navigationController?.pushViewController(vc, animated: true)
             }
     }
