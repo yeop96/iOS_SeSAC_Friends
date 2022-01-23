@@ -18,7 +18,6 @@ class PhoneAuthViewController: BaseViewController {
     let phoneTextField = InputTextField()
     let sendButton = DisableButton()
     let sendButtonActive = FillButton()
-    let exception = Exception()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,12 +107,12 @@ extension PhoneAuthViewController: UITextFieldDelegate{
         
         textField.formatPhoneNumber(range: range, string: string)
         if let text = textField.text {
-            if (text.count == 13 || text.count == 12) && !exception.IsValidPhone(phone: text){
+            if (text.count == 13 || text.count == 12) && !Exception.IsValidPhone(phone: text){
                 phoneTextField.errorColor = .error
                 phoneTextField.errorMessage = "잘못된 전화번호 형식입니다."
                 sendButton.isHidden = false
                 sendButtonActive.isHidden = true
-            } else if exception.IsValidPhone(phone: text){
+            } else if Exception.IsValidPhone(phone: text){
                 phoneTextField.errorColor = .success
                 phoneTextField.errorMessage = "인증 문자를 받으세요!"
                 sendButton.isHidden = true

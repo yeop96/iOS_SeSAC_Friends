@@ -14,7 +14,6 @@ import JGProgressHUD
 
 class MessageAuthViewController: BaseViewController {
     
-    let serverService = ServerService()
     let progress = JGProgressHUD()
     var limitTime = 300
     var verificationID = ""
@@ -156,20 +155,18 @@ class MessageAuthViewController: BaseViewController {
                     return
                 }
                 //아이디 토큰 받기 성공 -> 서버로부터 사용자 정보 확인
-                UserDefaults.standard.set(idToken, forKey: "idtoken")
-                print("아이뒤토쿤 :", idToken ?? "")
+                UserData.idToken = idToken ?? ""
                 self.userCheck()
             }
         }
         
-        //self.navigationController?.pushViewController(MessageAuthViewController(), animated: true)
     }
     
     func userCheck() {
         progress.show(in: view, animated: true)
         DispatchQueue.global().async {
-            self.serverService.getUserInfo { code, json in
-                switch code{
+            ServerService.shared.getUserInfo { statusCode, json in
+                switch statusCode{
                 case 200:
                     print("로그인 성공", "홈 화면으로 이동")
                     DispatchQueue.main.async {
@@ -184,7 +181,7 @@ class MessageAuthViewController: BaseViewController {
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
                 default:
-                    print("ERROR: ", code, json)
+                    print("ERROR: ", statusCode, json)
                 }
             }
             self.progress.dismiss(animated: true)
@@ -231,9 +228,7 @@ class MessageAuthViewController: BaseViewController {
         limitTime -= 1
     }
     
-    @objc func backButtonClicked(){
-        self.navigationController?.popViewController(animated: true)
-    }
+   
 }
 
 

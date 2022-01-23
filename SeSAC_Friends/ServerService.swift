@@ -20,7 +20,7 @@ enum ServerRequest {
     case SignUp
     
     var urlRequest: ServerModel {
-        let idtoken = UserDefaults.standard.string(forKey: "idtoken") ?? ""
+        let idToken = UserData.idToken
         var url: String?
         var parm: Parameters?
         var head: HTTPHeaders?
@@ -34,7 +34,7 @@ enum ServerRequest {
             parm = nil
         }
         
-        head = ["Content-Type" : "application/json", "idtoken" : idtoken]
+        head = ["Content-Type" : "application/json", "idtoken" : idToken]
         return ServerModel(url: url ?? "", parameters: parm, headers: head)
     }
 }
@@ -45,8 +45,8 @@ extension String{
         return baseURL + path
     }
     mutating func addToken() -> [String: String] {
-        let idtoken = UserDefaults.standard.string(forKey: "idtoken") ?? ""
-        return ["idtoken": idtoken]
+        let idToken = UserData.idToken
+        return ["idtoken": idToken]
     }
     mutating func addContentType() -> [String: String] {
         return ["Content-Type": "application/json"]
@@ -68,10 +68,10 @@ class ServerService {
             .validate(statusCode: 200..<300)
             .responseJSON { response in
                 let json = JSON(response)
-                let code = response.response?.statusCode ?? 500
+                let statusCode = response.response?.statusCode ?? 500
                 
-                result(code, json)
-                print(code,json)
+                result(statusCode, json)
+                print(statusCode,json)
             }
     }
     
@@ -89,10 +89,10 @@ class ServerService {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let code = response.response?.statusCode ?? 500
+                let statusCode = response.response?.statusCode ?? 500
                 
-                result(code, json)
-                print(code,json)
+                result(statusCode, json)
+                print(statusCode,json)
                 
             case .failure(let error):
                 print(error)
