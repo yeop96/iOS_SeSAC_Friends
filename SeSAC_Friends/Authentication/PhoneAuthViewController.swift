@@ -12,7 +12,6 @@ import Toast
 import FirebaseAuth //GoogleService-Info는 .gitignore한 상태
 
 class PhoneAuthViewController: BaseViewController {
-    let windows = UIApplication.shared.windows
     
     let textLabel = UILabel()
     let phoneTextField = InputTextField()

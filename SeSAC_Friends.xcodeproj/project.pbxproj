@@ -32,6 +32,7 @@
 		27540B682799D86100BA6416 /* MessageAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B672799D86100BA6416 /* MessageAuthViewController.swift */; };
 		27540B6A2799EB3B00BA6416 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */; };
 		2757905E279DC2E400B845D8 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757905D279DC2E400B845D8 /* UserDefault.swift */; };
+		27579061279EBABE00B845D8 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27579060279EBABE00B845D8 /* DateFormatter.swift */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
@@ -68,6 +69,7 @@
 		27540B672799D86100BA6416 /* MessageAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAuthViewController.swift; sourceTree = "<group>"; };
 		27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		2757905D279DC2E400B845D8 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		27579060279EBABE00B845D8 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		275A99383C1CC719AF68D849 /* Pods-SeSAC_Friends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.release.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.release.xcconfig"; sourceTree = "<group>"; };
 		2782D94B279AFD4A00369B68 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		279F1984279B253C001AAC15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				27540B612799C31F00BA6416 /* UITextField+Extension.swift */,
 				27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */,
 				27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */,
+				27579060279EBABE00B845D8 /* DateFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				27522F0227972F9600C7874E /* UIFont+Extension.swift in Sources */,
 				27540B552797F1F900BA6416 /* CALayer+Extension.swift in Sources */,
 				27CE520A279DA68C00972D3E /* GenderViewController.swift in Sources */,
+				27579061279EBABE00B845D8 /* DateFormatter.swift in Sources */,
 				2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */,
 				27522ED227970C2000C7874E /* AppDelegate.swift in Sources */,
 				27D19AAC279C73760001CFFE /* Model.swift in Sources */,

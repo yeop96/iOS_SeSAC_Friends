@@ -39,8 +39,8 @@ struct UserData {
     static var idToken: String
     @UserDefault(key: keyEnum.nickName.rawValue, defaultValue: "")
     static var nickName: String
-    @UserDefault(key: keyEnum.birth.rawValue, defaultValue: "")
-    static var birth: String
+    @UserDefault(key: keyEnum.birth.rawValue, defaultValue: Date())
+    static var birth: Date
     @UserDefault(key: keyEnum.email.rawValue, defaultValue: "")
     static var email: String
     @UserDefault(key: keyEnum.gender.rawValue, defaultValue: 2)

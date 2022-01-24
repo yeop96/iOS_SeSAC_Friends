@@ -11,12 +11,10 @@ import Toast
 
 class NickNameViewController: BaseViewController {
     
-    let windows = UIApplication.shared.windows
     let textLabel = UILabel()
     let nickNameTextField = InputTextField()
     let nextButton = DisableButton()
     let nextButtonActive = FillButton()
-    let exception = Exception()
     
     override func viewDidLoad() {
         super.viewDidLoad()

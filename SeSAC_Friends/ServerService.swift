@@ -34,7 +34,7 @@ enum ServerRequest {
             parm = nil
         }
         
-        head = ["Content-Type" : "application/json", "idtoken" : idToken]
+        head = ["Content-Type" : "application/x-www-form-urlencoded", "idtoken" : idToken]
         return ServerModel(url: url ?? "", parameters: parm, headers: head)
     }
 }

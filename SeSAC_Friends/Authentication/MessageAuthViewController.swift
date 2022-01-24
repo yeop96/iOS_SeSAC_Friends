@@ -19,7 +19,6 @@ class MessageAuthViewController: BaseViewController {
     var verificationID = ""
     var phoneNumber = ""
     var credential: PhoneAuthCredential?
-    let windows = UIApplication.shared.windows
 
     let textLabel = UILabel()
     let subTextLabel = UILabel()
