@@ -87,7 +87,7 @@ class EmailViewController: BaseViewController {
         
     }
     @objc func nextButtonClicked(){
-        windows.last?.makeToast("닉네임은 1자 이상 10자 이내로 부탁드려요", duration: 3.0, position: .top)
+        windows.last?.makeToast("이메일 형식이 올바르지 않습니다.", duration: 3.0, position: .top)
     }
     
     @objc func nextButtonActiveClicked(){

@@ -12,11 +12,10 @@ import Toast
 class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func configure() {
-        
+        view.backgroundColor = .white
     }
     
     override func setupConstraints() {

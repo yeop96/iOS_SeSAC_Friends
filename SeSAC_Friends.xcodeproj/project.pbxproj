@@ -34,6 +34,7 @@
 		2757905E279DC2E400B845D8 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757905D279DC2E400B845D8 /* UserDefault.swift */; };
 		27579061279EBABE00B845D8 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27579060279EBABE00B845D8 /* DateFormatter.swift */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
+		2788B9F727A06DA1007472D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788B9F627A06DA1007472D5 /* Constants.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
 		27CBE4662797448F008290BE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBE4652797448F008290BE /* CustomButtons.swift */; };
 		27CE5201279D58CE00972D3E /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 27CE5200279D58CE00972D3E /* JGProgressHUD */; };
@@ -72,6 +73,7 @@
 		27579060279EBABE00B845D8 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		275A99383C1CC719AF68D849 /* Pods-SeSAC_Friends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.release.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.release.xcconfig"; sourceTree = "<group>"; };
 		2782D94B279AFD4A00369B68 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		2788B9F627A06DA1007472D5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		279F1984279B253C001AAC15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27CBE4652797448F008290BE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		27CE5202279D5EB000972D3E /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				27540B5C27997B5600BA6416 /* Exception.swift */,
 				2757905D279DC2E400B845D8 /* UserDefault.swift */,
+				2788B9F627A06DA1007472D5 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				27CE5206279DA66E00972D3E /* BirthViewController.swift in Sources */,
 				27522F002797253B00C7874E /* UIColor+Extension.swift in Sources */,
 				27CE5208279DA67B00972D3E /* EmailViewController.swift in Sources */,
+				2788B9F727A06DA1007472D5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
