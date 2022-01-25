@@ -92,6 +92,8 @@ class PhoneAuthViewController: BaseViewController {
                     return
                 }
                 // 에러가 없다면 사용자에게 인증코드와 verificationID(인증ID) 전달
+                let phoneOnlyNumber = phoneNumber.components(separatedBy: ["-"]).joined()
+                UserData.phoneNumber = "+82" + phoneOnlyNumber
                 let vc = MessageAuthViewController()
                 vc.verificationID = verificationID ?? ""
                 vc.phoneNumber = phoneNumber

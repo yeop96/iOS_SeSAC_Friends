@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Toast
+import Firebase
 import FirebaseAuth
 import Alamofire
 import JGProgressHUD
@@ -155,6 +156,7 @@ class MessageAuthViewController: BaseViewController {
                 }
                 //아이디 토큰 받기 성공 -> 서버로부터 사용자 정보 확인
                 UserData.idToken = idToken ?? ""
+                
                 self.userCheck()
             }
         }

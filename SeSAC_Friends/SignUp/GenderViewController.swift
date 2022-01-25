@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Toast
+import Alamofire
+import JGProgressHUD
 
 class GenderViewController: BaseViewController {
     
@@ -19,6 +21,7 @@ class GenderViewController: BaseViewController {
     let nextButton = DisableButton()
     let nextButtonActive = FillButton()
     var selectNumber = GenderNumber.unSelect.rawValue
+    let progress = JGProgressHUD()
     
     
     override func viewDidLoad() {
@@ -143,8 +146,7 @@ class GenderViewController: BaseViewController {
     
     @objc func nextButtonClicked(){
         UserData.gender = selectNumber
-        
-        
+        userSignUp()
     }
     
     func buttonActive(){
@@ -155,6 +157,29 @@ class GenderViewController: BaseViewController {
             nextButton.isHidden = true
             nextButtonActive.isHidden = false
         }
-        
+    }
+    
+    func userSignUp() {
+        progress.show(in: view, animated: true)
+        DispatchQueue.global().async {
+            ServerService.shared.postSignUp{ statusCode, json in
+                switch statusCode{
+                case 200:
+                    print("회원가입 성공")
+                    print(json)
+                    DispatchQueue.main.async {
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+                        windowScene.windows.first?.makeKeyAndVisible()
+                    }
+                case 202:
+                    print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
+                default:
+                    print("ERROR: ", statusCode, json)
+                }
+            }
+            self.progress.dismiss(animated: true)
+        }
+        print("fetchEnd")
     }
 }

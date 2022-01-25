@@ -49,8 +49,15 @@ extension String{
         return ["idtoken": idToken]
     }
     mutating func addContentType() -> [String: String] {
-        return ["Content-Type": "application/json"]
+        return ["Content-Type": "application/x-www-form-urlencoded"]
     }
+
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        var request = try urlRequest.asURLRequest()
+        request.httpBody = data(using: .utf8, allowLossyConversion: false)
+        return request
+    }
+    
 }
 
 
@@ -78,14 +85,14 @@ class ServerService {
     
     func postSignUp(_ result: @escaping CompletionHandler) {
         let server = ServerRequest.SignUp.urlRequest
-        let parm : Parameters = ["phoneNumber": "",
-                "FCMtoken": "",
-                "nick": "",
-                "birth": "",
-                "email": "",
-                "gender": 1]
+        let parm : Parameters = ["phoneNumber": UserData.phoneNumber,
+                                 "FCMtoken": UserData.fcmToken,
+                                 "nick": UserData.nickName,
+                                 "birth": UserData.birth.bitryDateString(),
+                                 "email": UserData.email,
+                                 "gender": UserData.gender]
         
-        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseJSON { response in
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -98,6 +105,8 @@ class ServerService {
                 print(error)
             }
         }
+        
+        
     }
     
 }

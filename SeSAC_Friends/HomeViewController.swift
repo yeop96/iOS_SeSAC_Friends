@@ -16,6 +16,7 @@ class HomeViewController: BaseViewController {
     
     override func configure() {
         view.backgroundColor = .white
+        navigationController?.changeNavigationBar(isClear: true)
     }
     
     override func setupConstraints() {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273A32A327A08AD900FB0B0E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A32A227A08AD900FB0B0E /* Date+Extension.swift */; };
 		27522ED227970C2000C7874E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522ED127970C2000C7874E /* AppDelegate.swift */; };
 		27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27522ED327970C2000C7874E /* SceneDelegate.swift */; };
 		27522EDB27970C2300C7874E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27522EDA27970C2300C7874E /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		273A32A227A08AD900FB0B0E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		27522ECE27970C2000C7874E /* SeSAC_Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27522ED127970C2000C7874E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27522ED327970C2000C7874E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */,
 				27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */,
 				27579060279EBABE00B845D8 /* DateFormatter.swift */,
+				273A32A227A08AD900FB0B0E /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273A32A327A08AD900FB0B0E /* Date+Extension.swift in Sources */,
 				27540B682799D86100BA6416 /* MessageAuthViewController.swift in Sources */,
 				27D19AB0279C79800001CFFE /* Bundle+Extension.swift in Sources */,
 				27540B532797ED7200BA6416 /* CustomTextFields.swift in Sources */,
