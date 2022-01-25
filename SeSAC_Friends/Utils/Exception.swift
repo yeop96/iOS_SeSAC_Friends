@@ -21,5 +21,12 @@ struct Exception{
         let pred = NSPredicate(format:"SELF MATCHES %@", nickReg)
         return pred.evaluate(with: nickName)
     }
+    
+    static func IsValidEmail(email: String?) -> Bool{
+        guard email != nil else { return false }
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let pred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return pred.evaluate(with: email)
+    }
 }
 

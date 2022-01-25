@@ -28,7 +28,6 @@ class NickNameViewController: BaseViewController {
         textLabel.text = "닉네임을 입력해 주세요"
         textLabel.font = UIFont().Display1_R20
         textLabel.textColor = .black
-        textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
         
         nickNameTextField.delegate = self

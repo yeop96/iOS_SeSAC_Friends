@@ -54,6 +54,7 @@ class BirthViewController: BaseViewController {
         }
         
         yearTextField.placeholder = "1990"
+        yearTextField.becomeFirstResponder()
         monthTextField.placeholder = "1"
         dayTextField.placeholder = "1"
         [yearTextField, monthTextField, dayTextField].forEach {
