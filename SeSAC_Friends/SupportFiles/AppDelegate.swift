@@ -8,18 +8,39 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Firebase
-import FirebaseCore
+import UserNotifications
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        // 1) APN 등록 및 사용자 권한 받기
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+            )
+        application.registerForRemoteNotifications()
+        
+        //Message Delegate Setting
+        Messaging.messaging().delegate = self
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                //fcm 토큰 저장
+                UserData.fcmToken = token
+            }
+        }
+        
         return true
     }
 
@@ -40,3 +61,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+//MARK:- FCM
+extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
+    
+    // 2) 토큰 받기
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        let dataDict:[String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+        // TODO: If necessary send token to application server.
+    }
+    
+    // 3) 받은 메시지 처리
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // TODO: Handle data of notification
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+}

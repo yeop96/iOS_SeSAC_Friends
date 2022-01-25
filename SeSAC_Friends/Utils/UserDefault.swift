@@ -37,19 +37,25 @@ struct AppFirstLaunch {
 struct UserData {
     @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
     static var idToken: String
+    @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
+    static var phoneNumber: String
+    @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
+    static var fcmToken: String
     @UserDefault(key: keyEnum.nickName.rawValue, defaultValue: "")
     static var nickName: String
     @UserDefault(key: keyEnum.birth.rawValue, defaultValue: Date())
     static var birth: Date
     @UserDefault(key: keyEnum.email.rawValue, defaultValue: "")
     static var email: String
-    @UserDefault(key: keyEnum.gender.rawValue, defaultValue: 2)
+    @UserDefault(key: keyEnum.gender.rawValue, defaultValue: GenderNumber.unSelect.rawValue)
     static var gender: Int
 }
 
 enum keyEnum: String {
     case isAppFirstLaunch = "isAppFirstLaunch"
     case idToken = "idToken"
+    case phoneNumber = "phoneNumber"
+    case fcmToken = "fcmToken"
     case nickName = "nickName"
     case birth = "birth"
     case email = "email"
