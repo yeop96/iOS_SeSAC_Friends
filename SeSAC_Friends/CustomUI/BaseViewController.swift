@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class BaseViewController: UIViewController{
-    let windows = UIApplication.shared.windows
     
     override func viewDidLoad() {
         configure()

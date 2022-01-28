@@ -33,7 +33,12 @@ class MessageAuthViewController: BaseViewController {
         super.viewDidLoad()
         authTextField.delegate = self
         
-        windows.last?.makeToast("인증번호 전송 60초 안에 입력해주세요.", duration: 3.0, position: .top)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.view.makeToast("인증번호를 보냈습니다.", duration: 5.0, position: .top)
     }
 
     override func configure() {
@@ -126,8 +131,7 @@ class MessageAuthViewController: BaseViewController {
     }
     
     @objc func startButtonClicked(){
-        let windows = UIApplication.shared.windows
-        windows.last?.makeToast("인증번호를 입력해주세요.", duration: 1.0, position: .top)
+        self.view.makeToast("인증번호를 입력해주세요.", duration: 1.0, position: .top)
     }
     
     @objc func startButtonActiveClicked(){
@@ -142,7 +146,7 @@ class MessageAuthViewController: BaseViewController {
         Auth.auth().signIn(with: credential!) { authResult, error in
             if let error = error {
                 print("에러짱 :", error)
-                self.windows.last?.makeToast("전화번호 인증 실패", duration: 3.0, position: .top)
+                self.view.makeToast("전화번호 인증 실패", duration: 3.0, position: .top)
             }
             // 인증 완료 -> 파이어베이스 아이디 토큰 요청
             print("authData :", authResult ?? "")
@@ -151,12 +155,12 @@ class MessageAuthViewController: BaseViewController {
             currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                 if let error = error {
                     print("에러짱 :", error)
-                    self.windows.last?.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
+                    self.view.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
                     return
                 }
                 //아이디 토큰 받기 성공 -> 서버로부터 사용자 정보 확인
                 UserData.idToken = idToken ?? ""
-                
+                print("아이디 토큰",idToken)
                 self.userCheck()
             }
         }
@@ -196,11 +200,11 @@ class MessageAuthViewController: BaseViewController {
             .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
                     print("에러 :", error.localizedDescription)
-                    self.windows.last?.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
+                    self.view.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
                     return
                 }
                 self.verificationID = verificationID ?? ""
-                self.windows.last?.makeToast("인증 번호 재전송 60초안에 입력해주세요.", duration: 1.0, position: .top)
+                self.view.makeToast("인증 번호 재전송 60초안에 입력해주세요.", duration: 1.0, position: .top)
             }
     }
     
@@ -224,7 +228,7 @@ class MessageAuthViewController: BaseViewController {
     @objc func getSetTime(){
         secToTime(sec: limitTime)
         if limitTime == limitTime - 60{
-            windows.last?.makeToast("전화번호 인증 실패 (60초 초과)", duration: 3.0, position: .top)
+            self.view.makeToast("전화번호 인증 실패 (60초 초과)", duration: 3.0, position: .top)
         }
         limitTime -= 1
     }

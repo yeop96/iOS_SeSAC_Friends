@@ -16,6 +16,7 @@ class EmailViewController: BaseViewController {
     let emailTextField = InputTextField()
     let nextButton = DisableButton()
     let nextButtonActive = FillButton()
+    var nickNameBackBool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +88,7 @@ class EmailViewController: BaseViewController {
         
     }
     @objc func nextButtonClicked(){
-        windows.last?.makeToast("이메일 형식이 올바르지 않습니다.", duration: 3.0, position: .top)
+        self.view.makeToast("이메일 형식이 올바르지 않습니다.", duration: 3.0, position: .top)
     }
     
     @objc func nextButtonActiveClicked(){
@@ -95,6 +96,7 @@ class EmailViewController: BaseViewController {
         UserData.email = email
         
         let vc = GenderViewController()
+        vc.nickNameBackBool = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

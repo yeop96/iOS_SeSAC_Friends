@@ -22,6 +22,7 @@ class GenderViewController: BaseViewController {
     let nextButtonActive = FillButton()
     var selectNumber = GenderNumber.unSelect.rawValue
     let progress = JGProgressHUD()
+    var nickNameBackBool = false
     
     
     override func viewDidLoad() {
@@ -174,24 +175,35 @@ class GenderViewController: BaseViewController {
                     }
                 case 202:
                     print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
-                    guard let presentingVC = self.presentingViewController as? UINavigationController else { return }
-                    let viewControllerStack = presentingVC.viewControllers
-                  
-                    self.dismiss(animated: true) {
-                        for viewController in viewControllerStack {
-                            //navigation stack 에서 NickNameViewController(돌아가고싶은 뷰)가 있다면 거기까지 pop.
-                            if let rootVC = viewController as? NickNameViewController {
-                                presentingVC.popToViewController(rootVC, animated: true)
-                            }
-                        }
-                    }
+                    self.backNavigationControllers()
+                    
+                    
                 default:
-                    print("ERROR: ", statusCode, json)
+                    print("ERROR?: ", statusCode, json)
+                    DispatchQueue.main.async {
+                        self.view.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
+                    }
                 }
             }
             self.progress.dismiss(animated: true)
         }
         print("fetchEnd")
     }
+    
+    
+    func backNavigationControllers(){
+        
+        guard let presentingVC = self.navigationController else { return }
+        let viewControllerStack = presentingVC.viewControllers
+      
+        for viewController in viewControllerStack {
+            //navigation stack 에서 NickNameViewController(돌아가고싶은 뷰)가 있다면 거기까지 pop.
+            if let rootVC = viewController as? NickNameViewController {
+                rootVC.nickNameBackBool = true
+                presentingVC.popToViewController(rootVC, animated: true)
+            }
+        }
+    }
+    
 }
 

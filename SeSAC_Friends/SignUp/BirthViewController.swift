@@ -25,6 +25,7 @@ class BirthViewController: BaseViewController {
     let nextButton = DisableButton()
     let nextButtonActive = FillButton()
     let exception = Exception()
+    var nickNameBackBool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,11 +141,12 @@ class BirthViewController: BaseViewController {
     }
     
     @objc func nextButtonClicked(){
-        windows.last?.makeToast("새싹친구는 만 17세 이상만 사용할 수 있습니다.", duration: 3.0, position: .top)
+        self.view.makeToast("새싹친구는 만 17세 이상만 사용할 수 있습니다.", duration: 3.0, position: .top)
     }
     
     @objc func nextButtonActiveClicked(){
         let vc = EmailViewController()
+        vc.nickNameBackBool = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

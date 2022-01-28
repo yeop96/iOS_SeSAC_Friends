@@ -93,20 +93,14 @@ class ServerService {
                                  "gender": UserData.gender]
         
         AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let statusCode = response.response?.statusCode ?? 500
-                
-                result(statusCode, json)
-                print(statusCode,json)
-                
-            case .failure(let error):
-                print(error)
-            }
+            let json = JSON(response)
+            let statusCode = response.response?.statusCode ?? 500
+            
+            result(statusCode, json)
+            print(statusCode,json)
+            
         }
-        
-        
     }
+    
     
 }

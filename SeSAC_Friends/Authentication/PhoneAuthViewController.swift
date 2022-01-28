@@ -77,7 +77,7 @@ class PhoneAuthViewController: BaseViewController {
         
     }
     @objc func sendButtonClicked(){
-        windows.last?.makeToast("잘못된 전화번호 형식입니다.", duration: 1.0, position: .top)
+        self.view.makeToast("잘못된 전화번호 형식입니다.", duration: 1.0, position: .top)
     }
     
     @objc func sendButtonActiveClicked(){
@@ -88,7 +88,7 @@ class PhoneAuthViewController: BaseViewController {
             .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
                     print("에러 :", error.localizedDescription)
-                    self.windows.last?.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
+                    self.view.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
                     return
                 }
                 // 에러가 없다면 사용자에게 인증코드와 verificationID(인증ID) 전달

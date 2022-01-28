@@ -15,9 +15,18 @@ class NickNameViewController: BaseViewController {
     let nickNameTextField = InputTextField()
     let nextButton = DisableButton()
     let nextButtonActive = FillButton()
+    var nickNameBackBool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if nickNameBackBool{
+            self.view.makeToast("\(UserData.nickName)(는)은 금지된 닉네임 입니다. 다시 시도해주세요.", duration: 5.0, position: .top)
+        }
     }
 
     override func configure() {
@@ -75,7 +84,7 @@ class NickNameViewController: BaseViewController {
         
     }
     @objc func nextButtonClicked(){
-        windows.last?.makeToast("닉네임은 1자 이상 10자 이내로 부탁드려요", duration: 3.0, position: .top)
+        self.view.makeToast("닉네임은 1자 이상 10자 이내로 부탁드려요", duration: 3.0, position: .top)
     }
     
     @objc func nextButtonActiveClicked(){
@@ -83,6 +92,7 @@ class NickNameViewController: BaseViewController {
         UserData.nickName = nickName
         
         let vc = BirthViewController()
+        vc.nickNameBackBool = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
