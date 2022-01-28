@@ -18,6 +18,7 @@ struct ServerModel{
 enum ServerRequest {
     case UserInfo
     case SignUp
+    case Withdraw
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -32,9 +33,13 @@ enum ServerRequest {
         case .SignUp:
             url = .endPoint("/user")
             parm = nil
+        case .Withdraw:
+            url = .endPoint("/user/withdraw")
+            parm = nil
         }
         
-        head = ["Content-Type" : "application/x-www-form-urlencoded", "idtoken" : idToken]
+        head = ["Content-Type" : "application/x-www-form-urlencoded",
+                "idtoken" : idToken]
         return ServerModel(url: url ?? "", parameters: parm, headers: head)
     }
 }
@@ -65,18 +70,14 @@ extension String{
 class ServerService {
     static let shared = ServerService()
     typealias CompletionHandler = (Int, JSON) -> ()
-
+    
     func getUserInfo(_ result: @escaping CompletionHandler){
         let server = ServerRequest.UserInfo.urlRequest
-        
-        AF.request(server.url,
-                   method: .get,
-                   headers: server.headers)
+        AF.request(server.url, method: .get, headers: server.headers)
             .validate(statusCode: 200..<300)
             .responseJSON { response in
                 let json = JSON(response)
                 let statusCode = response.response?.statusCode ?? 500
-                
                 result(statusCode, json)
                 print(statusCode,json)
             }
@@ -100,6 +101,18 @@ class ServerService {
             print(statusCode,json)
             
         }
+    }
+    
+    func postWithdraw(_ result: @escaping CompletionHandler){
+        let server = ServerRequest.Withdraw.urlRequest
+        AF.request(server.url, method: .post, headers: server.headers)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                let json = JSON(response)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+                print(statusCode,json)
+            }
     }
     
     
