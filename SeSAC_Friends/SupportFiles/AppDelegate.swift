@@ -93,6 +93,7 @@ final class AppAppearance {
     static func setupAppearance() {
         UINavigationBar.appearance().backgroundColor = .white
         UINavigationBar.appearance().tintColor = .black
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont().Title3_M14]
+        UITabBarItem.appearance().setTitleTextAttributes([.font: UIFont().Body4_R12], for: .normal)
     }
 }

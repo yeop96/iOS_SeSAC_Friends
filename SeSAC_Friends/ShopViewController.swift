@@ -1,18 +1,17 @@
 //
-//  HomeViewController.swift
+//  ShopViewController.swift
 //  SeSAC_Friends
 //
-//  Created by yeop on 2022/01/21.
+//  Created by yeop on 2022/01/29.
 //
 
 import UIKit
 import SnapKit
 import Toast
 
-class HomeViewController: BaseViewController {
+class ShopViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.hideNavigationBar()
     }
     
     override func configure() {
