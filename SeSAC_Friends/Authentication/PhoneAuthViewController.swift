@@ -26,7 +26,6 @@ class PhoneAuthViewController: BaseViewController {
 
     override func configure() {
         
-        view.backgroundColor = .white
         navigationController?.changeNavigationBar(isClear: true)
         
         textLabel.text = "새싹 서비스 이용을 위해\n휴대폰 번호를 입력해 주세요"

@@ -28,11 +28,23 @@ class GenderViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if nickNameBackBool{
+            if UserData.gender == GenderNumber.male.rawValue{
+                maleButton.clicked()
+            } else if UserData.gender == GenderNumber.female.rawValue{
+                femaleButton.clicked()
+            }
+            selectNumber = UserData.gender
+            buttonActive()
+        }
+    }
 
     override func configure() {
-        view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationController?.navigationBar.tintColor = .black
+        backConfigure()
         
         textLabel.text = "성별을 선택해 주세요"
         textLabel.font = UIFont().Display1_R20

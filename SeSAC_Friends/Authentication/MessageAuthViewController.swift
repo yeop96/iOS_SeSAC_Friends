@@ -16,7 +16,7 @@ import JGProgressHUD
 class MessageAuthViewController: BaseViewController {
     
     let progress = JGProgressHUD()
-    var limitTime = 300
+    var limitTime = 60
     var verificationID = ""
     var phoneNumber = ""
     var credential: PhoneAuthCredential?
@@ -37,14 +37,12 @@ class MessageAuthViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        windows.last?.makeToast("인증번호를 보냈습니다.", duration: 5.0, position: .top)
         
-        self.view.makeToast("인증번호를 보냈습니다.", duration: 5.0, position: .top)
     }
 
     override func configure() {
-        view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationController?.navigationBar.tintColor = .black
+        backConfigure()
         
         textLabel.text = "인증번호가 문자로 전송되었어요"
         textLabel.font = UIFont().Display1_R20
@@ -59,6 +57,7 @@ class MessageAuthViewController: BaseViewController {
         
         authTextField.placeholder = "인증번호 입력"
         authTextField.keyboardType = .numberPad
+        authTextField.becomeFirstResponder()
         authTextField.textContentType = .oneTimeCode //SMS 인증 번호 자동 추천
         authTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
@@ -77,6 +76,8 @@ class MessageAuthViewController: BaseViewController {
         
         reSendButton.setTitle("재전송", for: .normal)
         reSendButton.addTarget(self, action: #selector(reSendButtonClicked), for: .touchUpInside)
+        
+        
     }
     
     override func setupConstraints() {
@@ -128,6 +129,7 @@ class MessageAuthViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
+        
     }
     
     @objc func startButtonClicked(){
@@ -200,11 +202,12 @@ class MessageAuthViewController: BaseViewController {
             .verifyPhoneNumber("+82" + phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
                     print("에러 :", error.localizedDescription)
-                    self.view.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 1.0, position: .top)
+                    self.view.makeToast("에러가 발생했습니다. 다시 시도해주세요.", duration: 3.0, position: .top)
                     return
                 }
                 self.verificationID = verificationID ?? ""
-                self.view.makeToast("인증 번호 재전송 60초안에 입력해주세요.", duration: 1.0, position: .top)
+                self.view.makeToast("인증 번호 재전송", duration: 3.0, position: .top)
+                self.limitTime = 60
             }
     }
     
@@ -261,6 +264,6 @@ extension MessageAuthViewController: UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
-        return newLength <= 7 // 숫자제한
+        return newLength <= 6 // 숫자제한
     }
 }

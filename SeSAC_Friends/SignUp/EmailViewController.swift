@@ -21,11 +21,21 @@ class EmailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if nickNameBackBool{
+            emailTextField.text = UserData.email
+            emailTextField.errorColor = .success
+            emailTextField.errorMessage = "다음"
+            nextButton.isHidden = true
+            nextButtonActive.isHidden = false
+        }
+    }
 
     override func configure() {
-        view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationController?.navigationBar.tintColor = .black
+        backConfigure()
         
         textLabel.text = "이메일을 입력해 주세요"
         textLabel.font = UIFont().Display1_R20
@@ -96,7 +106,7 @@ class EmailViewController: BaseViewController {
         UserData.email = email
         
         let vc = GenderViewController()
-        vc.nickNameBackBool = true
+        vc.nickNameBackBool = nickNameBackBool ? true : false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

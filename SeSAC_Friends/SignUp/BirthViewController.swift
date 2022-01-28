@@ -30,11 +30,17 @@ class BirthViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if nickNameBackBool{
+            datePickerSaveClicked()
+        }
+    }
 
     override func configure() {
-        view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationController?.navigationBar.tintColor = .black
+        backConfigure()
         
         textLabel.text = "생년월일을 알려주세요"
         textLabel.font = UIFont().Display1_R20
@@ -146,7 +152,7 @@ class BirthViewController: BaseViewController {
     
     @objc func nextButtonActiveClicked(){
         let vc = EmailViewController()
-        vc.nickNameBackBool = true
+        vc.nickNameBackBool = nickNameBackBool ? true : false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -30,9 +30,7 @@ class NickNameViewController: BaseViewController {
     }
 
     override func configure() {
-        view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backButtonClicked))
-        self.navigationController?.navigationBar.tintColor = .black
+        backConfigure()
         
         textLabel.text = "닉네임을 입력해 주세요"
         textLabel.font = UIFont().Display1_R20
@@ -92,7 +90,7 @@ class NickNameViewController: BaseViewController {
         UserData.nickName = nickName
         
         let vc = BirthViewController()
-        vc.nickNameBackBool = true
+        vc.nickNameBackBool = nickNameBackBool ? true : false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

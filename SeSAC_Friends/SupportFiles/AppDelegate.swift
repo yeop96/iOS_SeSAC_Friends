@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
+        AppAppearance.setupAppearance()
         
         UNUserNotificationCenter.current().delegate = self
         
@@ -85,5 +86,13 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // TODO: Handle data of notification
         completionHandler(UIBackgroundFetchResult.newData)
+    }
+}
+
+final class AppAppearance {
+    static func setupAppearance() {
+        UINavigationBar.appearance().backgroundColor = .white
+        UINavigationBar.appearance().tintColor = .black
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
 }
