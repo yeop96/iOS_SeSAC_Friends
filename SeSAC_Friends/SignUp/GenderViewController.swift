@@ -182,7 +182,7 @@ class GenderViewController: BaseViewController {
                     print(json)
                     DispatchQueue.main.async {
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+                        windowScene.windows.first?.rootViewController = TabBarController()
                         windowScene.windows.first?.makeKeyAndVisible()
                     }
                 case 202:

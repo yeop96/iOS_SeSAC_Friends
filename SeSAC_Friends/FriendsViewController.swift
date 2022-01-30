@@ -16,9 +16,17 @@ class FriendsViewController: BaseViewController {
     
     override func configure() {
         navigationController?.changeNavigationBar(isClear: true)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "friends_plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
+        self.navigationController?.navigationBar.tintColor = .black
     }
     
     override func setupConstraints() {
 
     }
+    
+    @objc func plusButtonClicked(){
+        
+    }
 }
+

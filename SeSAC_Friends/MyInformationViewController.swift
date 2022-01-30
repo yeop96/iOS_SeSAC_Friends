@@ -21,4 +21,5 @@ class MyInformationViewController: BaseViewController {
     override func setupConstraints() {
 
     }
+    
 }

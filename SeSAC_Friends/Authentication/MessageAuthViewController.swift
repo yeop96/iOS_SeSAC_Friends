@@ -178,7 +178,7 @@ class MessageAuthViewController: BaseViewController {
                     print("로그인 성공", "홈 화면으로 이동")
                     DispatchQueue.main.async {
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+                        windowScene.windows.first?.rootViewController = TabBarController()
                         windowScene.windows.first?.makeKeyAndVisible()
                     }
                 case 201:

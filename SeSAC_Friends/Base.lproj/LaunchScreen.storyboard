@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,8 +16,30 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ssW-tj-48e">
+                                <rect key="frame" x="97.5" y="203.5" width="219" height="265"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="219" id="3LR-or-Pd3"/>
+                                    <constraint firstAttribute="height" constant="265" id="uh0-MJ-Omh"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_text.png" translatesAutoresizingMaskIntoConstraints="NO" id="keF-2v-fTb">
+                                <rect key="frame" x="61" y="487" width="292" height="101"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="101" id="U9e-mh-zdI"/>
+                                    <constraint firstAttribute="width" constant="292" id="d2G-y3-f2i"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="white"/>
+                        <constraints>
+                            <constraint firstItem="keF-2v-fTb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="71e-j5-e9W"/>
+                            <constraint firstItem="ssW-tj-48e" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HvG-No-pMA"/>
+                            <constraint firstItem="keF-2v-fTb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="1.2" id="rNf-n2-2V0"/>
+                            <constraint firstItem="ssW-tj-48e" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="0.75" id="yhj-Ve-Xdl"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -26,8 +48,10 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="splash_logo.png" width="219" height="263.66665649414062"/>
+        <image name="splash_text.png" width="292" height="101.33333587646484"/>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
