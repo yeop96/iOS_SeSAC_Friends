@@ -8,8 +8,11 @@
 import UIKit
 import SnapKit
 import Toast
+import MapKit
 
 class HomeViewController: BaseViewController {
+    let mapView = MKMapView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.hideNavigationBar()
@@ -20,6 +23,9 @@ class HomeViewController: BaseViewController {
     }
     
     override func setupConstraints() {
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
     }
 }
