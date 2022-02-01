@@ -23,6 +23,7 @@ class HomeViewController: BaseViewController {
     }
     
     override func setupConstraints() {
+        view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
