@@ -54,6 +54,7 @@
 		27D735BB27A479D600300E8C /* MyInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D735BA27A479D600300E8C /* MyInformationViewController.swift */; };
 		27D735C527A681EB00300E8C /* splash_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 27D735C427A681EB00300E8C /* splash_logo.png */; };
 		27D735C727A6825100300E8C /* splash_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 27D735C627A6825100300E8C /* splash_text.png */; };
+		27D735FB27A9844300300E8C /* MyInformationManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D735FA27A9844200300E8C /* MyInformationManagementViewController.swift */; };
 		A6E83BCE4923A7B7FEB5CF38 /* Pods_SeSAC_Friends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		27D735BA27A479D600300E8C /* MyInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInformationViewController.swift; sourceTree = "<group>"; };
 		27D735C427A681EB00300E8C /* splash_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_logo.png; sourceTree = "<group>"; };
 		27D735C627A6825100300E8C /* splash_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_text.png; sourceTree = "<group>"; };
+		27D735FA27A9844200300E8C /* MyInformationManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInformationManagementViewController.swift; sourceTree = "<group>"; };
 		8678C6833A190C98A8DDB6E3 /* Pods_SeSAC_Friends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeSAC_Friends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A78E6C0363EE460721ED57A4 /* Pods-SeSAC_Friends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeSAC_Friends.debug.xcconfig"; path = "Target Support Files/Pods-SeSAC_Friends/Pods-SeSAC_Friends.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +160,7 @@
 				27D735B627A4797D00300E8C /* ShopViewController.swift */,
 				27D735B827A479A400300E8C /* FriendsViewController.swift */,
 				27D735BA27A479D600300E8C /* MyInformationViewController.swift */,
+				27D735FA27A9844200300E8C /* MyInformationManagementViewController.swift */,
 				27D735B427A4788800300E8C /* TabBarController.swift */,
 			);
 			path = SeSAC_Friends;
@@ -437,6 +440,7 @@
 				27CBE4662797448F008290BE /* CustomButtons.swift in Sources */,
 				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,
 				27CE5206279DA66E00972D3E /* BirthViewController.swift in Sources */,
+				27D735FB27A9844300300E8C /* MyInformationManagementViewController.swift in Sources */,
 				27522F002797253B00C7874E /* UIColor+Extension.swift in Sources */,
 				27CE5208279DA67B00972D3E /* EmailViewController.swift in Sources */,
 				2788B9F727A06DA1007472D5 /* Constants.swift in Sources */,

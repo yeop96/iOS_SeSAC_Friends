@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import SwiftUI
 
 class MyInformationViewController: BaseViewController {
     let tableView = UITableView()
@@ -22,6 +21,7 @@ class MyInformationViewController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(InformationListTableViewCell.self, forCellReuseIdentifier: InformationListTableViewCell.identifier)
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
     }
@@ -38,37 +38,104 @@ class MyInformationViewController: BaseViewController {
 
 extension MyInformationViewController: UITableViewDelegate, UITableViewDataSource{
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings.count
+        return section == 0 ? 1 : settings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InformationListTableViewCell.identifier) as? InformationListTableViewCell else{
-            return UITableViewCell()
+        if indexPath.section == 0{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier) as? ProfileTableViewCell else{
+                return UITableViewCell()
+            }
+            cell.nameLabel.text = UserData.nickName
+            
+            return cell
+        } else{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: InformationListTableViewCell.identifier) as? InformationListTableViewCell else{
+                return UITableViewCell()
+            }
+            let row = indexPath.row
+            cell.iconImageView.image = UIImage(named: settings[row][0])
+            cell.titleLabel.text = settings[row][1]
+            
+            return cell
         }
-        let row = indexPath.row
-        cell.iconImageView.image = UIImage(named: settings[row][0])
-        cell.titleLabel.text = settings[row][1]
         
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 74
+        return indexPath.section == 0 ? 96 : 74
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.section == 0{
+            let nextViewController = MyInformationManagementViewController()
+            navigationController?.pushViewController(nextViewController, animated: true)
+        }
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
 }
 
 class ProfileTableViewCell: UITableViewCell{
+    static let identifier = "ProfileTableViewCell"
     
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 13
+        return stackView
+    }()
+    let separatorVeiw = UIView()
+    let proefileImageView = UIImageView()
+    let nameLabel = UILabel()
+    let arrowImageView = UIImageView()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.selectionStyle = .none
+        self.backgroundColor = .white
+        
+        contentView.addSubview(separatorVeiw)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(proefileImageView)
+        stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(arrowImageView)
+        
+        separatorVeiw.backgroundColor = .gray2
+        proefileImageView.image = UIImage(named: "profile_img")
+        nameLabel.font = UIFont().Title1_M16
+        nameLabel.textAlignment = .left
+        nameLabel.textColor = .black
+        arrowImageView.image = UIImage(named: "more_arrow")
+
+        separatorVeiw.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(separatorVeiw.snp.bottom).offset(23)
+            make.bottom.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(17)
+        }
+        proefileImageView.snp.makeConstraints { make in
+            make.height.width.equalTo(48)
+        }
+        arrowImageView.snp.makeConstraints { make in
+            make.height.width.equalTo(24)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("")
+    }
 }
 
 class InformationListTableViewCell: UITableViewCell{
