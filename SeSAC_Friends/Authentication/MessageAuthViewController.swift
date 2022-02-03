@@ -181,7 +181,7 @@ class MessageAuthViewController: BaseViewController {
                         windowScene.windows.first?.rootViewController = TabBarController()
                         windowScene.windows.first?.makeKeyAndVisible()
                     }
-                case 201:
+                case 406:
                     print("미가입 유저","회원가입 화면으로 이동")
                     DispatchQueue.main.async {
                         let vc = NickNameViewController()

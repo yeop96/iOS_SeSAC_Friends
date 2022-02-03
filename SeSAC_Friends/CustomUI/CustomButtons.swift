@@ -23,6 +23,20 @@ class InactiveButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func clicked() {
+        self.layer.borderWidth = 0
+        self.backgroundColor = .green
+        self.setTitleColor(.white, for: .normal)
+        self.titleLabel?.font = UIFont().Body3_R14
+    }
+    
+    func unclicked() {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.gray4.cgColor
+        self.backgroundColor = .white
+        self.setTitleColor(.black, for: .normal)
+    }
 }
 
 class FillButton: UIButton {
@@ -90,6 +104,40 @@ class DisableButton: UIButton {
     
 }
 
+class ToggleButton: UIView {
+    let imageView = UIImageView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        self.layer.masksToBounds = true
+        
+        imageView.contentMode = .scaleToFill
+        imageView.image = UIImage(named: "toggleOff")
+        imageView.backgroundColor = .clear
+        
+        self.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func toggleOn() {
+        imageView.image = UIImage(named: "toggleOn")
+    }
+    
+    func toggleOff() {
+        imageView.image = UIImage(named: "toggleOff")
+    }
+    
+}
+
 class ImageButton: UIView {
     let imageView = UIImageView()
     let label = UILabel()
@@ -126,7 +174,9 @@ class ImageButton: UIView {
        
     }
     
-    @objc func handleTap(sender: UITapGestureRecognizer) { print("tap") }
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
