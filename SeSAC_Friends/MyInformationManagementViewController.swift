@@ -163,6 +163,10 @@ class MyInformationManagementViewController: BaseViewController {
         matchAgeStackView.addArrangedSubview(matchAgeTextLabel)
         matchAgeStackView.addArrangedSubview(matchAgeLabel)
         
+        withdrawButton.snp.makeConstraints { make in
+            make.top.equalTo(profileView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
     }
     
     @objc func saveButtonClicked(){
