@@ -112,7 +112,7 @@ class ToggleButton: UIView {
         self.backgroundColor = .white
         self.layer.masksToBounds = true
         
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "toggleOff")
         imageView.backgroundColor = .clear
         

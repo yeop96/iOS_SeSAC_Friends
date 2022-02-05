@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MultiSlider
 
 class MyInformationManagementViewController: BaseViewController {
     
@@ -34,7 +35,7 @@ class MyInformationManagementViewController: BaseViewController {
     let matchAgeStackView = UIStackView()
     let matchAgeTextLabel = UILabel()
     let matchAgeLabel = UILabel()
-    let matchAgeSlider = UILabel()
+    let matchAgeSlider = MultiSlider()
     
     let withdrawButton = UILabel()
     
@@ -95,15 +96,29 @@ class MyInformationManagementViewController: BaseViewController {
         matchAgeLabel.textAlignment = .right
         matchAgeLabel.font = UIFont().Title3_M14
         matchAgeLabel.textColor = .green
+        
+        matchAgeSlider.minimumValue = 18
+        matchAgeSlider.maximumValue = 65
+        matchAgeSlider.orientation = .horizontal
+        matchAgeSlider.outerTrackColor = .gray2
+        matchAgeSlider.tintColor = .green
+        matchAgeSlider.value = [18, 35]
+        matchAgeSlider.thumbImage = UIImage(named: "filter_control")
+        matchAgeSlider.showsThumbImageShadow = false
+        matchAgeSlider.hasRoundTrackEnds = true
+        matchAgeSlider.trackWidth = 4
     }
     
     override func setupConstraints() {
         
-        [profileView, nameView, settingStackView, withdrawButton].forEach {
+        [profileView, nameView, settingStackView, matchAgeSlider, withdrawButton].forEach {
             view.addSubview($0)
         }
         [genderStackView, hobbyStackView, phoneAccessStackView, matchAgeStackView].forEach {
             settingStackView.addArrangedSubview($0)
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(48)
+            }
         }
         
         profileView.snp.makeConstraints { make in
@@ -157,15 +172,22 @@ class MyInformationManagementViewController: BaseViewController {
         phoneAccessStackView.addArrangedSubview(phoneAccessLabel)
         phoneAccessStackView.addArrangedSubview(phoneAccessButton)
         phoneAccessButton.snp.makeConstraints { make in
+            //make.height.equalTo(28)
             make.width.equalTo(52)
         }
         
         matchAgeStackView.addArrangedSubview(matchAgeTextLabel)
         matchAgeStackView.addArrangedSubview(matchAgeLabel)
         
+        matchAgeSlider.snp.makeConstraints { make in
+            make.top.equalTo(settingStackView.snp.bottom).offset(1)
+            make.leading.trailing.equalToSuperview().inset(17)
+        }
+        
         withdrawButton.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom).offset(16)
+            make.top.equalTo(matchAgeSlider.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(48)
         }
     }
     

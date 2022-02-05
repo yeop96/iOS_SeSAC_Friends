@@ -34,6 +34,7 @@
 		27540B6A2799EB3B00BA6416 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27540B692799EB3B00BA6416 /* UINavigationController+Extension.swift */; };
 		2757905E279DC2E400B845D8 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757905D279DC2E400B845D8 /* UserDefault.swift */; };
 		27579061279EBABE00B845D8 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27579060279EBABE00B845D8 /* DateFormatter.swift */; };
+		27767DED27AE114900972523 /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 27767DEC27AE114900972523 /* MultiSlider */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
 		2788B9F727A06DA1007472D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788B9F627A06DA1007472D5 /* Constants.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
@@ -110,6 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27540B652799D3BC00BA6416 /* Toast in Frameworks */,
+				27767DED27AE114900972523 /* MultiSlider in Frameworks */,
 				27540B602799C19F00BA6416 /* AnyFormatKit in Frameworks */,
 				27CE5201279D58CE00972D3E /* JGProgressHUD in Frameworks */,
 				27522EFB279717AB00C7874E /* IQKeyboardManagerSwift in Frameworks */,
@@ -300,6 +302,7 @@
 				27540B642799D3BC00BA6416 /* Toast */,
 				27D19AB2279CA1BD0001CFFE /* SwiftyJSON */,
 				27CE5200279D58CE00972D3E /* JGProgressHUD */,
+				27767DEC27AE114900972523 /* MultiSlider */,
 			);
 			productName = SeSAC_Friends;
 			productReference = 27522ECE27970C2000C7874E /* SeSAC_Friends.app */;
@@ -339,6 +342,7 @@
 				27540B632799D3BC00BA6416 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				27D19AB1279CA1BD0001CFFE /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+				27767DEB27AE114900972523 /* XCRemoteSwiftPackageReference "MultiSlider" */,
 			);
 			productRefGroup = 27522ECF27970C2000C7874E /* Products */;
 			projectDirPath = "";
@@ -717,6 +721,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		27767DEB27AE114900972523 /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yonat/MultiSlider.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.11.1;
+			};
+		};
 		27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
@@ -775,6 +787,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27540B632799D3BC00BA6416 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		27767DEC27AE114900972523 /* MultiSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27767DEB27AE114900972523 /* XCRemoteSwiftPackageReference "MultiSlider" */;
+			productName = MultiSlider;
 		};
 		27CE5200279D58CE00972D3E /* JGProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
