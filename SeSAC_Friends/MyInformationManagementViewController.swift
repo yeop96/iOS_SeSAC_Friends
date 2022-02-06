@@ -107,6 +107,10 @@ class MyInformationManagementViewController: BaseViewController {
         matchAgeSlider.showsThumbImageShadow = false
         matchAgeSlider.hasRoundTrackEnds = true
         matchAgeSlider.trackWidth = 4
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(withdrawButtonClicked))
+        withdrawButton.isUserInteractionEnabled = true
+        withdrawButton.addGestureRecognizer(tap)
     }
     
     override func setupConstraints() {
@@ -190,6 +194,11 @@ class MyInformationManagementViewController: BaseViewController {
             make.height.equalTo(48)
         }
     }
+    
+    @objc
+       func withdrawButtonClicked(sender: UITapGestureRecognizer) {
+           showPopUp(title: "정말 탈퇴하시겠습니까?", message: "탈퇴하시면 새싹 프렌즈를 이용할 수 없어요ㅠ")
+       }
     
     @objc func saveButtonClicked(){
     }
