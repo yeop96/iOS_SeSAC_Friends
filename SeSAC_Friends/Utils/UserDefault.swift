@@ -49,6 +49,19 @@ struct UserData {
     static var email: String
     @UserDefault(key: keyEnum.gender.rawValue, defaultValue: GenderNumber.unSelect.rawValue)
     static var gender: Int
+    
+    @UserDefault(key: keyEnum.background.rawValue, defaultValue: 0)
+    static var background: Int
+    @UserDefault(key: keyEnum.sesac.rawValue, defaultValue: 0)
+    static var sesac: Int
+    @UserDefault(key: keyEnum.hobby.rawValue, defaultValue: "")
+    static var hobby: String
+    @UserDefault(key: keyEnum.searchable.rawValue, defaultValue: 1)
+    static var searchable: Int
+    @UserDefault(key: keyEnum.ageMin.rawValue, defaultValue: 18)
+    static var ageMin: Int
+    @UserDefault(key: keyEnum.ageMax.rawValue, defaultValue: 38)
+    static var ageMax: Int
 }
 
 enum keyEnum: String {
@@ -59,5 +72,12 @@ enum keyEnum: String {
     case nickName = "nickName"
     case birth = "birth"
     case email = "email"
-    case gender = "gender"
+    case gender = "gender" // 여자: 0, 남자: 1, 미선택: -1
+    case background = "background"
+    case sesac = "sesac"
+    case hobby = "hobby"
+    case searchable = "searchable" // 거부(Switch OFF): 0 , 허용(Switch ON): 1
+    case ageMin = "ageMin"
+    case ageMax = "ageMax"
 }
+

@@ -19,6 +19,7 @@ enum ServerRequest {
     case UserInfo
     case SignUp
     case Withdraw
+    case UpdateMyPage
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -35,6 +36,9 @@ enum ServerRequest {
             parm = nil
         case .Withdraw:
             url = .endPoint("/user/withdraw")
+            parm = nil
+        case .UpdateMyPage:
+            url = .endPoint("/user/update/mypage")
             parm = nil
         }
         
@@ -79,7 +83,6 @@ class ServerService {
                 let json = JSON(response.data)
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
-                
             }
     }
     
@@ -113,6 +116,22 @@ class ServerService {
                 result(statusCode, json)
                 print(statusCode,json)
             }
+    }
+    
+    func postMyPage(_ result: @escaping CompletionHandler) {
+        let server = ServerRequest.UpdateMyPage.urlRequest
+        let parm : Parameters = ["searchable": UserData.searchable,
+                                 "ageMin": UserData.ageMin,
+                                 "ageMax": UserData.ageMax,
+                                 "gender": UserData.gender,
+                                 "hobby": UserData.hobby]
+        
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
+            let json = JSON(response.data)
+            let statusCode = response.response?.statusCode ?? 500
+            
+            result(statusCode, json)
+        }
     }
     
     

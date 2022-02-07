@@ -11,6 +11,7 @@ class PopUpViewController: UIViewController{
     private var titleText: String?
     private var messageText: String?
     private var contentView: UIView?
+    var confirmAction : (() -> ()) = {}
 
     private lazy var containerView: UIView = {
         let view = SesacAlert()
@@ -74,8 +75,8 @@ class PopUpViewController: UIViewController{
         dismiss(animated: false, completion: nil)
     }
     @objc func confirmButtonClicked(){
-        
-        dismiss(animated: false, completion: nil)
+        confirmAction()
+        //dismiss(animated: false, completion: nil)
     }
 
 }

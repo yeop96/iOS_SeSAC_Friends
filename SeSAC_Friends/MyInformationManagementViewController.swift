@@ -13,6 +13,8 @@ import JGProgressHUD
 class MyInformationManagementViewController: BaseViewController {
     
     let progress = JGProgressHUD()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     let profileView = UIView()
     let profileBackImageView = UIImageView()
     let profileUserImageView = UIImageView()
@@ -41,12 +43,14 @@ class MyInformationManagementViewController: BaseViewController {
     
     let withdrawButton = UILabel()
     
-    override func loadView() {
-        userCheck()
-    }
+    var selectSearchable = UserData.searchable
+    var selectAgeMin = UserData.ageMin
+    var selectAgeMax = UserData.ageMax
+    var selectGender = UserData.gender
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userCheck()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +68,9 @@ class MyInformationManagementViewController: BaseViewController {
         backConfigure()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonClicked))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont().Title3_M14], for: .normal)
+        
+        scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = true
         
         settingStackView.axis = .vertical
         settingStackView.spacing = 16
@@ -96,9 +103,33 @@ class MyInformationManagementViewController: BaseViewController {
         maleButton.setTitle("남자", for: .normal)
         femaleButton.setTitle("여자", for: .normal)
         
-        hobbyTextField.placeholder = "취미를 입력해 주세요"
+        if UserData.gender == GenderNumber.male.rawValue{
+            maleButton.clicked()
+            selectGender = GenderNumber.male.rawValue
+        } else if UserData.gender == GenderNumber.female.rawValue{
+            femaleButton.clicked()
+            selectGender = GenderNumber.female.rawValue
+        } else{
+            selectGender = GenderNumber.unSelect.rawValue
+        }
+        maleButton.addTarget(self, action: #selector(maleButtonClicked), for: .touchUpInside)
+        femaleButton.addTarget(self, action: #selector(femaleButtonClicked), for: .touchUpInside)
         
-        matchAgeLabel.text = "18 - 35"
+        hobbyTextField.placeholder = "취미를 입력해 주세요"
+        hobbyTextField.text = UserData.hobby
+        
+        if UserData.searchable == 1{
+            phoneAccessButton.toggleOn()
+            selectSearchable = 1
+        } else{
+            phoneAccessButton.toggleOff()
+            selectSearchable = 0
+        }
+        let toggle = UITapGestureRecognizer(target: self, action: #selector(phoneAccessButtonClicked))
+        phoneAccessButton.isUserInteractionEnabled = true
+        phoneAccessButton.addGestureRecognizer(toggle)
+        
+        matchAgeLabel.text = "\(UserData.ageMin) - \(UserData.ageMax)"
         matchAgeLabel.textAlignment = .right
         matchAgeLabel.font = UIFont().Title3_M14
         matchAgeLabel.textColor = .green
@@ -108,11 +139,12 @@ class MyInformationManagementViewController: BaseViewController {
         matchAgeSlider.orientation = .horizontal
         matchAgeSlider.outerTrackColor = .gray2
         matchAgeSlider.tintColor = .green
-        matchAgeSlider.value = [18, 35]
+        matchAgeSlider.value = [CGFloat(UserData.ageMin), CGFloat(UserData.ageMax)]
         matchAgeSlider.thumbImage = UIImage(named: "filter_control")
         matchAgeSlider.showsThumbImageShadow = false
         matchAgeSlider.hasRoundTrackEnds = true
         matchAgeSlider.trackWidth = 4
+        matchAgeSlider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged) // continuous changes
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(withdrawButtonClicked))
         withdrawButton.isUserInteractionEnabled = true
@@ -121,8 +153,19 @@ class MyInformationManagementViewController: BaseViewController {
     
     override func setupConstraints() {
         
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalTo(view.snp.width)
+            make.bottom.equalToSuperview().inset(20)
+        }
+        
         [profileView, nameView, settingStackView, matchAgeSlider, withdrawButton].forEach {
-            view.addSubview($0)
+            contentView.addSubview($0)
         }
         [genderStackView, hobbyStackView, phoneAccessStackView, matchAgeStackView].forEach {
             settingStackView.addArrangedSubview($0)
@@ -132,7 +175,7 @@ class MyInformationManagementViewController: BaseViewController {
         }
         
         profileView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(194)
         }
@@ -198,17 +241,72 @@ class MyInformationManagementViewController: BaseViewController {
             make.top.equalTo(matchAgeSlider.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(48)
+            make.bottom.equalToSuperview().inset(16)
+        }
+    }
+    @objc func maleButtonClicked(){
+        if selectGender == GenderNumber.female.rawValue{
+            femaleButton.unclicked()
+            maleButton.clicked()
+            selectGender = GenderNumber.male.rawValue
+        }
+    }
+    @objc func femaleButtonClicked(){
+        if selectGender == GenderNumber.male.rawValue{
+            maleButton.unclicked()
+            femaleButton.clicked()
+            selectGender = GenderNumber.female.rawValue
+        }
+    }
+    @objc func phoneAccessButtonClicked(sender: UITapGestureRecognizer){
+        if selectSearchable == 1{
+            phoneAccessButton.toggleOff()
+            selectSearchable = 0
+        } else{
+            phoneAccessButton.toggleOn()
+            selectSearchable = 1
+        }
+    }
+    @objc func sliderChanged(_ slider: MultiSlider) {
+        matchAgeLabel.text = "\(Int(slider.value[0])) - \(Int(slider.value[1]))"
+        selectAgeMin = Int(slider.value[0])
+        selectAgeMax = Int(slider.value[1])
+    }
+    
+    
+    
+    //회원탈퇴
+    @objc func withdrawButtonClicked(sender: UITapGestureRecognizer) {
+        let popUpViewController = PopUpViewController(titleText: "정말 탈퇴하시겠습니까?", messageText: "탈퇴하시면 새싹 프렌즈를 이용할 수 없어요ㅠ")
+        popUpViewController.confirmAction = {
+            self.userWithdraw()
+        }
+        present(popUpViewController, animated: false, completion: nil)
+    }
+    
+    //저장버튼
+    @objc func saveButtonClicked(){
+        progress.show(in: view, animated: true)
+        UserData.searchable = selectSearchable
+        UserData.ageMin = selectAgeMin
+        UserData.ageMax = selectAgeMax
+        UserData.gender = selectGender
+        UserData.hobby = hobbyTextField.text ?? ""
+
+        DispatchQueue.global().async {
+            ServerService.shared.postMyPage { statusCode, json in
+                switch statusCode{
+                case 200:
+                    print("저장완료")
+                default:
+                    print("ERROR: ", statusCode, json)
+                }
+            }
+            self.progress.dismiss(animated: true)
         }
     }
     
-    @objc
-       func withdrawButtonClicked(sender: UITapGestureRecognizer) {
-           showPopUp(title: "정말 탈퇴하시겠습니까?", message: "탈퇴하시면 새싹 프렌즈를 이용할 수 없어요ㅠ")
-       }
-    
-    @objc func saveButtonClicked(){
-    }
-    
+    //회원 정보 가져오기
     func userCheck() {
         progress.show(in: view, animated: true)
         DispatchQueue.global().async {
@@ -216,8 +314,14 @@ class MyInformationManagementViewController: BaseViewController {
                 switch statusCode{
                 case 200:
                     DispatchQueue.main.async {
-                        print("?!?!?!")
-                        print(json["email"])
+                        UserData.background = json["background"].intValue
+                        UserData.sesac = json["sesac"].intValue
+                        UserData.nickName =  json["nick"].stringValue
+                        UserData.gender = json["gender"].intValue
+                        UserData.hobby = json["hobby"].stringValue
+                        UserData.searchable = json["searchable"].intValue
+                        UserData.ageMin = json["ageMin"].intValue
+                        UserData.ageMax = json["ageMax"].intValue
                     }
                 default:
                     print("ERROR: ", statusCode, json)
@@ -225,6 +329,25 @@ class MyInformationManagementViewController: BaseViewController {
             }
             self.progress.dismiss(animated: true)
         }
-        print("fetchEnd")
+    }
+    
+    //회원 탈퇴
+    func userWithdraw(){
+        progress.show(in: view, animated: true)
+        DispatchQueue.global().async {
+            ServerService.shared.postWithdraw{ statusCode, json in
+                switch statusCode{
+                case 200:
+                    DispatchQueue.main.async {
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
+                        windowScene.windows.first?.makeKeyAndVisible()
+                    }
+                default:
+                    print("ERROR: ", statusCode, json)
+                }
+            }
+            self.progress.dismiss(animated: true)
+        }
     }
 }
