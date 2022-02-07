@@ -8,9 +8,11 @@
 import UIKit
 import SnapKit
 import MultiSlider
+import JGProgressHUD
 
 class MyInformationManagementViewController: BaseViewController {
     
+    let progress = JGProgressHUD()
     let profileView = UIView()
     let profileBackImageView = UIImageView()
     let profileUserImageView = UIImageView()
@@ -38,6 +40,10 @@ class MyInformationManagementViewController: BaseViewController {
     let matchAgeSlider = MultiSlider()
     
     let withdrawButton = UILabel()
+    
+    override func loadView() {
+        userCheck()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -201,5 +207,24 @@ class MyInformationManagementViewController: BaseViewController {
        }
     
     @objc func saveButtonClicked(){
+    }
+    
+    func userCheck() {
+        progress.show(in: view, animated: true)
+        DispatchQueue.global().async {
+            ServerService.shared.getUserInfo { statusCode, json in
+                switch statusCode{
+                case 200:
+                    DispatchQueue.main.async {
+                        print("?!?!?!")
+                        print(json["email"])
+                    }
+                default:
+                    print("ERROR: ", statusCode, json)
+                }
+            }
+            self.progress.dismiss(animated: true)
+        }
+        print("fetchEnd")
     }
 }

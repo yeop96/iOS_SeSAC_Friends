@@ -37,9 +37,9 @@ struct AppFirstLaunch {
 struct UserData {
     @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
     static var idToken: String
-    @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
+    @UserDefault(key: keyEnum.phoneNumber.rawValue, defaultValue: "")
     static var phoneNumber: String
-    @UserDefault(key: keyEnum.idToken.rawValue, defaultValue: "")
+    @UserDefault(key: keyEnum.fcmToken.rawValue, defaultValue: "")
     static var fcmToken: String
     @UserDefault(key: keyEnum.nickName.rawValue, defaultValue: "")
     static var nickName: String

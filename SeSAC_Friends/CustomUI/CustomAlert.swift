@@ -35,8 +35,6 @@ class SesacAlert: UIView{
         cancelButton.setTitle("취소", for: .normal)
         confirmButton.setTitle("확인", for: .normal)
         
-        
-        
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 8

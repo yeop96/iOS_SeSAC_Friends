@@ -16,11 +16,6 @@ extension UIViewController {
         showPopUp(popUpViewController: popUpViewController)
     }
 
-    func showPopUp(contentView: UIView) {
-        let popUpViewController = PopUpViewController(contentView: contentView)
-
-        showPopUp(popUpViewController: popUpViewController)
-    }
 
     private func showPopUp(popUpViewController: PopUpViewController) {
         present(popUpViewController, animated: false, completion: nil)

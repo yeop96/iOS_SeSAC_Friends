@@ -76,10 +76,10 @@ class ServerService {
         AF.request(server.url, method: .get, headers: server.headers)
             .validate(statusCode: 200..<300)
             .responseJSON { response in
-                let json = JSON(response)
+                let json = JSON(response.data)
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
-                print(statusCode,json)
+                
             }
     }
     
@@ -94,7 +94,7 @@ class ServerService {
                                  "gender": UserData.gender]
         
         AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
-            let json = JSON(response)
+            let json = JSON(response.data)
             let statusCode = response.response?.statusCode ?? 500
             
             result(statusCode, json)
@@ -108,7 +108,7 @@ class ServerService {
         AF.request(server.url, method: .post, headers: server.headers)
             .validate(statusCode: 200..<300)
             .responseJSON { response in
-                let json = JSON(response)
+                let json = JSON(response.data)
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
                 print(statusCode,json)

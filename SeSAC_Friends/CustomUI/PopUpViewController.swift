@@ -18,7 +18,8 @@ class PopUpViewController: UIViewController{
         view.titleLabel.text = titleText
         view.descriptionLabel.text = messageText
         
-        //view.cancelButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        view.cancelButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        view.confirmButton.addTarget(self, action: #selector(confirmButtonClicked), for: .touchUpInside)
         return view
     }()
     
@@ -27,7 +28,6 @@ class PopUpViewController: UIViewController{
         self.init()
         self.titleText = titleText
         self.messageText = messageText
-        
         
         modalPresentationStyle = .overFullScreen
     }
@@ -42,7 +42,7 @@ class PopUpViewController: UIViewController{
         super.viewDidLoad()
         
         view.addSubview(containerView)
-        view.backgroundColor = .black.withAlphaComponent(0.2)
+        view.backgroundColor = .black.withAlphaComponent(0.5)
     
         containerView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
@@ -69,6 +69,15 @@ class PopUpViewController: UIViewController{
             self?.containerView.isHidden = true
         }
     }
+    
+    @objc func dismissView(){
+        dismiss(animated: false, completion: nil)
+    }
+    @objc func confirmButtonClicked(){
+        
+        dismiss(animated: false, completion: nil)
+    }
+
 }
 
 
