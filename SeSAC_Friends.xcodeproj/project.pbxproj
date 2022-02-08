@@ -155,21 +155,12 @@
 		27522ED027970C2000C7874E /* SeSAC_Friends */ = {
 			isa = PBXGroup;
 			children = (
-				2757905F279DC53500B845D8 /* Authentication */,
+				27767DF927B2E13B00972523 /* Models */,
+				27767DF727B2E04F00972523 /* ViewControllers */,
 				27522EE7279710B000C7874E /* SupportFiles */,
-				27CE5204279DA63F00972D3E /* SignUp */,
 				27540B662799D53200BA6416 /* CustomUI */,
 				27522EE6279710A200C7874E /* Utils */,
 				27522EE52797109600C7874E /* Extensions */,
-				27522EDC27970C2300C7874E /* LaunchScreen.storyboard */,
-				27D19AA9279C71ED0001CFFE /* ServerService.swift */,
-				27D19AAB279C73760001CFFE /* Model.swift */,
-				2782D94B279AFD4A00369B68 /* HomeViewController.swift */,
-				27D735B627A4797D00300E8C /* ShopViewController.swift */,
-				27D735B827A479A400300E8C /* FriendsViewController.swift */,
-				27D735BA27A479D600300E8C /* MyInformationViewController.swift */,
-				27D735FA27A9844200300E8C /* MyInformationManagementViewController.swift */,
-				27D735B427A4788800300E8C /* TabBarController.swift */,
 			);
 			path = SeSAC_Friends;
 			sourceTree = "<group>";
@@ -193,6 +184,7 @@
 		27522EE6279710A200C7874E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				27D19AA9279C71ED0001CFFE /* ServerService.swift */,
 				27540B5C27997B5600BA6416 /* Exception.swift */,
 				2757905D279DC2E400B845D8 /* UserDefault.swift */,
 				2788B9F627A06DA1007472D5 /* Constants.swift */,
@@ -207,6 +199,7 @@
 				27522EE82797110100C7874E /* Fonts */,
 				27522ED127970C2000C7874E /* AppDelegate.swift */,
 				27522ED327970C2000C7874E /* SceneDelegate.swift */,
+				27522EDC27970C2300C7874E /* LaunchScreen.storyboard */,
 				27522EDA27970C2300C7874E /* Assets.xcassets */,
 				27522EDF27970C2300C7874E /* Info.plist */,
 				279F1984279B253C001AAC15 /* GoogleService-Info.plist */,
@@ -252,6 +245,61 @@
 				27540B672799D86100BA6416 /* MessageAuthViewController.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		27767DF727B2E04F00972523 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2757905F279DC53500B845D8 /* Authentication */,
+				27CE5204279DA63F00972D3E /* SignUp */,
+				27D735B427A4788800300E8C /* TabBarController.swift */,
+				27767DF827B2E08700972523 /* Home */,
+				27767DFA27B2E17000972523 /* Shop */,
+				27767DFC27B2E1AB00972523 /* Friends */,
+				27767DFB27B2E17900972523 /* My */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		27767DF827B2E08700972523 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2782D94B279AFD4A00369B68 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		27767DF927B2E13B00972523 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				27D19AAB279C73760001CFFE /* Model.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		27767DFA27B2E17000972523 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				27D735B627A4797D00300E8C /* ShopViewController.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		27767DFB27B2E17900972523 /* My */ = {
+			isa = PBXGroup;
+			children = (
+				27D735BA27A479D600300E8C /* MyInformationViewController.swift */,
+				27D735FA27A9844200300E8C /* MyInformationManagementViewController.swift */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
+		27767DFC27B2E1AB00972523 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				27D735B827A479A400300E8C /* FriendsViewController.swift */,
+			);
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		27CE5204279DA63F00972D3E /* SignUp */ = {
