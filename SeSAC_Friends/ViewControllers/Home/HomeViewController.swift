@@ -15,7 +15,7 @@ import CoreLocation
 class HomeViewController: BaseViewController {
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
-    let userCoordinate = CLLocationCoordinate2D(latitude: 37.51818789942772, longitude: 126.88541765534976)
+    let defaultCoordinate = CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
     let pin = MKPointAnnotation()
     let filterButton = FilterButton()
     let gpsButton = GPSButton()
@@ -26,19 +26,25 @@ class HomeViewController: BaseViewController {
         navigationController?.hideNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func configure() {
         navigationController?.changeNavigationBar(isClear: true)
         
         mapView.delegate = self
-        mapView.setRegion(MKCoordinateRegion(center: userCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        mapView.setRegion(MKCoordinateRegion(center: defaultCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
-        pin.coordinate = userCoordinate
-        pin.title = "클릭시 제목"
-        pin.subtitle = "설명"
+        pin.coordinate = defaultCoordinate
+        pin.title = "기본 위치"
+        pin.subtitle = "위치 권한 설정을 허용해주세요"
         mapView.addAnnotation(pin)
 
+        
+        gpsButton.addTarget(self, action: #selector(findMyLocation), for: .touchUpInside)
     }
     
     override func setupConstraints() {
@@ -65,7 +71,7 @@ class HomeViewController: BaseViewController {
     
     @objc func findMyLocation() {
         
-        guard let currentLocation = locationManager.location else {
+        guard let _ = locationManager.location else {
             locationManager.requestWhenInUseAuthorization()
             return
         }
@@ -82,8 +88,10 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         guard !annotation.isKind(of: MKUserLocation.self) else {
-            //유저
-            return nil
+            let annotationView = MKAnnotationView()
+            annotationView.annotation = annotation
+            annotationView.image = UIImage(named: "map_marker")
+            return annotationView
         }
         
         var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Custom")

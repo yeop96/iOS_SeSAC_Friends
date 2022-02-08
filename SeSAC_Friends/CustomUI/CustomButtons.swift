@@ -296,9 +296,6 @@ class FloatingButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.snp.makeConstraints { make in
-            make.size.equalTo(64)
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -324,6 +321,14 @@ class FloatingButton: UIButton {
         }
         self.layer.cornerRadius = self.frame.width / 2
         self.layer.masksToBounds = true
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowRadius = 3
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        
+        self.snp.makeConstraints { make in
+            make.size.equalTo(64)
+        }
     }
     
 }
