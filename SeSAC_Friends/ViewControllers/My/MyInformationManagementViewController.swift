@@ -82,8 +82,8 @@ class MyInformationManagementViewController: BaseViewController {
         }
         profileView.layer.cornerRadius = 8
         profileView.clipsToBounds = true
-        profileBackImageView.image = UIImage(named: "sesac_background_1")
-        profileUserImageView.image = UIImage(named: "sesac_face_1")
+        profileBackImageView.image = SesacBackgroundImage(rawValue: UserData.background)?.sesacBackgroundUIImage()
+        profileUserImageView.image = SesacImage(rawValue: UserData.sesac)?.sesacUIImage()
         nameView.layer.cornerRadius = 8
         nameView.layer.borderWidth = 1
         nameView.layer.borderColor = UIColor.gray2.cgColor

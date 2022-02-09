@@ -22,6 +22,7 @@ enum ServerRequest {
     case SignUp
     case Withdraw
     case UpdateMyPage
+    case SearchFriends
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -42,6 +43,10 @@ enum ServerRequest {
         case .UpdateMyPage:
             url = .endPoint("/user/update/mypage")
             parm = nil
+        case .SearchFriends:
+            url = .endPoint("/queue/onqueue")
+            parm = nil
+            
         }
         
         head = ["Content-Type" : "application/x-www-form-urlencoded",
@@ -155,6 +160,22 @@ class ServerService {
         }
     }
     
+    func postSearchFriedns(region: Int, lat: Double, long: Double,_ result: @escaping CompletionHandler) {
+        let server = ServerRequest.SignUp.urlRequest
+        let parm : Parameters = ["region": region,
+                                 "lat": lat,
+                                 "long": long]
+        
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
+            let json = JSON(response.data)
+            let statusCode = response.response?.statusCode ?? 500
+            
+            result(statusCode, json)
+            print(statusCode,json)
+            
+        }
+    }
+    
     static func updateIdToken(completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             
@@ -165,6 +186,7 @@ class ServerService {
             
             if let idToken = idToken {
                 UserData.idToken = idToken
+                print("아이디 토큰 업데이투",idToken)
                 completion(.success(idToken))
             }
         }
