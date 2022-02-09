@@ -177,7 +177,7 @@ class GenderViewController: BaseViewController {
         DispatchQueue.global().async {
             ServerService.shared.postSignUp{ statusCode, json in
                 switch statusCode{
-                case 200:
+                case ServerStatusCode.OK.rawValue:
                     print("회원가입 성공")
                     print(json)
                     DispatchQueue.main.async {
@@ -188,7 +188,16 @@ class GenderViewController: BaseViewController {
                 case 202:
                     print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
                     self.backNavigationControllers()
-                    
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.userSignUp()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
                     
                 default:
                     print("ERROR?: ", statusCode, json)

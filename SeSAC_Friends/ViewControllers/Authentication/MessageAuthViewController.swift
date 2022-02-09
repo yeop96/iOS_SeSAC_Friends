@@ -174,14 +174,24 @@ class MessageAuthViewController: BaseViewController {
         DispatchQueue.global().async {
             ServerService.shared.getUserInfo { statusCode, json in
                 switch statusCode{
-                case 200:
+                case ServerStatusCode.OK.rawValue:
                     print("로그인 성공", "홈 화면으로 이동")
                     DispatchQueue.main.async {
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                         windowScene.windows.first?.rootViewController = TabBarController()
                         windowScene.windows.first?.makeKeyAndVisible()
                     }
-                case 406:
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.userCheck()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
+                case ServerStatusCode.UNREGISTERED_ERROR.rawValue:
                     print("미가입 유저","회원가입 화면으로 이동")
                     DispatchQueue.main.async {
                         let vc = NickNameViewController()

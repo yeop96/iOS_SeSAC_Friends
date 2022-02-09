@@ -8,6 +8,8 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import Firebase
+import FirebaseAuth
 
 struct ServerModel{
     let url: String
@@ -74,11 +76,12 @@ extension String{
 class ServerService {
     static let shared = ServerService()
     typealias CompletionHandler = (Int, JSON) -> ()
+    typealias NetworkResult = (Int) -> ()
     
     func getUserInfo(_ result: @escaping CompletionHandler){
         let server = ServerRequest.UserInfo.urlRequest
         AF.request(server.url, method: .get, headers: server.headers)
-            .validate(statusCode: 200..<300)
+            .validate()
             .responseJSON { response in
                 let json = JSON(response.data)
                 let statusCode = response.response?.statusCode ?? 500
@@ -96,7 +99,7 @@ class ServerService {
                                  "email": UserData.email,
                                  "gender": UserData.gender]
         
-        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
             let json = JSON(response.data)
             let statusCode = response.response?.statusCode ?? 500
             
@@ -109,9 +112,9 @@ class ServerService {
     func postWithdraw(_ result: @escaping CompletionHandler){
         let server = ServerRequest.Withdraw.urlRequest
         AF.request(server.url, method: .post, headers: server.headers)
-            .validate(statusCode: 200..<300)
+            .validate()
             .responseJSON { response in
-                let json = JSON(response.data)
+                let json = JSON(response.data as Any)
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
                 print(statusCode,json)
@@ -126,13 +129,44 @@ class ServerService {
                                  "gender": UserData.gender,
                                  "hobby": UserData.hobby]
         
-        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate(statusCode: 200...500).responseString { response in
-            let json = JSON(response.data)
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
             let statusCode = response.response?.statusCode ?? 500
-            
-            result(statusCode, json)
+        
+            switch response.result {
+            case .success:
+                switch statusCode {
+                case 200..<300:
+                    let json = JSON(response.data as Any)
+                    result(statusCode, json)
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    let json = JSON(response.data as Any)
+                    result(statusCode, json)
+                case ServerStatusCode.SERVER_ERROR.rawValue:
+                    print("서버 에러")
+                case ServerStatusCode.CLIENT_ERROR.rawValue:
+                    print("클라이언트 에러")
+                default:
+                    print("default")
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     
-    
+    static func updateIdToken(completion: @escaping (Result<String, Error>) -> Void) {
+        Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            if let idToken = idToken {
+                UserData.idToken = idToken
+                completion(.success(idToken))
+            }
+        }
+    }
 }

@@ -296,8 +296,18 @@ class MyInformationManagementViewController: BaseViewController {
         DispatchQueue.global().async {
             ServerService.shared.postMyPage { statusCode, json in
                 switch statusCode{
-                case 200:
+                case ServerStatusCode.OK.rawValue:
                     print("저장완료")
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.saveButtonClicked()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
                 default:
                     print("ERROR: ", statusCode, json)
                 }
@@ -312,7 +322,7 @@ class MyInformationManagementViewController: BaseViewController {
         DispatchQueue.global().async {
             ServerService.shared.getUserInfo { statusCode, json in
                 switch statusCode{
-                case 200:
+                case ServerStatusCode.OK.rawValue:
                     DispatchQueue.main.async {
                         UserData.background = json["background"].intValue
                         UserData.sesac = json["sesac"].intValue
@@ -322,6 +332,17 @@ class MyInformationManagementViewController: BaseViewController {
                         UserData.searchable = json["searchable"].intValue
                         UserData.ageMin = json["ageMin"].intValue
                         UserData.ageMax = json["ageMax"].intValue
+                    }
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            print("idToken 업데이트..!")
+                            self.userCheck()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
                     }
                 default:
                     print("ERROR: ", statusCode, json)
@@ -337,11 +358,21 @@ class MyInformationManagementViewController: BaseViewController {
         DispatchQueue.global().async {
             ServerService.shared.postWithdraw{ statusCode, json in
                 switch statusCode{
-                case 200:
+                case ServerStatusCode.OK.rawValue:
                     DispatchQueue.main.async {
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                         windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
                         windowScene.windows.first?.makeKeyAndVisible()
+                    }
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.userWithdraw()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
                     }
                 default:
                     print("ERROR: ", statusCode, json)

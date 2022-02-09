@@ -12,3 +12,12 @@ enum GenderNumber : Int {
     case female = 0
     case male = 1
 }
+
+enum ServerStatusCode: Int {
+    case OK = 200
+    case FIREBASE_TOKEN_ERROR = 401
+    case UNREGISTERED_ERROR = 406
+    case SERVER_ERROR = 500
+    case CLIENT_ERROR = 501
+    
+}
