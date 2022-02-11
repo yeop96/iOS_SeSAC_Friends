@@ -34,23 +34,25 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.hideNavigationBar()
+        
         print("아이디토큰", UserData.idToken)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.hideNavigationBar()
         searchFreinds()
     }
     
     override func configure() {
-        navigationController?.changeNavigationBar(isClear: true)
         centerLocationView.image = UIImage(named: "map_marker")
       
         filterButton.allButton.addTarget(self, action: #selector(filterAllButtonClicked), for: .touchUpInside)
         filterButton.allButtonClicked(sender: filterButton.allButton)
         filterButton.maleButton.addTarget(self, action: #selector(filterMaleButtonClicked), for: .touchUpInside)
         filterButton.femaleButton.addTarget(self, action: #selector(filterFemaleButtonClicked), for: .touchUpInside)
+        
+        floatingButton.addTarget(self, action: #selector(floatingButtonClicked), for: .touchUpInside)
         
         mapView.delegate = self
         mapView.setRegion(MKCoordinateRegion(center: defaultCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
@@ -107,7 +109,12 @@ class HomeViewController: BaseViewController {
         searchFreinds()
     }
     
-    func addFilteredPin(gender: Int){
+    @objc func floatingButtonClicked(){
+        let vc = HobbySearchingViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func genderFilteredPin(gender: Int){
         mapView.removeAnnotations(self.mapView.annotations)
         switch gender {
         case GenderNumber.male.rawValue:
@@ -152,20 +159,6 @@ class HomeViewController: BaseViewController {
         return String(str[startIndex ..< endIndex])
     }
     
-    //성별
-//    func genderFilteredPin(gender: Int){
-//        mapView.removeAnnotations(self.mapView.annotations)
-//
-//        switch gender {
-//        case GenderNumber.male.rawValue:
-//            //mapView.addAnnotations(manAnnotations)
-//        case GenderNumber.female.rawValue:
-//            //mapView.addAnnotations(womanAnnotations)
-//        default:
-//            //mapView.addAnnotations(manAnnotations)
-//            //mapView.addAnnotations(womanAnnotations)
-//        }
-//    }
     
     //주변 찾기
     func searchFreinds(){
@@ -200,7 +193,7 @@ class HomeViewController: BaseViewController {
                         }
                         
                         
-                        self.addFilteredPin(gender: self.selectFilter)
+                        self.genderFilteredPin(gender: self.selectFilter)
                         print("누구인가", self.searchedFriends as Any)
                     }
                 case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
@@ -221,7 +214,6 @@ class HomeViewController: BaseViewController {
         }
     }
 
-    
 }
 
 
@@ -280,10 +272,9 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         lat = mapView.centerCoordinate.latitude
         long = mapView.centerCoordinate.longitude
-        
-        let center = CLLocation(latitude: lat, longitude: long)
         region = controlRegion(lat: lat, long: long)
         
+        print(lat,long,region)
         searchFreinds()
     }
     
