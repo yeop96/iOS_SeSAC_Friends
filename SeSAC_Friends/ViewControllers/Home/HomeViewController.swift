@@ -7,19 +7,25 @@
 
 import UIKit
 import SnapKit
-import Toast
 import MapKit
 import CoreLocation
+import JGProgressHUD
 
 
 class HomeViewController: BaseViewController {
     let mapView = MKMapView()
-    let locationManager = CLLocationManager()
+    let progress = JGProgressHUD()
+    var locationManager = CLLocationManager()
     let defaultCoordinate = CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
     let pin = MKPointAnnotation()
     let filterButton = FilterButton()
     let gpsButton = GPSButton()
     var floatingButton = FloatingButton(status: .search)
+    var searchedFriends: SearchedFriends?
+    var pickLocation: PickLocation?
+    var currentLocation: CLLocation!
+    var maleAnnotations = [CustomAnnotation]()
+    var femaleAnnotations = [CustomAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,7 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        searchFreinds()
     }
     
     override func configure() {
@@ -36,7 +43,12 @@ class HomeViewController: BaseViewController {
         mapView.delegate = self
         mapView.setRegion(MKCoordinateRegion(center: defaultCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization() //권한
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        currentLocation = locationManager.location
+        
         
         pin.coordinate = defaultCoordinate
         pin.title = "기본 위치"
@@ -78,12 +90,89 @@ class HomeViewController: BaseViewController {
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(.follow, animated: true)
     }
+    
+    
+    //region 값 변환
+    func controlRegion(lat: Double, long: Double) -> Int{
+        var strLat = String(lat+90)
+        var strLong = String(long+180)
+        
+        strLat = strLat.components(separatedBy: ["."]).joined()
+        strLong = strLong.components(separatedBy: ["."]).joined()
+        
+        let strRegion = substring(str: strLat ,from: 0, to: 4) + substring(str: strLong, from: 0, to: 4)
+        
+        return Int(strRegion) ?? 0
+    }
+    func substring(str: String, from: Int, to: Int) -> String {
+        guard from < str.count, to >= 0, to - from >= 0 else { return "" }
+        
+        let startIndex = str.index(str.startIndex, offsetBy: from)
+        let endIndex = str.index(str.startIndex, offsetBy: to + 1)
+        
+        return String(str[startIndex ..< endIndex])
+    }
+    
+    //성별
+//    func genderFilteredPin(gender: Int){
+//        mapView.removeAnnotations(self.mapView.annotations)
+//
+//        switch gender {
+//        case GenderNumber.male.rawValue:
+//            //mapView.addAnnotations(manAnnotations)
+//        case GenderNumber.female.rawValue:
+//            //mapView.addAnnotations(womanAnnotations)
+//        default:
+//            //mapView.addAnnotations(manAnnotations)
+//            //mapView.addAnnotations(womanAnnotations)
+//        }
+//    }
+    
+    //주변 찾기
+    func searchFreinds(){
+        progress.show(in: view, animated: true)
+        DispatchQueue.global().async {
+            ServerService.shared.postSearchFriedns(region: 1275130688, lat: 37.517819364682694, long: 126.88647317074734) { statusCode, data in
+                switch statusCode{
+                case ServerStatusCode.OK.rawValue:
+                    DispatchQueue.main.async {
+                        self.searchedFriends = try? JSONDecoder().decode(SearchedFriends.self, from: data!)
+                        print("누구인가", self.searchedFriends as Any)
+                    }
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.searchFreinds()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
+                default:
+                    print("ERROR: ", statusCode)
+                }
+            }
+            
+            self.progress.dismiss(animated: true)
+        }
+        
+        
+    }
 
     
 }
 
 
 extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager = manager
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            currentLocation = locationManager.location
+        }
+    }
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -111,4 +200,21 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
         return annotationView
     }
     
+}
+
+
+class CustomAnnotation: NSObject, MKAnnotation {
+  let sesac_image: Int?
+  let coordinate: CLLocationCoordinate2D
+
+  init(
+    sesac_image: Int?,
+    coordinate: CLLocationCoordinate2D
+  ) {
+    self.sesac_image = sesac_image
+    self.coordinate = coordinate
+
+    super.init()
+  }
+
 }

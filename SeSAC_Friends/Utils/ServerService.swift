@@ -22,6 +22,8 @@ enum ServerRequest {
     case SignUp
     case Withdraw
     case UpdateMyPage
+    case RequestFrineds
+    case StopRequestFrineds
     case SearchFriends
     
     var urlRequest: ServerModel {
@@ -42,6 +44,12 @@ enum ServerRequest {
             parm = nil
         case .UpdateMyPage:
             url = .endPoint("/user/update/mypage")
+            parm = nil
+        case .RequestFrineds:
+            url = .endPoint("/queue")
+            parm = nil
+        case .StopRequestFrineds:
+            url = .endPoint("/queue")
             parm = nil
         case .SearchFriends:
             url = .endPoint("/queue/onqueue")
@@ -82,6 +90,7 @@ class ServerService {
     static let shared = ServerService()
     typealias CompletionHandler = (Int, JSON) -> ()
     typealias NetworkResult = (Int) -> ()
+    typealias DataCompletionHandler = (Int, Data?) -> ()
     
     func getUserInfo(_ result: @escaping CompletionHandler){
         let server = ServerRequest.UserInfo.urlRequest
@@ -160,18 +169,44 @@ class ServerService {
         }
     }
     
-    func postSearchFriedns(region: Int, lat: Double, long: Double,_ result: @escaping CompletionHandler) {
-        let server = ServerRequest.SignUp.urlRequest
+    func postRequestFrineds(region: Int, lat: Double, long: Double, hobby: [String], _ result: @escaping CompletionHandler){
+        let server = ServerRequest.RequestFrineds.urlRequest
+        let parm : Parameters = ["type": 2,
+                                 "region": region,
+                                 "lat": lat,
+                                 "long": long,
+                                 "hf": hobby]
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers)
+            .validate()
+            .responseString { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+            }
+    }
+    
+    func DeleteRequestFrineds(_ result: @escaping CompletionHandler){
+        let server = ServerRequest.StopRequestFrineds.urlRequest
+        AF.request(server.url, method: .delete, headers: server.headers)
+            .validate()
+            .responseString { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+            }
+    }
+    
+    func postSearchFriedns(region: Int, lat: Double, long: Double,_ result: @escaping DataCompletionHandler) {
+        let server = ServerRequest.SearchFriends.urlRequest
         let parm : Parameters = ["region": region,
                                  "lat": lat,
                                  "long": long]
         
-        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
-            let json = JSON(response.data)
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseJSON { response in
+            let data = response.data
             let statusCode = response.response?.statusCode ?? 500
             
-            result(statusCode, json)
-            print(statusCode,json)
+            result(statusCode, data)
             
         }
     }

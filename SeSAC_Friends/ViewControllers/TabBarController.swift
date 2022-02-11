@@ -46,7 +46,7 @@ class TabBarController: UITabBarController , UITabBarControllerDelegate{
         tabBar.tintColor = .green
     }
     
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        print(item)
-    }
+//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        print(item)
+//    }
 }
