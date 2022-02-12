@@ -40,6 +40,7 @@
 		27767DF327B00DBE00972523 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767DF227B00DBE00972523 /* PopUpViewController.swift */; };
 		27767DFE27B6CE5200972523 /* HobbySearchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767DFD27B6CE5200972523 /* HobbySearchingViewController.swift */; };
 		27767E0027B6CE7500972523 /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767DFF27B6CE7500972523 /* NearUserViewController.swift */; };
+		27767E0227B819EB00972523 /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767E0127B819EB00972523 /* CustomCollectionView.swift */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
 		2788B9F727A06DA1007472D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788B9F627A06DA1007472D5 /* Constants.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
@@ -92,6 +93,7 @@
 		27767DF227B00DBE00972523 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		27767DFD27B6CE5200972523 /* HobbySearchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbySearchingViewController.swift; sourceTree = "<group>"; };
 		27767DFF27B6CE7500972523 /* NearUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewController.swift; sourceTree = "<group>"; };
+		27767E0127B819EB00972523 /* CustomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionView.swift; sourceTree = "<group>"; };
 		2782D94B279AFD4A00369B68 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2788B9F627A06DA1007472D5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		279F1984279B253C001AAC15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				27767DEE27AFCB3400972523 /* CustomAlert.swift */,
 				27522EEC279716E200C7874E /* BaseViewController.swift */,
 				27767DF227B00DBE00972523 /* PopUpViewController.swift */,
+				27767E0127B819EB00972523 /* CustomCollectionView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				27D19AAA279C71ED0001CFFE /* ServerService.swift in Sources */,
 				27D735B727A4797D00300E8C /* ShopViewController.swift in Sources */,
 				27CBE4662797448F008290BE /* CustomButtons.swift in Sources */,
+				27767E0227B819EB00972523 /* CustomCollectionView.swift in Sources */,
 				27767DF327B00DBE00972523 /* PopUpViewController.swift in Sources */,
 				27767DEF27AFCB3400972523 /* CustomAlert.swift in Sources */,
 				27522EED279716E200C7874E /* BaseViewController.swift in Sources */,

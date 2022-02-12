@@ -41,6 +41,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.hideNavigationBar()
+        tabBarController?.tabBar.isHidden = false
         searchFreinds()
     }
     
@@ -110,7 +111,9 @@ class HomeViewController: BaseViewController {
     }
     
     @objc func floatingButtonClicked(){
+        tabBarController?.tabBar.isHidden = true
         let vc = HobbySearchingViewController()
+        vc.searchedFriends = self.searchedFriends
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

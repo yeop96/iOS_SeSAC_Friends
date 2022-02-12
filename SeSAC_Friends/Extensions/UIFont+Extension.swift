@@ -29,7 +29,7 @@ extension UIFont{
     var Title5_M12: UIFont {
         return UIFont(name: "NotoSansCJKkr-Medium", size: 12)!
     }
-    var Title5_R12: UIFont {
+    var Title6_R12: UIFont {
         return UIFont(name: "NotoSansCJKkr-Regular", size: 12)!
     }
     var Body1_M16: UIFont {
