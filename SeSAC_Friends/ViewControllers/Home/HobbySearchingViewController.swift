@@ -40,11 +40,21 @@ class HobbySearchingViewController: BaseViewController {
     let searchButton = FillButton()
     
     var searchedFriends: SearchedFriends?
-    var fromRecommend = [String]()
-    var fromHF = [String]()
-    
-    var wantHobbies = [String]()
-    var newWantHobbies = [String]()
+    var fromRecommend = [String](){
+        didSet{
+            nearHobbyCollectionView.reloadData()
+        }
+    }
+    var fromHF = [String](){
+        didSet{
+            nearHobbyCollectionView.reloadData()
+        }
+    }
+    var wantHobbies = [String](){
+        didSet{
+            wantHobbyCollectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,8 +67,8 @@ class HobbySearchingViewController: BaseViewController {
         navigationController?.view.setNeedsLayout()
         navigationController?.view.layoutIfNeeded()
         
-        searchBar.delegate = self
-        
+        //searchBar.delegate = self
+        searchBar.searchTextField.delegate = self
         
         nearHobbyLabel.font = UIFont().Title6_R12
         nearHobbyLabel.textColor = .black
@@ -130,15 +140,47 @@ class HobbySearchingViewController: BaseViewController {
     }
     
     @objc func searchButtonClicked(){
-        
+        let vc = NearUserViewController()
+        vc.searchedFriends = self.searchedFriends
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
 
 
-extension HobbySearchingViewController: UISearchBarDelegate {
+extension HobbySearchingViewController: UITextFieldDelegate {
     //리턴키
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        guard let text = textField.text else{ return true }
+        let texts = text.split(separator: " ").map{String($0)} //띄어쓰기 자르기
+        
+        //공백일 경우
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
+            self.view.makeToast("최소 한 자 이상, 최대 8글자까지 작성 가능합니다", duration: 3.0, position: .top)
+            return true
+        }
+        // 8개 넘을 경우
+        else if wantHobbies.count + texts.count > 8{
+            self.view.makeToast("취미를 더 이상 추가할 수 없습니다 (8개)", duration: 3.0, position: .top)
+            return true
+        }
+        
+        for text in texts {
+            //띄어쓰기 글자중 8글자 넘는게 있는지 판단
+            if text.count > 8{
+                self.view.makeToast("각 취미 최소 한 자 이상, 최대 8글자까지 작성 가능합니다", duration: 3.0, position: .top)
+                return true
+            }
+            //띄어쓰기 글자중 이미 있는게 있는지 판단
+            else if wantHobbies.contains(text){
+                self.view.makeToast("이미 등록된 취미가 있습니다", duration: 3.0, position: .top)
+                return true
+            }
+        }
+        
+        wantHobbies += texts
+        textField.text = ""
         
         return true
     }
@@ -186,6 +228,13 @@ extension HobbySearchingViewController: UICollectionViewDataSource, UICollection
                 return UICollectionViewCell()
             }
             cell.tagLabel.text = wantHobbies[indexPath.row]
+            //셀 안 삭제 버튼 액션 클로저로 구현
+            //unowned self 를 쓴 이유는 retain 싸이클을 방지하기 위해서 사용
+            cell.delete = { [unowned self] in
+                if let selecttIndex = wantHobbies.firstIndex(of: wantHobbies[indexPath.row]) {
+                    wantHobbies.remove(at: selecttIndex)
+                }
+            }
             
             return cell
         }
@@ -232,6 +281,30 @@ extension HobbySearchingViewController: UICollectionViewDataSource, UICollection
             
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let row = indexPath.row
+        if collectionView == nearHobbyCollectionView {
+            if wantHobbies.count >= 8 {
+                self.view.makeToast("취미를 더 이상 추가할 수 없습니다 (8개)", duration: 3.0, position: .top)
+                return
+            }
+            if indexPath.section == 0{
+                if let selecttIndex = fromRecommend.firstIndex(of: fromRecommend[row]) {
+                    wantHobbies += [fromRecommend[row]]
+                    fromRecommend.remove(at: selecttIndex)
+                }
+            }
+            else{
+                if let selecttIndex = fromHF.firstIndex(of: fromHF[row]) {
+                    wantHobbies += [fromHF[row]]
+                    fromHF.remove(at: selecttIndex)
+                }
+            }
+        }
+        
+    }
+    
 }
 
 
@@ -269,6 +342,7 @@ class NearHobbyCell: UICollectionViewCell {
 
 class WantHobbyCell: UICollectionViewCell {
     static let identifier = "WantHobbyCell"
+    var delete : (() -> ()) = {}
     
     let tagLabel = UILabel()
     let removeButton = UIImageView()
@@ -284,6 +358,10 @@ class WantHobbyCell: UICollectionViewCell {
         tagLabel.textColor = .green
         removeButton.image = UIImage(named: "close_small")?.withRenderingMode(.alwaysTemplate)
         removeButton.tintColor = .green
+        let removeAction = UITapGestureRecognizer(target: self, action: #selector(removeButtonClicked))
+        removeButton.isUserInteractionEnabled = true
+        removeButton.addGestureRecognizer(removeAction)
+        
         contentView.layer.borderColor = UIColor.green.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.masksToBounds = true
@@ -302,6 +380,10 @@ class WantHobbyCell: UICollectionViewCell {
             make.top.bottom.equalToSuperview().inset(8)
             make.size.equalTo(16)
         }
+    }
+    
+    @objc func removeButtonClicked(){
+        delete()
     }
     
     required init?(coder: NSCoder) {

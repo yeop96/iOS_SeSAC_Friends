@@ -10,12 +10,14 @@ import SnapKit
 import Toast
 
 class NearUserViewController: BaseViewController {
+    var searchedFriends: SearchedFriends?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func configure() {
-        
+        backConfigure()
     }
     
     override func setupConstraints() {
