@@ -114,6 +114,9 @@ class HomeViewController: BaseViewController {
         tabBarController?.tabBar.isHidden = true
         let vc = HobbySearchingViewController()
         vc.searchedFriends = self.searchedFriends
+        vc.lat = self.lat
+        vc.long = self.long
+        vc.region = self.region
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

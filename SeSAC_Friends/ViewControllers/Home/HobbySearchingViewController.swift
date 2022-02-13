@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Toast
+import JGProgressHUD
 
 class HobbySearchingViewController: BaseViewController {
     
@@ -33,6 +34,7 @@ class HobbySearchingViewController: BaseViewController {
         
         return searchbar
     }()
+    let progress = JGProgressHUD()
     let nearHobbyLabel = UILabel()
     let nearHobbyCollectionView = TagDynamicHeightCollectionView()
     let wantHobbyLabel = UILabel()
@@ -40,6 +42,9 @@ class HobbySearchingViewController: BaseViewController {
     let searchButton = FillButton()
     
     var searchedFriends: SearchedFriends?
+    var lat = 0.0
+    var long = 0.0
+    var region = 0
     var fromRecommend = [String](){
         didSet{
             nearHobbyCollectionView.reloadData()
@@ -140,9 +145,42 @@ class HobbySearchingViewController: BaseViewController {
     }
     
     @objc func searchButtonClicked(){
+        searchFriendsServer()
         let vc = NearUserViewController()
         vc.searchedFriends = self.searchedFriends
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func searchFriendsServer(){
+        progress.show(in: view, animated: true)
+        
+        if wantHobbies.isEmpty{
+            wantHobbies += ["Anything"]
+        }
+        
+        DispatchQueue.global().async {
+            ServerService.shared.postRequestFrineds(region: self.region, lat: self.lat, long: self.long, hobby: self.wantHobbies) { statusCode, data in
+                switch statusCode{
+                case ServerStatusCode.OK.rawValue:
+                    DispatchQueue.main.async {
+                        print("성공~")
+                    }
+                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                    ServerService.updateIdToken { result in
+                        switch result {
+                        case .success:
+                            self.searchFriendsServer()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
+                default:
+                    print("ERROR: ", statusCode)
+                }
+            }
+            self.progress.dismiss(animated: true)
+        }
     }
     
 }

@@ -58,7 +58,7 @@ enum ServerRequest {
         }
         
         head = ["Content-Type" : "application/x-www-form-urlencoded",
-                "idtoken" : idToken]
+                "idtoken" : idToken] as HTTPHeaders
         return ServerModel(url: url ?? "", parameters: parm, headers: head)
     }
 }
@@ -97,7 +97,7 @@ class ServerService {
         AF.request(server.url, method: .get, headers: server.headers)
             .validate()
             .responseJSON { response in
-                let json = JSON(response.data)
+                let json = JSON(response.data as Any)
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
             }
@@ -114,7 +114,7 @@ class ServerService {
                                  "gender": UserData.gender]
         
         AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
-            let json = JSON(response.data)
+            let json = JSON(response.data as Any)
             let statusCode = response.response?.statusCode ?? 500
             
             result(statusCode, json)
@@ -176,7 +176,7 @@ class ServerService {
                                  "lat": lat,
                                  "long": long,
                                  "hf": hobby]
-        AF.request(server.url, method: .post, parameters: parm, headers: server.headers)
+        AF.request(server.url, method: .post, parameters: parm, encoding: URLEncoding(arrayEncoding: .noBrackets), headers: server.headers)
             .validate()
             .responseString { response in
                 let json = JSON(response.data as Any)
