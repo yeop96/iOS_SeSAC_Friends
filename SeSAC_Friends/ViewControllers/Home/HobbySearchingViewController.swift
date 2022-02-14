@@ -160,7 +160,7 @@ final class HobbySearchingViewController: BaseViewController {
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
                     UserData.matchingStatus = MatchingStatus.matching.rawValue
-                    let vc = NearUserViewController()
+                    let vc = FindUsersTabViewController()
                     vc.searchedFriends = self.searchedFriends
                     self.navigationController?.pushViewController(vc, animated: true)
                 }

@@ -123,7 +123,7 @@ final class HomeViewController: BaseViewController {
             vc.region = self.region
             self.navigationController?.pushViewController(vc, animated: true)
         case MatchingStatus.matching.rawValue:
-            let vc = NearUserViewController()
+            let vc = FindUsersTabViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         case MatchingStatus.matched.rawValue:
             let vc = ChattingViewController()
