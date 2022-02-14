@@ -62,6 +62,10 @@ struct UserData {
     static var ageMin: Int
     @UserDefault(key: keyEnum.ageMax.rawValue, defaultValue: 38)
     static var ageMax: Int
+    
+    @UserDefault(key: keyEnum.matchingStatus.rawValue, defaultValue: MatchingStatus.search.rawValue)
+    static var matchingStatus: Int
+    
 }
 
 enum keyEnum: String {
@@ -79,5 +83,6 @@ enum keyEnum: String {
     case searchable = "searchable" // 거부(Switch OFF): 0 , 허용(Switch ON): 1
     case ageMin = "ageMin"
     case ageMax = "ageMax"
+    case matchingStatus = "matchingStatus"
 }
 

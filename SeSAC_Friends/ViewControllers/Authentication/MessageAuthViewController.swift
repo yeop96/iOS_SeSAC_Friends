@@ -36,7 +36,7 @@ final class MessageAuthViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         windows.last?.makeToast("인증번호를 보냈습니다.", duration: 5.0, position: .top)
         
     }

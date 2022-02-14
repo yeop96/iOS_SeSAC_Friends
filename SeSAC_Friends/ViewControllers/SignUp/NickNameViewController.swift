@@ -22,7 +22,7 @@ class NickNameViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
         if nickNameBackBool{
             self.view.makeToast("\(UserData.nickName)(는)은 금지된 닉네임 입니다. 다시 시도해주세요.", duration: 5.0, position: .top)

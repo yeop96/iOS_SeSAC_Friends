@@ -19,7 +19,7 @@ final class HomeViewController: BaseViewController {
     let pin = MKPointAnnotation()
     let filterButton = FilterButton()
     let gpsButton = GPSButton()
-    var floatingButton = FloatingButton(status: .search)
+    var floatingButton = FloatingButton(status: MatchingStatus.search.rawValue)
     let centerLocationView = UIImageView()
     var searchedFriends: SearchedFriends?
     var pickLocation: PickLocation?
@@ -42,6 +42,7 @@ final class HomeViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.hideNavigationBar()
         tabBarController?.tabBar.isHidden = false
+        floatingButton.setup(status: UserData.matchingStatus)
         searchFreinds()
     }
     
@@ -112,12 +113,24 @@ final class HomeViewController: BaseViewController {
     
     @objc func floatingButtonClicked(){
         tabBarController?.tabBar.isHidden = true
-        let vc = HobbySearchingViewController()
-        vc.searchedFriends = self.searchedFriends
-        vc.lat = self.lat
-        vc.long = self.long
-        vc.region = self.region
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        switch UserData.matchingStatus{
+        case MatchingStatus.search.rawValue:
+            let vc = HobbySearchingViewController()
+            vc.searchedFriends = self.searchedFriends
+            vc.lat = self.lat
+            vc.long = self.long
+            vc.region = self.region
+            self.navigationController?.pushViewController(vc, animated: true)
+        case MatchingStatus.matching.rawValue:
+            let vc = NearUserViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        case MatchingStatus.matched.rawValue:
+            let vc = ChattingViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            return
+        }
     }
     
     func genderFilteredPin(gender: Int){

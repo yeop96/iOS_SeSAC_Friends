@@ -190,7 +190,7 @@ class ServerService {
             }
     }
     
-    func DeleteRequestFrineds(_ result: @escaping CompletionHandler){
+    func deleteRequestFrineds(_ result: @escaping CompletionHandler){
         let server = ServerRequest.StopRequestFrineds.urlRequest
         AF.request(server.url, method: .delete, headers: server.headers)
             .validate()

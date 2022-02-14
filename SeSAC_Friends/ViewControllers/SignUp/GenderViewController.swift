@@ -30,7 +30,7 @@ class GenderViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
         if nickNameBackBool{
             if UserData.gender == GenderNumber.male.rawValue{
@@ -184,7 +184,7 @@ class GenderViewController: BaseViewController {
                     windowScene.windows.first?.rootViewController = TabBarController()
                     windowScene.windows.first?.makeKeyAndVisible()
                 }
-            case 202:
+            case SignupStatusCode.CANT_USE_NICKNAME.rawValue:
                 print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
                 self.backNavigationControllers()
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:

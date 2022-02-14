@@ -146,9 +146,6 @@ final class HobbySearchingViewController: BaseViewController {
     
     @objc func searchButtonClicked(){
         searchFriendsServer()
-        let vc = NearUserViewController()
-        vc.searchedFriends = self.searchedFriends
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func searchFriendsServer(){
@@ -162,8 +159,37 @@ final class HobbySearchingViewController: BaseViewController {
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
-                    print("성공~")
+                    UserData.matchingStatus = MatchingStatus.matching.rawValue
+                    let vc = NearUserViewController()
+                    vc.searchedFriends = self.searchedFriends
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
+            case QueueStatusCode.ALREADY_THREE_REPORT.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("신고가 누적되어 이용하실 수 없습니다.", duration: 3.0, position: .top)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case QueueStatusCode.FIRST_PENALTY.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("약속 취소 패널티로, 1분동안 이용하실 수 없습니다", duration: 3.0, position: .top)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case QueueStatusCode.SECOND_PENALTY.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("약속 취소 패널티로, 2분동안 이용하실 수 없습니다", duration: 3.0, position: .top)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case QueueStatusCode.THIRD_PENALTY.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("연속으로 약속을 취소하셔서 3분동안 이용하실 수 없습니다", duration: 3.0, position: .top)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case QueueStatusCode.GENDER_NOT_SET.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("새싹 찾기 기능을 이용하기 위해서는 성별이 필요해요!", duration: 3.0, position: .top)
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {

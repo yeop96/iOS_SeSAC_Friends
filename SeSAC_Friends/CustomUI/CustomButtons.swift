@@ -289,35 +289,30 @@ class FilterButton: UIView {
 
 class FloatingButton: UIButton {
     
-    enum MatchingStatus {
-        case search, matching, matched
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(status: MatchingStatus) {
+    convenience init(status: Int) {
         self.init(frame: .zero)
         
         setup(status: status)
     }
     
-    func setup(status: MatchingStatus? = nil) {
+    func setup(status: Int) {
         switch status {
-        case .search:
+        case MatchingStatus.search.rawValue:
             self.setImage(UIImage(named: "default_status_button"), for: .normal)
-        case .matching:
+        case MatchingStatus.matching.rawValue:
             self.setImage(UIImage(named: "matching_status_button"), for: .normal)
-        case .matched:
+        case MatchingStatus.matched.rawValue:
             self.setImage(UIImage(named: "matched_status_button"), for: .normal)
-        case .none:
-            print("none")
+        default:
+            print("")
         }
         self.layer.cornerRadius = self.frame.width / 2
         self.layer.masksToBounds = true

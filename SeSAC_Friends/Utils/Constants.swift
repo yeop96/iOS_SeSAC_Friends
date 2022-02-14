@@ -14,12 +14,38 @@ enum GenderNumber : Int {
     case male = 1
 }
 
+enum MatchingStatus: Int {
+    case search
+    case matching
+    case matched
+}
+
 enum ServerStatusCode: Int {
     case OK = 200
     case FIREBASE_TOKEN_ERROR = 401
     case UNREGISTERED_ERROR = 406
     case SERVER_ERROR = 500
     case CLIENT_ERROR = 501
+}
+
+// 회원가입
+enum SignupStatusCode: Int {
+    case ALREADY_SIGNIN = 201
+    case CANT_USE_NICKNAME = 202
+}
+
+// 취미 함께할 친구 찾기 요청 (post queue)
+enum QueueStatusCode: Int {
+    case ALREADY_THREE_REPORT = 201
+    case FIRST_PENALTY = 203
+    case SECOND_PENALTY = 204
+    case THIRD_PENALTY = 205
+    case GENDER_NOT_SET = 206
+}
+
+// 친구 찾기 중단 (delete queue)
+enum DeleteQueueStatusCode: Int {
+    case ALREADY_MATCHING = 201
 }
 
 enum SesacImage : Int {

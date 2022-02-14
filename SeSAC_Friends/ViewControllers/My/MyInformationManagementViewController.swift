@@ -59,7 +59,7 @@ final class MyInformationManagementViewController: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     
