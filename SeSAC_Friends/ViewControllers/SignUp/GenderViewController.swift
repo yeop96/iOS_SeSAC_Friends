@@ -174,41 +174,38 @@ class GenderViewController: BaseViewController {
     
     func userSignUp() {
         progress.show(in: view, animated: true)
-        DispatchQueue.global().async {
-            ServerService.shared.postSignUp{ statusCode, json in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    print("회원가입 성공")
-                    print(json)
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                        windowScene.windows.first?.rootViewController = TabBarController()
-                        windowScene.windows.first?.makeKeyAndVisible()
-                    }
-                case 202:
-                    print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
-                    self.backNavigationControllers()
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.userSignUp()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
-                    }
-                    
-                default:
-                    print("ERROR?: ", statusCode, json)
-                    DispatchQueue.main.async {
-                        self.view.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
+        ServerService.shared.postSignUp{ statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                print("회원가입 성공")
+                print(json)
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                    windowScene.windows.first?.rootViewController = TabBarController()
+                    windowScene.windows.first?.makeKeyAndVisible()
+                }
+            case 202:
+                print("사용할 수 없는 닉네임(ex. 바람의나라, 미묘한도사, 고래밥)")
+                self.backNavigationControllers()
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.userSignUp()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
                     }
                 }
+                
+            default:
+                print("ERROR?: ", statusCode, json)
+                DispatchQueue.main.async {
+                    self.view.makeToast("에러가 발생했습니다. 잠시 후 다시 시도해주세요.", duration: 3.0, position: .top)
+                }
             }
-            self.progress.dismiss(animated: true)
         }
-        print("fetchEnd")
+        self.progress.dismiss(animated: true)
     }
     
     

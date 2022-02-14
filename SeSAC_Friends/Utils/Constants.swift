@@ -23,49 +23,28 @@ enum ServerStatusCode: Int {
 }
 
 enum SesacImage : Int {
-    case sesac0 = 0
-    case sesac1 = 1
-    case sesac2 = 2
-    case sesac3 = 3
-    case sesac4 = 4
+    //Int여서 자동으로 rawValue 0부터 값을 가짐
+    case sesac0
+    case sesac1
+    case sesac2
+    case sesac3
+    case sesac4
     
     func sesacUIImage() -> UIImage{
-        switch self {
-        case .sesac0:
-            return UIImage(named: "sesac_face_1")!
-        case .sesac1:
-            return UIImage(named: "sesac_face_2")!
-        case .sesac2:
-            return UIImage(named: "sesac_face_3")!
-        case .sesac3:
-            return UIImage(named: "sesac_face_4")!
-        case .sesac4:
-            return UIImage(named: "sesac_face_5")!
-        }
+        return UIImage(named: "sesac_face_\(self.rawValue + 1)")!
     }
     
 }
 
 enum SesacBackgroundImage : Int {
-    case background0 = 0
-    case background1 = 1
-    case background2 = 2
-    case background3 = 3
-    case background4 = 4
+    case background0
+    case background1
+    case background2
+    case background3
+    case background4
     
     func sesacBackgroundUIImage() -> UIImage{
-        switch self {
-        case .background0:
-            return UIImage(named: "sesac_background_1")!
-        case .background1:
-            return UIImage(named: "sesac_background_2")!
-        case .background2:
-            return UIImage(named: "sesac_background_3")!
-        case .background3:
-            return UIImage(named: "sesac_background_4")!
-        case .background4:
-            return UIImage(named: "sesac_background_5")!
-        }
+        return UIImage(named: "sesac_background_\(self.rawValue + 1)")!
     }
     
 }

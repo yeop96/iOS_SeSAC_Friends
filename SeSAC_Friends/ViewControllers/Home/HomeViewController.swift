@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 import JGProgressHUD
 
-class HomeViewController: BaseViewController {
+final class HomeViewController: BaseViewController {
     let mapView = MKMapView()
     let progress = JGProgressHUD()
     var locationManager = CLLocationManager()

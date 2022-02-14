@@ -92,6 +92,11 @@ class ServerService {
     typealias NetworkResult = (Int) -> ()
     typealias DataCompletionHandler = (Int, Data?) -> ()
     
+    //싱글톤 사용시 private으로 인스턴스 생성 안되게 하기
+    private init(){
+    
+    }
+    
     func getUserInfo(_ result: @escaping CompletionHandler){
         let server = ServerRequest.UserInfo.urlRequest
         AF.request(server.url, method: .get, headers: server.headers)

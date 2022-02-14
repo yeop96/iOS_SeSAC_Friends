@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MyInformationViewController: BaseViewController {
+final class MyInformationViewController: BaseViewController {
     let tableView = UITableView()
     let settings = [["notice", "공지사항"], ["faq","자주 묻는 질문"], ["qna", "1:1 문의"] ,["setting_alarm", "알림 설정"], ["permit", "이용 약관"]]
     

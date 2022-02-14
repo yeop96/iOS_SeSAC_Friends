@@ -13,7 +13,7 @@ import FirebaseAuth
 import Alamofire
 import JGProgressHUD
 
-class MessageAuthViewController: BaseViewController {
+final class MessageAuthViewController: BaseViewController {
     
     let progress = JGProgressHUD()
     var limitTime = 60
@@ -171,39 +171,37 @@ class MessageAuthViewController: BaseViewController {
     
     func userCheck() {
         progress.show(in: view, animated: true)
-        DispatchQueue.global().async {
-            ServerService.shared.getUserInfo { statusCode, json in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    print("로그인 성공", "홈 화면으로 이동")
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                        windowScene.windows.first?.rootViewController = TabBarController()
-                        windowScene.windows.first?.makeKeyAndVisible()
-                    }
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.userCheck()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
-                    }
-                case ServerStatusCode.UNREGISTERED_ERROR.rawValue:
-                    print("미가입 유저","회원가입 화면으로 이동")
-                    DispatchQueue.main.async {
-                        let vc = NickNameViewController()
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                default:
-                    print("ERROR: ", statusCode, json)
+        ServerService.shared.getUserInfo { statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                print("로그인 성공", "홈 화면으로 이동")
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                    windowScene.windows.first?.rootViewController = TabBarController()
+                    windowScene.windows.first?.makeKeyAndVisible()
                 }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.userCheck()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            case ServerStatusCode.UNREGISTERED_ERROR.rawValue:
+                print("미가입 유저","회원가입 화면으로 이동")
+                DispatchQueue.main.async {
+                    let vc = NickNameViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            default:
+                print("ERROR: ", statusCode, json)
             }
-            self.progress.dismiss(animated: true)
         }
-        print("fetchEnd")
+        self.progress.dismiss(animated: true)
+        
     }
     
     

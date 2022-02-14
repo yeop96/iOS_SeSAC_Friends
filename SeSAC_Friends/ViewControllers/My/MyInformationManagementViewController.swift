@@ -10,7 +10,7 @@ import SnapKit
 import MultiSlider
 import JGProgressHUD
 
-class MyInformationManagementViewController: BaseViewController {
+final class MyInformationManagementViewController: BaseViewController {
     
     let progress = JGProgressHUD()
     let scrollView = UIScrollView()
@@ -292,93 +292,89 @@ class MyInformationManagementViewController: BaseViewController {
         UserData.ageMax = selectAgeMax
         UserData.gender = selectGender
         UserData.hobby = hobbyTextField.text ?? ""
-
-        DispatchQueue.global().async {
-            ServerService.shared.postMyPage { statusCode, json in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    print("저장완료")
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.saveButtonClicked()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
+        
+        ServerService.shared.postMyPage { statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                print("저장완료")
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.saveButtonClicked()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
                     }
-                default:
-                    print("ERROR: ", statusCode, json)
                 }
+            default:
+                print("ERROR: ", statusCode, json)
             }
-            self.progress.dismiss(animated: true)
         }
+        self.progress.dismiss(animated: true)
+        
     }
     
     //회원 정보 가져오기
     func userCheck() {
         progress.show(in: view, animated: true)
-        DispatchQueue.global().async {
-            ServerService.shared.getUserInfo { statusCode, json in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    DispatchQueue.main.async {
-                        UserData.background = json["background"].intValue
-                        UserData.sesac = json["sesac"].intValue
-                        UserData.nickName =  json["nick"].stringValue
-                        UserData.gender = json["gender"].intValue
-                        UserData.hobby = json["hobby"].stringValue
-                        UserData.searchable = json["searchable"].intValue
-                        UserData.ageMin = json["ageMin"].intValue
-                        UserData.ageMax = json["ageMax"].intValue
-                    }
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            print("idToken 업데이트..!")
-                            self.userCheck()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
-                    }
-                default:
-                    print("ERROR: ", statusCode, json)
+        ServerService.shared.getUserInfo { statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    UserData.background = json["background"].intValue
+                    UserData.sesac = json["sesac"].intValue
+                    UserData.nickName =  json["nick"].stringValue
+                    UserData.gender = json["gender"].intValue
+                    UserData.hobby = json["hobby"].stringValue
+                    UserData.searchable = json["searchable"].intValue
+                    UserData.ageMin = json["ageMin"].intValue
+                    UserData.ageMax = json["ageMax"].intValue
                 }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        print("idToken 업데이트..!")
+                        self.userCheck()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode, json)
             }
-            self.progress.dismiss(animated: true)
         }
+        self.progress.dismiss(animated: true)
+        
     }
     
     //회원 탈퇴
     func userWithdraw(){
         progress.show(in: view, animated: true)
-        DispatchQueue.global().async {
-            ServerService.shared.postWithdraw{ statusCode, json in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                        windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
-                        windowScene.windows.first?.makeKeyAndVisible()
-                    }
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.userWithdraw()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
-                    }
-                default:
-                    print("ERROR: ", statusCode, json)
+        ServerService.shared.postWithdraw{ statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                    windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
+                    windowScene.windows.first?.makeKeyAndVisible()
                 }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.userWithdraw()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode, json)
             }
-            self.progress.dismiss(animated: true)
         }
+        self.progress.dismiss(animated: true)
     }
 }

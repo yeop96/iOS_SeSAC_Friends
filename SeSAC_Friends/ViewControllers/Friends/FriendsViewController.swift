@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Toast
 
-class FriendsViewController: BaseViewController {
+final class FriendsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }

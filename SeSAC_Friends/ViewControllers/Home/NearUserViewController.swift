@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Toast
 
-class NearUserViewController: BaseViewController {
+final class NearUserViewController: BaseViewController {
     var searchedFriends: SearchedFriends?
     
     override func viewDidLoad() {

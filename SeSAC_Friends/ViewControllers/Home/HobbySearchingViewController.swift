@@ -10,7 +10,7 @@ import SnapKit
 import Toast
 import JGProgressHUD
 
-class HobbySearchingViewController: BaseViewController {
+final class HobbySearchingViewController: BaseViewController {
     
     lazy var searchBar: UISearchBar = {
         let searchbar = UISearchBar()
@@ -158,29 +158,28 @@ class HobbySearchingViewController: BaseViewController {
             wantHobbies += ["Anything"]
         }
         
-        DispatchQueue.global().async {
-            ServerService.shared.postRequestFrineds(region: self.region, lat: self.lat, long: self.long, hobby: self.wantHobbies) { statusCode, data in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    DispatchQueue.main.async {
-                        print("성공~")
-                    }
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.searchFriendsServer()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
-                        }
-                    }
-                default:
-                    print("ERROR: ", statusCode)
+        ServerService.shared.postRequestFrineds(region: self.region, lat: self.lat, long: self.long, hobby: self.wantHobbies) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    print("성공~")
                 }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.searchFriendsServer()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
             }
-            self.progress.dismiss(animated: true)
         }
+        self.progress.dismiss(animated: true)
+        
     }
     
 }

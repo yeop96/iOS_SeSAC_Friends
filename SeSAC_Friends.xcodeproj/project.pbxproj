@@ -163,9 +163,9 @@
 			children = (
 				27767DF927B2E13B00972523 /* Models */,
 				27767DF727B2E04F00972523 /* ViewControllers */,
+				27522EE6279710A200C7874E /* Utils */,
 				27522EE7279710B000C7874E /* SupportFiles */,
 				27540B662799D53200BA6416 /* CustomUI */,
-				27522EE6279710A200C7874E /* Utils */,
 				27522EE52797109600C7874E /* Extensions */,
 			);
 			path = SeSAC_Friends;

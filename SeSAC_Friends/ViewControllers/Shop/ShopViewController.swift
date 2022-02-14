@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Toast
 
-class ShopViewController: BaseViewController {
+final class ShopViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
