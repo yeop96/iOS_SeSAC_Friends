@@ -385,7 +385,7 @@ class NearHobbyCell: UICollectionViewCell {
     func configure(){
         tagLabel.font = UIFont().Title4_R14
         tagLabel.textColor = .gray
-        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.layer.borderColor = UIColor.gray4.cgColor
         contentView.layer.borderWidth = 1
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 8
