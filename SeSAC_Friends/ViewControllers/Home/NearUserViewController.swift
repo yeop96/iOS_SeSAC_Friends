@@ -33,7 +33,7 @@ final class NearUserViewController: BaseViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -59,13 +59,20 @@ extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
              return UITableViewCell()
         }
         cell.hobbyData = ["냥","냥냥파티","냥냥파티","냥냥파티"]
+        cell.matchButton.setTitle("요청하기", for: .normal)
         
         return cell
     }
     
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 700
+//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 700
+        print("df",UITableView.automaticDimension)
+        return UITableView.automaticDimension
     }
-    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
 }

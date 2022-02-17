@@ -55,6 +55,7 @@ class UserProfileTableViewCell: UITableViewCell{
         nickNameLabel.font = UIFont().Title1_M16
         nickNameLabel.textColor = .black
         nickNameLabel.textAlignment = .left
+        nickNameLabel.text = "이름 구간"
         titleLabel.text = "새싹 타이틀"
         wantHobbyLabel.text = "하고 싶은 취미"
         wantHobbyCollectionView.delegate = self
@@ -73,9 +74,9 @@ class UserProfileTableViewCell: UITableViewCell{
     }
     
     func setupConstraints(){
-        addSubview(profileView)
+        contentView.addSubview(profileView)
         profileView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
+            make.top.equalToSuperview().offset(20)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(194)
         }
@@ -97,7 +98,7 @@ class UserProfileTableViewCell: UITableViewCell{
             make.width.equalTo(80)
         }
         
-        addSubview(profileDetailView)
+        contentView.addSubview(profileDetailView)
         profileDetailView.addSubview(nickNameLabel)
         profileDetailView.addSubview(titleLabel)
         profileDetailView.addSubview(reputationsView)
@@ -108,10 +109,11 @@ class UserProfileTableViewCell: UITableViewCell{
         
         profileDetailView.snp.makeConstraints { make in
             make.top.equalTo(profileView.snp.bottom)
+            make.bottom.equalTo(contentView.snp.bottom).inset(4)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         nickNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom)
+            make.top.equalTo(profileDetailView.snp.top).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(26)
         }
@@ -141,6 +143,7 @@ class UserProfileTableViewCell: UITableViewCell{
         reviewLabel.snp.makeConstraints { make in
             make.top.equalTo(reviewTitleLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(16)
             make.height.equalTo(24)
         }
     }
