@@ -64,9 +64,6 @@ extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 700
-//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         print("df",UITableView.automaticDimension)
         return UITableView.automaticDimension
