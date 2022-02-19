@@ -113,7 +113,11 @@ extension FindUsersTabViewController: PageboyViewControllerDataSource, TMBarData
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return viewControllers[index]
+        let vc = NearUserViewController()
+        vc.searchedFriends = self.searchedFriends
+        
+        return index == 0 ? vc : AcceptViewController()
+        //return viewControllers[index]
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

@@ -10,6 +10,7 @@ import SnapKit
 import Toast
 
 final class AcceptViewController: BaseViewController {
+    var searchedFriends: SearchedFriends?
     let emptyView = EmptyUIView(text: "아직 받은 요청이 없어요ㅠ")
     
     override func loadView() {

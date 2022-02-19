@@ -12,6 +12,7 @@ import Toast
 final class NearUserViewController: BaseViewController {
     let emptyView = EmptyUIView(text: "아쉽게도 주변에 새싹이 없어요ㅠ")
     let tableView = UITableView()
+    var searchedFriends: SearchedFriends?
     
     override func viewDidLoad() {
         super.viewDidLoad()
