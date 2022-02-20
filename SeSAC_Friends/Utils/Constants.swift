@@ -48,6 +48,19 @@ enum DeleteQueueStatusCode: Int {
     case ALREADY_MATCHING = 201
 }
 
+// 취미 함께하기 요청 (post hobbyrequest)
+enum HobbyRequestStatusCode: Int {
+    case USER_ALREADY_REQUEST = 201
+    case USER_STOP_MATCHING = 202
+}
+
+// 취미 함께하기 수락 (post hobbyaccept)
+enum HobbyAcceptStatusCode: Int {
+    case ALREADY_MATCHING_OTHERS = 201
+    case USER_STOP_MATCHING = 202
+    case ALREADY_MATCHING_ME = 203
+}
+
 enum SesacImage : Int {
     //Int여서 자동으로 rawValue 0부터 값을 가짐
     case sesac0

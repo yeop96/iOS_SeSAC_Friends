@@ -26,6 +26,7 @@ final class AcceptViewController: BaseViewController {
     let emptyView = EmptyUIView(text: "아직 받은 요청이 없어요ㅠ")
     let tableView = UITableView()
     let progress = JGProgressHUD()
+    var otherUID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,7 @@ final class AcceptViewController: BaseViewController {
     
     override func setupConstraints() {
         view.addSubview(emptyView)
-
+        
         emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -91,7 +92,53 @@ final class AcceptViewController: BaseViewController {
         searchFreinds()
     }
     @objc func matchButtonClicked(sender: UIButton){
-        print(fromQueueDB[sender.tag].uid)
+        
+        otherUID = self.fromQueueDB[sender.tag].uid
+        
+        let popUpViewController = PopUpViewController(titleText: "취미 같이 하기를 수락할까요?", messageText: "요청을 수락하면 채팅창에서 대화를 나눌 수 있어요")
+        popUpViewController.confirmAction = {
+            self.accept()
+            popUpViewController.dismiss(animated: false, completion: nil)
+        }
+        present(popUpViewController, animated: false, completion: nil)
+        
+    }
+    
+    //수락 하기
+    func accept(){
+        ServerService.shared.postHobbyrequest(uid: otherUID) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    UserData.matchingStatus = MatchingStatus.matched.rawValue
+                    // 1_5_chatting 변환
+                }
+            case HobbyAcceptStatusCode.ALREADY_MATCHING_OTHERS.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("상대방이 이미 다른 사람과 취미를 함께 하는 중입니다", duration: 1.0, position: .bottom)
+                }
+            case HobbyAcceptStatusCode.USER_STOP_MATCHING.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("상대방이 취미 함께 하기를 그만두었습니다", duration: 1.0, position: .bottom)
+                }
+            case HobbyAcceptStatusCode.ALREADY_MATCHING_ME.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("앗! 누군가가 나의 취미 함께 하기를 수락하였어요!", duration: 1.0, position: .bottom)
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.accept()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
     }
     
     //주변 찾기
@@ -133,7 +180,7 @@ extension AcceptViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserProfileTableViewCell.identifier, for: indexPath) as? UserProfileTableViewCell else {
-             return UITableViewCell()
+            return UITableViewCell()
         }
         
         let user = fromQueueDB[indexPath.row]
@@ -171,7 +218,7 @@ extension AcceptViewController: UITableViewDelegate, UITableViewDataSource{
         cell.matchButton.backgroundColor = .success
         cell.matchButton.tag = indexPath.row
         cell.matchButton.addTarget(self, action: #selector(matchButtonClicked(sender:)), for: .touchUpInside)
-         
+        
         return cell
     }
     

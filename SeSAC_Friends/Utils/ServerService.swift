@@ -25,6 +25,9 @@ enum ServerRequest {
     case RequestFrineds
     case StopRequestFrineds
     case SearchFriends
+    case HobbyRequest
+    case HobbyAccept
+    case MyState
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -54,7 +57,15 @@ enum ServerRequest {
         case .SearchFriends:
             url = .endPoint("/queue/onqueue")
             parm = nil
-            
+        case .HobbyRequest:
+            url = .endPoint("/queue/hobbyrequest")
+            parm = nil
+        case .HobbyAccept:
+            url = .endPoint("/queue/hobbyaccept")
+            parm = nil
+        case .MyState:
+            url = .endPoint("/queue/myQueueState")
+            parm = nil
         }
         
         head = ["Content-Type" : "application/x-www-form-urlencoded",
@@ -206,7 +217,6 @@ class ServerService {
         let parm : Parameters = ["region": region,
                                  "lat": lat,
                                  "long": long]
-        
         AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseJSON { response in
             let data = response.data
             let statusCode = response.response?.statusCode ?? 500
@@ -214,6 +224,39 @@ class ServerService {
             result(statusCode, data)
             
         }
+    }
+    
+    func postHobbyrequest(uid: String, _ result: @escaping CompletionHandler){
+        let server = ServerRequest.HobbyRequest.urlRequest
+        let parm : Parameters = ["otheruid": uid]
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers)
+            .validate()
+            .responseString { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+            }
+    }
+    func postHobbyaccept(uid: String, _ result: @escaping CompletionHandler){
+        let server = ServerRequest.HobbyAccept.urlRequest
+        let parm : Parameters = ["otheruid": uid]
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers)
+            .validate()
+            .responseString { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+            }
+    }
+    func getMyState( _ result: @escaping CompletionHandler){
+        let server = ServerRequest.MyState.urlRequest
+        AF.request(server.url, method: .get, headers: server.headers)
+            .validate()
+            .responseJSON { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
+            }
     }
     
     static func updateIdToken(completion: @escaping (Result<String, Error>) -> Void) {

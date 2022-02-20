@@ -26,6 +26,7 @@ final class NearUserViewController: BaseViewController {
     let emptyView = EmptyUIView(text: "아쉽게도 주변에 새싹이 없어요ㅠ")
     let tableView = UITableView()
     let progress = JGProgressHUD()
+    var otherUID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +93,46 @@ final class NearUserViewController: BaseViewController {
         searchFreinds()
     }
     @objc func matchButtonClicked(sender: UIButton){
-        print(fromQueueDB[sender.tag].uid)
+        otherUID = self.fromQueueDB[sender.tag].uid
+        let popUpViewController = PopUpViewController(titleText: "취미 같이 하기를 요청할게요!", messageText: "요청이 수락되면 30분 후에 리뷰를 남길 수 있어요")
+        popUpViewController.confirmAction = {
+            self.request()
+            popUpViewController.dismiss(animated: false, completion: nil)
+        }
+        present(popUpViewController, animated: false, completion: nil)
+    }
+    
+    //취미 요청
+    func request(){
+        ServerService.shared.postHobbyrequest(uid: otherUID) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("취미 함께 하기 요청을 보냈습니다", duration: 3.0, position: .bottom)
+                }
+            case HobbyRequestStatusCode.USER_ALREADY_REQUEST.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("상대방도 취미 함께 하기를 요청했습니다. 채팅방으로 이동합니다", duration: 1.0, position: .bottom)
+                    //1초뒤 1_5_chatting 변환
+                }
+            case HobbyRequestStatusCode.USER_STOP_MATCHING.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("상대방이 취미 함께 하기를 그만두었습니다", duration: 1.0, position: .bottom)
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.request()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
     }
     
     //주변 찾기
