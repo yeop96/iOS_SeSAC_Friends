@@ -10,9 +10,9 @@ import SnapKit
 import Toast
 
 final class NearUserViewController: BaseViewController {
+    var fromQueueDB = [FromQueueDB]()
     let emptyView = EmptyUIView(text: "아쉽게도 주변에 새싹이 없어요ㅠ")
     let tableView = UITableView()
-    var searchedFriends: SearchedFriends?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,14 +23,23 @@ final class NearUserViewController: BaseViewController {
         tableView.dataSource = self
         tableView.register(UserProfileTableViewCell.self, forCellReuseIdentifier: UserProfileTableViewCell.identifier)
         tableView.separatorStyle = .none
+        
+        if fromQueueDB.isEmpty{
+            tableView.isHidden = true
+            emptyView.isHidden = false
+        } else{
+            tableView.isHidden = false
+            emptyView.isHidden = true
+        }
     }
     
     override func setupConstraints() {
-//        view.addSubview(emptyView)
-//
-//        emptyView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
+        view.addSubview(emptyView)
+
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -44,24 +53,35 @@ final class NearUserViewController: BaseViewController {
 }
 
 
+//struct f: Codable {
+//    let uid, nick: String
+//    let lat, long: Double
+//    let reputation: [Int]
+//    let hf, reviews: [String]
+//    let gender, type, sesac, background: Int
+//}
 extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 3
-        
+        return fromQueueDB.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserProfileTableViewCell.identifier, for: indexPath) as? UserProfileTableViewCell else {
              return UITableViewCell()
         }
-        cell.hobbyData = ["냥","냥냥파티","냥냥파티","냥냥파티"]
-        cell.matchButton.setTitle("요청하기", for: .normal)
         
+        let user = fromQueueDB[indexPath.row]
+        cell.profileBackImageView.image = SesacBackgroundImage(rawValue: user.background)?.sesacBackgroundUIImage()
+        cell.profileUserImageView.image = SesacImage(rawValue: user.sesac)?.sesacUIImage()
+        cell.nickNameLabel.text = user.nick
+        print(user.reputation)
+        cell.hobbyData = user.hf.map{$0.lowercased() == "anything" ? "아무거나" : $0}
+        print(user.reviews)
+        cell.matchButton.setTitle("요청하기", for: .normal)
+         
         return cell
     }
     
