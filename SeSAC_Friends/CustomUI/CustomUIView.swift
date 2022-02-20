@@ -39,7 +39,6 @@ class EmptyUIView: UIView {
         emptyDescriptionLabel.font = UIFont().Title4_R14
         emptyDescriptionLabel.textColor = .gray7
         changeHobbyButton.setTitle("취미 변경하기", for: .normal)
-        changeHobbyButton.addTarget(self, action: #selector(changeHobbyButtonClicked), for: .touchUpInside)
     }
     
     func setupConstraints() {
@@ -76,9 +75,6 @@ class EmptyUIView: UIView {
         }
     }
     
-    @objc func changeHobbyButtonClicked(){
-        
-    }
 }
 
 class ReputationButtonsView: UIView {

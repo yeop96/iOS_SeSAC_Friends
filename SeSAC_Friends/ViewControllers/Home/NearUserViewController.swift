@@ -8,29 +8,38 @@
 import UIKit
 import SnapKit
 import Toast
+import JGProgressHUD
 
 final class NearUserViewController: BaseViewController {
-    var fromQueueDB = [FromQueueDB]()
+    var fromQueueDB = [FromQueueDB](){
+        didSet{
+            if fromQueueDB.isEmpty{
+                tableView.isHidden = true
+                emptyView.isHidden = false
+            } else{
+                tableView.isHidden = false
+                emptyView.isHidden = true
+            }
+            tableView.reloadData()
+        }
+    }
     let emptyView = EmptyUIView(text: "아쉽게도 주변에 새싹이 없어요ㅠ")
     let tableView = UITableView()
+    let progress = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchFreinds()
     }
     
     override func configure() {
+        emptyView.changeHobbyButton.addTarget(self, action: #selector(changeHobbyButtonClicked), for: .touchUpInside)
+        emptyView.reloadButton.addTarget(self, action: #selector(reloadButtonButtonClicked), for: .touchUpInside)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UserProfileTableViewCell.self, forCellReuseIdentifier: UserProfileTableViewCell.identifier)
         tableView.separatorStyle = .none
-        
-        if fromQueueDB.isEmpty{
-            tableView.isHidden = true
-            emptyView.isHidden = false
-        } else{
-            tableView.isHidden = false
-            emptyView.isHidden = true
-        }
     }
     
     override func setupConstraints() {
@@ -47,19 +56,73 @@ final class NearUserViewController: BaseViewController {
         }
     }
     
+    
     @objc func changeHobbyButtonClicked(){
-        print("?")
+        progress.show(in: view, animated: true)
+        ServerService.shared.deleteRequestFrineds() { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    print(statusCode, data)
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case DeleteQueueStatusCode.ALREADY_MATCHING.rawValue:
+                DispatchQueue.main.async {
+                    self.view.makeToast("누군가와 취미를 함께하기로 약속하셨어요!", duration: 3.0, position: .top)
+                    //채팅 화면(1_5_chatting)으로 이동
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.changeHobbyButtonClicked()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        self.progress.dismiss(animated: true)
+    }
+    @objc func reloadButtonButtonClicked(){
+        searchFreinds()
+    }
+    @objc func matchButtonClicked(sender: UIButton){
+        print(fromQueueDB[sender.tag].uid)
+    }
+    
+    //주변 찾기
+    func searchFreinds(){
+        progress.show(in: view, animated: true)
+        ServerService.shared.postSearchFriedns(region: UserData.region, lat: UserData.lat, long: UserData.long) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    let searchedFriends = try? JSONDecoder().decode(SearchedFriends.self, from: data!)
+                    self.fromQueueDB = searchedFriends!.fromQueueDB
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.searchFreinds()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        self.progress.dismiss(animated: true)
     }
 }
 
-
-//struct f: Codable {
-//    let uid, nick: String
-//    let lat, long: Double
-//    let reputation: [Int]
-//    let hf, reviews: [String]
-//    let gender, type, sesac, background: Int
-//}
 extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,12 +168,13 @@ extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
             cell.reviewLabel.textColor = .black
         }
         cell.matchButton.setTitle("요청하기", for: .normal)
+        cell.matchButton.tag = indexPath.row
+        cell.matchButton.addTarget(self, action: #selector(matchButtonClicked(sender:)), for: .touchUpInside)
          
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("df",UITableView.automaticDimension)
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -63,6 +63,13 @@ struct UserData {
     @UserDefault(key: keyEnum.ageMax.rawValue, defaultValue: 38)
     static var ageMax: Int
     
+    @UserDefault(key: keyEnum.lat.rawValue, defaultValue: 0.0)
+    static var lat: Double
+    @UserDefault(key: keyEnum.long.rawValue, defaultValue: 0.0)
+    static var long: Double
+    @UserDefault(key: keyEnum.region.rawValue, defaultValue: 0)
+    static var region: Int
+    
     @UserDefault(key: keyEnum.matchingStatus.rawValue, defaultValue: MatchingStatus.search.rawValue)
     static var matchingStatus: Int
     
@@ -83,6 +90,9 @@ enum keyEnum: String {
     case searchable = "searchable" // 거부(Switch OFF): 0 , 허용(Switch ON): 1
     case ageMin = "ageMin"
     case ageMax = "ageMax"
+    case lat = "lat"
+    case long = "long"
+    case region = "region"
     case matchingStatus = "matchingStatus"
 }
 

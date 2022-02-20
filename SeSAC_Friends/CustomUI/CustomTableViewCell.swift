@@ -31,6 +31,22 @@ class UserProfileTableViewCell: UITableViewCell{
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileBackImageView.image = SesacBackgroundImage(rawValue: 0)?.sesacBackgroundUIImage()
+        profileUserImageView.image = SesacImage(rawValue: 0)?.sesacUIImage()
+        nickNameLabel.text = ""
+        reputationsView.mannerButton.unclicked()
+        reputationsView.timeButton.unclicked()
+        reputationsView.fastButton.unclicked()
+        reputationsView.kindButton.unclicked()
+        reputationsView.handyButton.unclicked()
+        reputationsView.beneficialButton.unclicked()
+        reviewLabel.text = "첫 리뷰를 기다리는 중이에요!"
+        reviewLabel.font = UIFont().Body3_R14
+        reviewLabel.textColor = .gray6
+        reviewLabel.textAlignment = .left
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

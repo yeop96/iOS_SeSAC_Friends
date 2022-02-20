@@ -113,13 +113,13 @@ extension FindUsersTabViewController: PageboyViewControllerDataSource, TMBarData
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        let nearUserViewController = NearUserViewController()
-        nearUserViewController.fromQueueDB = self.searchedFriends?.fromQueueDB ?? []
-        let acceptViewControleer = AcceptViewController()
-        acceptViewControleer.fromQueueDB = self.searchedFriends?.fromQueueDBRequested ?? []
-        
-        return index == 0 ? nearUserViewController : acceptViewControleer
-        //return viewControllers[index]
+//        let nearUserViewController = NearUserViewController()
+//        nearUserViewController.fromQueueDB = self.searchedFriends?.fromQueueDB ?? []
+//        let acceptViewControleer = AcceptViewController()
+//        acceptViewControleer.fromQueueDB = self.searchedFriends?.fromQueueDBRequested ?? []
+//
+//        return index == 0 ? nearUserViewController : acceptViewControleer
+        return viewControllers[index]
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

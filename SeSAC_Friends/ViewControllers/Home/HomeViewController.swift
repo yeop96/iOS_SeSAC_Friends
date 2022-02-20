@@ -48,7 +48,7 @@ final class HomeViewController: BaseViewController {
     
     override func configure() {
         centerLocationView.image = UIImage(named: "map_marker")
-      
+        
         filterButton.allButton.addTarget(self, action: #selector(filterAllButtonClicked), for: .touchUpInside)
         filterButton.allButtonClicked(sender: filterButton.allButton)
         filterButton.maleButton.addTarget(self, action: #selector(filterMaleButtonClicked), for: .touchUpInside)
@@ -66,7 +66,7 @@ final class HomeViewController: BaseViewController {
         currentLocation = locationManager.location
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         
-
+        
         gpsButton.addTarget(self, action: #selector(findMyLocation), for: .touchUpInside)
     }
     
@@ -121,6 +121,9 @@ final class HomeViewController: BaseViewController {
             vc.lat = self.lat
             vc.long = self.long
             vc.region = self.region
+            UserData.lat = self.lat
+            UserData.long = self.long
+            UserData.region = self.region
             self.navigationController?.pushViewController(vc, animated: true)
         case MatchingStatus.matching.rawValue:
             let vc = FindUsersTabViewController()
@@ -182,57 +185,53 @@ final class HomeViewController: BaseViewController {
     //주변 찾기
     func searchFreinds(){
         progress.show(in: view, animated: true)
-        DispatchQueue.global().async {
-            ServerService.shared.postSearchFriedns(region: self.region, lat: self.lat, long: self.long) { statusCode, data in
-                switch statusCode{
-                case ServerStatusCode.OK.rawValue:
-                    DispatchQueue.main.async {
-                        self.maleAnnotations = []
-                        self.femaleAnnotations = []
+        ServerService.shared.postSearchFriedns(region: self.region, lat: self.lat, long: self.long) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    self.maleAnnotations = []
+                    self.femaleAnnotations = []
+                    
+                    self.searchedFriends = try? JSONDecoder().decode(SearchedFriends.self, from: data!)
+                    
+                    for otherUserInfo in self.searchedFriends!.fromQueueDB {
                         
-                        self.searchedFriends = try? JSONDecoder().decode(SearchedFriends.self, from: data!)
-                        
-                        for otherUserInfo in self.searchedFriends!.fromQueueDB {
-                            
-                            if otherUserInfo.gender == GenderNumber.male.rawValue {
-                                self.maleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
-                            } else {
-                                self.femaleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
-                            }
-                        }
-                        
-                        for otherUserInfo in self.searchedFriends!.fromQueueDBRequested {
-                            
-                            if otherUserInfo.gender == GenderNumber.male.rawValue {
-                                self.maleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
-                            } else {
-                                self.femaleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
-                            }
-                            
-                        }
-                        
-                        
-                        self.genderFilteredPin(gender: self.selectFilter)
-                        print("누구인가", self.searchedFriends as Any)
-                    }
-                case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
-                    ServerService.updateIdToken { result in
-                        switch result {
-                        case .success:
-                            self.searchFreinds()
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            return
+                        if otherUserInfo.gender == GenderNumber.male.rawValue {
+                            self.maleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
+                        } else {
+                            self.femaleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
                         }
                     }
-                default:
-                    print("ERROR: ", statusCode)
+                    
+                    for otherUserInfo in self.searchedFriends!.fromQueueDBRequested {
+                        
+                        if otherUserInfo.gender == GenderNumber.male.rawValue {
+                            self.maleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
+                        } else {
+                            self.femaleAnnotations.append(CustomAnnotation(sesac_image: otherUserInfo.sesac, coordinate: CLLocationCoordinate2D(latitude: otherUserInfo.lat, longitude: otherUserInfo.long)))
+                        }
+                        
+                    }
+                    
+                    self.genderFilteredPin(gender: self.selectFilter)
                 }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.searchFreinds()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
             }
-            self.progress.dismiss(animated: true)
         }
+        self.progress.dismiss(animated: true)
     }
-
+    
 }
 
 
@@ -245,16 +244,16 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
             currentLocation = locationManager.location
         }
         
-//        guard let location = locations.last else { return }
-//
-//        lat = location.coordinate.latitude
-//        long = location.coordinate.longitude
-//        let center = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//
-//        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
-//
-//
-//        mapView.setRegion(region, animated: true)
+        //        guard let location = locations.last else { return }
+        //
+        //        lat = location.coordinate.latitude
+        //        long = location.coordinate.longitude
+        //        let center = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        //
+        //        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        //
+        //
+        //        mapView.setRegion(region, animated: true)
     }
     
     
@@ -280,7 +279,7 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
         UIGraphicsBeginImageContext(size)
         
         sesacImage = SesacImage(rawValue: annotation.sesac_image ?? 0)?.sesacUIImage()
-    
+        
         sesacImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         annotationView?.image = resizedImage
@@ -301,19 +300,19 @@ extension HomeViewController: MKMapViewDelegate, CLLocationManagerDelegate{
 
 
 class CustomAnnotation: NSObject, MKAnnotation {
-  let sesac_image: Int?
-  let coordinate: CLLocationCoordinate2D
-
-  init(
-    sesac_image: Int?,
-    coordinate: CLLocationCoordinate2D
-  ) {
-    self.sesac_image = sesac_image
-    self.coordinate = coordinate
-
-    super.init()
-  }
-
+    let sesac_image: Int?
+    let coordinate: CLLocationCoordinate2D
+    
+    init(
+        sesac_image: Int?,
+        coordinate: CLLocationCoordinate2D
+    ) {
+        self.sesac_image = sesac_image
+        self.coordinate = coordinate
+        
+        super.init()
+    }
+    
 }
 
 class CustomAnnotationView: MKAnnotationView {
