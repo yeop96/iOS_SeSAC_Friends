@@ -1,0 +1,133 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "f82c23a8a7ef8dc1a49a8bfc6a96883e79121864",
+          "version": "5.5.0"
+        }
+      },
+      {
+        "package": "AnyFormatKit",
+        "repositoryURL": "https://github.com/luximetr/AnyFormatKit.git",
+        "state": {
+          "branch": null,
+          "revision": "27b35c984c1c81e74c8be5273f7b2dc5250cb5cc",
+          "version": "2.5.1"
+        }
+      },
+      {
+        "package": "AvailableHapticFeedback",
+        "repositoryURL": "https://github.com/yonat/AvailableHapticFeedback",
+        "state": {
+          "branch": null,
+          "revision": "f9ae6d54af1fb06fff0ddb16246091c6de22f989",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "IQKeyboardManagerSwift",
+        "repositoryURL": "https://github.com/hackiftekhar/IQKeyboardManager.git",
+        "state": {
+          "branch": null,
+          "revision": "474f849accae40fe61b5302d9b057dd48ee073ba",
+          "version": "6.5.9"
+        }
+      },
+      {
+        "package": "JGProgressHUD",
+        "repositoryURL": "https://github.com/JonasGessner/JGProgressHUD.git",
+        "state": {
+          "branch": null,
+          "revision": "78d7cd35f1d90ff74fd82e486f2cbe4b24be8cf9",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "MultiSlider",
+        "repositoryURL": "https://github.com/yonat/MultiSlider.git",
+        "state": {
+          "branch": null,
+          "revision": "54339400e64ffb90fed9d3eb97dbc6f62e560627",
+          "version": "1.11.1"
+        }
+      },
+      {
+        "package": "Pageboy",
+        "repositoryURL": "https://github.com/uias/Pageboy",
+        "state": {
+          "branch": null,
+          "revision": "34ecb6e7c4e0e07494960ab2f7cc9a02293915a6",
+          "version": "3.6.2"
+        }
+      },
+      {
+        "package": "RxSwift",
+        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "b4307ba0b6425c0ba4178e138799946c3da594f8",
+          "version": "6.5.0"
+        }
+      },
+      {
+        "package": "SkyFloatingLabelTextField",
+        "repositoryURL": "https://github.com/Skyscanner/SkyFloatingLabelTextField.git",
+        "state": {
+          "branch": null,
+          "revision": "a0750ebbc7311f3b3debf99c5e59338e854afa59",
+          "version": "4.0.0"
+        }
+      },
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
+        "state": {
+          "branch": null,
+          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "package": "SweeterSwift",
+        "repositoryURL": "https://github.com/yonat/SweeterSwift",
+        "state": {
+          "branch": null,
+          "revision": "23997b3f33cc213a9fb15064c609bf29787c0653",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "SwiftyJSON",
+        "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+        "state": {
+          "branch": null,
+          "revision": "2b6054efa051565954e1d2b9da831680026cd768",
+          "version": "5.0.0"
+        }
+      },
+      {
+        "package": "Tabman",
+        "repositoryURL": "https://github.com/uias/Tabman.git",
+        "state": {
+          "branch": null,
+          "revision": "a9f10cb862a32e6a22549836af013abd6b0692d3",
+          "version": "2.12.0"
+        }
+      },
+      {
+        "package": "Toast",
+        "repositoryURL": "https://github.com/scalessec/Toast-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "0c9493eeacb102cc614da385cfaaf475379f4ab4",
+          "version": "5.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
