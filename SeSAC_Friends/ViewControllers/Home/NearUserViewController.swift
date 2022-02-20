@@ -77,9 +77,33 @@ extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
         cell.profileBackImageView.image = SesacBackgroundImage(rawValue: user.background)?.sesacBackgroundUIImage()
         cell.profileUserImageView.image = SesacImage(rawValue: user.sesac)?.sesacUIImage()
         cell.nickNameLabel.text = user.nick
-        print(user.reputation)
+        
+        for (index, element) in user.reputation.enumerated(){
+            if element > 0{
+                switch index {
+                case 0:
+                    cell.reputationsView.mannerButton.clicked()
+                case 1:
+                    cell.reputationsView.timeButton.clicked()
+                case 2:
+                    cell.reputationsView.fastButton.clicked()
+                case 3:
+                    cell.reputationsView.kindButton.clicked()
+                case 4:
+                    cell.reputationsView.handyButton.clicked()
+                case 5:
+                    cell.reputationsView.beneficialButton.clicked()
+                default:
+                    print("")
+                }
+            }
+        }
         cell.hobbyData = user.hf.map{$0.lowercased() == "anything" ? "아무거나" : $0}
-        print(user.reviews)
+        if let review = user.reviews.first{
+            cell.reviewLabel.text = review
+            cell.reviewLabel.numberOfLines = 0
+            cell.reviewLabel.textColor = .black
+        }
         cell.matchButton.setTitle("요청하기", for: .normal)
          
         return cell
