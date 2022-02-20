@@ -68,6 +68,9 @@ enum SesacBackgroundImage : Int {
     case background2
     case background3
     case background4
+    case background5
+    case background6
+    case background7
     
     func sesacBackgroundUIImage() -> UIImage{
         return UIImage(named: "sesac_background_\(self.rawValue + 1)")!
