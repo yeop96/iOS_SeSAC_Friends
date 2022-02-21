@@ -23,7 +23,11 @@ class UserProfileTableViewCell: UITableViewCell{
     let wantHobbyLabel = UILabel()
     let wantHobbyCollectionView = TagDynamicHeightCollectionView()
     let reviewTitleLabel = UILabel()
+    let reviewMoreButton = UIImageView()
     let reviewLabel = UILabel()
+    
+    var more : (() -> ()) = {}
+    
     
     var hobbyData = [String](){
         didSet{
@@ -78,6 +82,13 @@ class UserProfileTableViewCell: UITableViewCell{
         wantHobbyCollectionView.dataSource = self
         wantHobbyCollectionView.register(HobbyCell.self, forCellWithReuseIdentifier: HobbyCell.identifier)
         reviewTitleLabel.text = "새싹 리뷰"
+        
+        reviewMoreButton.image = UIImage(named: "more_arrow")?.withRenderingMode(.alwaysTemplate)
+        reviewMoreButton.tintColor = .black
+        let moreAction = UITapGestureRecognizer(target: self, action: #selector(moreButtonClicked))
+        reviewMoreButton.isUserInteractionEnabled = true
+        reviewMoreButton.addGestureRecognizer(moreAction)
+        
         reviewLabel.text = "첫 리뷰를 기다리는 중이에요!"
         [titleLabel, wantHobbyLabel, reviewTitleLabel].forEach {
             $0.font = UIFont().Title6_R12
@@ -121,6 +132,7 @@ class UserProfileTableViewCell: UITableViewCell{
         profileDetailView.addSubview(wantHobbyLabel)
         profileDetailView.addSubview(wantHobbyCollectionView)
         profileDetailView.addSubview(reviewTitleLabel)
+        profileDetailView.addSubview(reviewMoreButton)
         profileDetailView.addSubview(reviewLabel)
         
         profileDetailView.snp.makeConstraints { make in
@@ -153,8 +165,13 @@ class UserProfileTableViewCell: UITableViewCell{
         }
         reviewTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(wantHobbyCollectionView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.equalToSuperview().inset(16)
             make.height.equalTo(18)
+        }
+        reviewMoreButton.snp.makeConstraints { make in
+            make.centerY.equalTo(reviewTitleLabel)
+            make.trailing.equalToSuperview().inset(21)
+            make.height.equalTo(12)
         }
         reviewLabel.snp.makeConstraints { make in
             make.top.equalTo(reviewTitleLabel.snp.bottom).offset(16)
@@ -166,6 +183,10 @@ class UserProfileTableViewCell: UITableViewCell{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func moreButtonClicked(){
+        more()
     }
 }
 

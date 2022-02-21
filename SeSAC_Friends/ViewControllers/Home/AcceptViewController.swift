@@ -209,6 +209,13 @@ extension AcceptViewController: UITableViewDelegate, UITableViewDataSource{
             }
         }
         cell.hobbyData = user.hf.map{$0.lowercased() == "anything" ? "아무거나" : $0}
+        cell.more = { [unowned self] in
+            DispatchQueue.main.async {
+                let reviewDetailViewController = ReviewDetailViewController()
+                reviewDetailViewController.reviewData = user.reviews
+                self.navigationController?.pushViewController(reviewDetailViewController, animated: true)
+            }
+        }
         if let review = user.reviews.first{
             cell.reviewLabel.text = review
             cell.reviewLabel.numberOfLines = 0

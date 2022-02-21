@@ -61,6 +61,7 @@
 		27D19AAE279C788F0001CFFE /* BaseURLInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27D19AAD279C788F0001CFFE /* BaseURLInfo.plist */; };
 		27D19AB0279C79800001CFFE /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */; };
 		27D19AB3279CA1BD0001CFFE /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 27D19AB2279CA1BD0001CFFE /* SwiftyJSON */; };
+		27D28B9127C2C9FB00BDFB88 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D28B9027C2C9FB00BDFB88 /* ReviewDetailViewController.swift */; };
 		27D735B527A4788800300E8C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D735B427A4788800300E8C /* TabBarController.swift */; };
 		27D735B727A4797D00300E8C /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D735B627A4797D00300E8C /* ShopViewController.swift */; };
 		27D735B927A479A400300E8C /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D735B827A479A400300E8C /* FriendsViewController.swift */; };
@@ -117,6 +118,7 @@
 		27D19AAB279C73760001CFFE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		27D19AAD279C788F0001CFFE /* BaseURLInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BaseURLInfo.plist; sourceTree = "<group>"; };
 		27D19AAF279C797F0001CFFE /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		27D28B9027C2C9FB00BDFB88 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
 		27D735B427A4788800300E8C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		27D735B627A4797D00300E8C /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		27D735B827A479A400300E8C /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				27767DFF27B6CE7500972523 /* FindUsersTabViewController.swift */,
 				27767E0827BACC3100972523 /* NearUserViewController.swift */,
 				27767E0A27BACC4000972523 /* AcceptViewController.swift */,
+				27D28B9027C2C9FB00BDFB88 /* ReviewDetailViewController.swift */,
 				27767E0327BAC21500972523 /* ChattingViewController.swift */,
 			);
 			path = Home;
@@ -527,6 +530,7 @@
 				27540B6A2799EB3B00BA6416 /* UINavigationController+Extension.swift in Sources */,
 				27CE5203279D5EB000972D3E /* NickNameViewController.swift in Sources */,
 				27522ED427970C2000C7874E /* SceneDelegate.swift in Sources */,
+				27D28B9127C2C9FB00BDFB88 /* ReviewDetailViewController.swift in Sources */,
 				27540B622799C31F00BA6416 /* UITextField+Extension.swift in Sources */,
 				27D735BB27A479D600300E8C /* MyInformationViewController.swift in Sources */,
 				2757905E279DC2E400B845D8 /* UserDefault.swift in Sources */,
