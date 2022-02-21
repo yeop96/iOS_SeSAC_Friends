@@ -68,9 +68,10 @@ final class AcceptViewController: BaseViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             case DeleteQueueStatusCode.ALREADY_MATCHING.rawValue:
-                DispatchQueue.main.async {
-                    self.view.makeToast("누군가와 취미를 함께하기로 약속하셨어요!", duration: 3.0, position: .top)
+                self.view.makeToast("누군가와 취미를 함께하기로 약속하셨어요!", duration: 3.0, position: .top)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     //채팅 화면(1_5_chatting)으로 이동
+                    self.navigationController?.pushViewController(ChattingViewController(), animated: true)
                 }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
@@ -106,25 +107,21 @@ final class AcceptViewController: BaseViewController {
     
     //수락 하기
     func accept(){
-        ServerService.shared.postHobbyrequest(uid: otherUID) { statusCode, data in
+        ServerService.shared.postHobbyaccept(uid: otherUID) { statusCode, data in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
                     UserData.matchingStatus = MatchingStatus.matched.rawValue
                     // 1_5_chatting 변환
+                    let vc = ChattingViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             case HobbyAcceptStatusCode.ALREADY_MATCHING_OTHERS.rawValue:
-                DispatchQueue.main.async {
                     self.view.makeToast("상대방이 이미 다른 사람과 취미를 함께 하는 중입니다", duration: 1.0, position: .bottom)
-                }
             case HobbyAcceptStatusCode.USER_STOP_MATCHING.rawValue:
-                DispatchQueue.main.async {
                     self.view.makeToast("상대방이 취미 함께 하기를 그만두었습니다", duration: 1.0, position: .bottom)
-                }
             case HobbyAcceptStatusCode.ALREADY_MATCHING_ME.rawValue:
-                DispatchQueue.main.async {
                     self.view.makeToast("앗! 누군가가 나의 취미 함께 하기를 수락하였어요!", duration: 1.0, position: .bottom)
-                }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {
@@ -213,6 +210,7 @@ extension AcceptViewController: UITableViewDelegate, UITableViewDataSource{
             DispatchQueue.main.async {
                 let reviewDetailViewController = ReviewDetailViewController()
                 reviewDetailViewController.reviewData = user.reviews
+                reviewDetailViewController.nickName = user.nick
                 self.navigationController?.pushViewController(reviewDetailViewController, animated: true)
             }
         }

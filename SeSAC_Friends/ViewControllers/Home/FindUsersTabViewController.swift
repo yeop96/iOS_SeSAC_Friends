@@ -13,15 +13,21 @@ import Tabman
 import Pageboy
 
 final class FindUsersTabViewController: TabmanViewController {
+    var timer : Timer?
     var searchedFriends: SearchedFriends?
     let progress = JGProgressHUD()
     var viewControllers = [NearUserViewController(), AcceptViewController()]
     let bar = TMBar.ButtonBar()
+    var myState: MyState?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         configure()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timer?.invalidate()
     }
     
     func configure() {
@@ -35,6 +41,8 @@ final class FindUsersTabViewController: TabmanViewController {
         self.dataSource = self
         settingTabBar(bar: bar)
         addBar(bar, dataSource: self, at: .top)
+        
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(checkState), userInfo: nil, repeats: true)
     }
     
     @objc func rootBackButtonClicked(){
@@ -90,6 +98,46 @@ final class FindUsersTabViewController: TabmanViewController {
         bar.indicator.weight = .custom(value: 2)
         bar.indicator.tintColor = .green
     }
+    
+    @objc func checkState() {
+        ServerService.shared.getMyState(){ statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                self.myState = try? JSONDecoder().decode(MyState.self, from: data!)
+                if self.myState?.matched == 1{
+                    UserData.matchingStatus = MatchingStatus.matched.rawValue
+                    self.view.makeToast("\(String(describing: self.myState?.matchedNick))님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다", duration: 1.0, position: .bottom)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        //1초뒤 1_5_chatting 변환
+                        let vc = ChattingViewController()
+                        vc.matchingPartner = self.myState?.matchedNick ?? ""
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
+            case 201:
+                self.view.makeToast("오랜 시간 동안 매칭 되지 않아 새싹 친구 찾기를 그만둡니다", duration: 1.0, position: .bottom)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                    self.rootBackButtonClicked()
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.checkState()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        
+    }
+    
+    
 }
 
 
@@ -113,12 +161,6 @@ extension FindUsersTabViewController: PageboyViewControllerDataSource, TMBarData
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-//        let nearUserViewController = NearUserViewController()
-//        nearUserViewController.fromQueueDB = self.searchedFriends?.fromQueueDB ?? []
-//        let acceptViewControleer = AcceptViewController()
-//        acceptViewControleer.fromQueueDB = self.searchedFriends?.fromQueueDBRequested ?? []
-//
-//        return index == 0 ? nearUserViewController : acceptViewControleer
         return viewControllers[index]
     }
     

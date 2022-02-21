@@ -248,14 +248,15 @@ class ServerService {
                 result(statusCode, json)
             }
     }
-    func getMyState( _ result: @escaping CompletionHandler){
+    func getMyState( _ result: @escaping DataCompletionHandler){
         let server = ServerRequest.MyState.urlRequest
         AF.request(server.url, method: .get, headers: server.headers)
             .validate()
             .responseJSON { response in
-                let json = JSON(response.data as Any)
+                let data = response.data
                 let statusCode = response.response?.statusCode ?? 500
-                result(statusCode, json)
+                
+                result(statusCode, data)
             }
     }
     

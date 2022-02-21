@@ -69,10 +69,12 @@ final class NearUserViewController: BaseViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             case DeleteQueueStatusCode.ALREADY_MATCHING.rawValue:
-                DispatchQueue.main.async {
-                    self.view.makeToast("누군가와 취미를 함께하기로 약속하셨어요!", duration: 3.0, position: .top)
+                self.view.makeToast("누군가와 취미를 함께하기로 약속하셨어요!", duration: 3.0, position: .top)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     //채팅 화면(1_5_chatting)으로 이동
+                    self.navigationController?.pushViewController(ChattingViewController(), animated: true)
                 }
+                
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {
@@ -107,18 +109,16 @@ final class NearUserViewController: BaseViewController {
         ServerService.shared.postHobbyrequest(uid: otherUID) { statusCode, data in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
-                DispatchQueue.main.async {
-                    self.view.makeToast("취미 함께 하기 요청을 보냈습니다", duration: 3.0, position: .bottom)
-                }
+                self.view.makeToast("취미 함께 하기 요청을 보냈습니다", duration: 3.0, position: .bottom)
             case HobbyRequestStatusCode.USER_ALREADY_REQUEST.rawValue:
-                DispatchQueue.main.async {
-                    self.view.makeToast("상대방도 취미 함께 하기를 요청했습니다. 채팅방으로 이동합니다", duration: 1.0, position: .bottom)
+                self.view.makeToast("상대방도 취미 함께 하기를 요청했습니다. 채팅방으로 이동합니다", duration: 1.0, position: .bottom)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     //1초뒤 1_5_chatting 변환
+                    let vc = ChattingViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             case HobbyRequestStatusCode.USER_STOP_MATCHING.rawValue:
-                DispatchQueue.main.async {
-                    self.view.makeToast("상대방이 취미 함께 하기를 그만두었습니다", duration: 1.0, position: .bottom)
-                }
+                self.view.makeToast("상대방이 취미 함께 하기를 그만두었습니다", duration: 1.0, position: .bottom)
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {
@@ -207,6 +207,7 @@ extension NearUserViewController: UITableViewDelegate, UITableViewDataSource{
             DispatchQueue.main.async {
                 let reviewDetailViewController = ReviewDetailViewController()
                 reviewDetailViewController.reviewData = user.reviews
+                reviewDetailViewController.nickName = user.nick
                 self.navigationController?.pushViewController(reviewDetailViewController, animated: true)
             }
         }

@@ -16,6 +16,7 @@ final class ReviewDetailViewController: BaseViewController {
             tableView.reloadData()
         }
     }
+    var nickName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,7 @@ final class ReviewDetailViewController: BaseViewController {
     override func configure() {
         navigationController?.changeNavigationBar(isClear: true)
         backConfigure()
-        title = "새싹 리뷰"
+        title = "\(nickName)님의 새싹 리뷰"
         
         tableView.delegate = self
         tableView.dataSource = self

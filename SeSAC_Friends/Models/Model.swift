@@ -26,3 +26,8 @@ struct FromQueueDB: Codable {
     let hf, reviews: [String]
     let gender, type, sesac, background: Int
 }
+
+struct MyState: Codable {
+    let dodged, matched, reviewed: Int
+    let matchedNick, matchedUid: String
+}
