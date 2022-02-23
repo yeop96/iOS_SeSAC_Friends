@@ -147,3 +147,72 @@ class ReputationButtonsView: UIView {
     }
     
 }
+
+class MoreView: UIView{
+    let mainStackView = UIStackView()
+    let reportStackView = UIStackView()
+    let reportButton = UIButton()
+    let reportLabel = UILabel()
+    let dodgeStackView = UIStackView()
+    let dodgeButton = UIButton()
+    let dodgeLabel = UILabel()
+    let rateStackView = UIStackView()
+    let rateButton = UIButton()
+    let rateLabel = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configure()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure() {
+        backgroundColor = .white
+        mainStackView.distribution = .fillEqually
+        mainStackView.spacing = 0
+        mainStackView.axis = .horizontal
+        [reportStackView, dodgeStackView, rateStackView].forEach {
+            $0.distribution = .fillProportionally
+            $0.spacing = 4
+            $0.axis = .vertical
+        }
+        [reportLabel, dodgeLabel, rateLabel].forEach {
+            $0.font = UIFont().Title3_M14
+            $0.textAlignment = .center
+        }
+        reportButton.setImage(UIImage(named: "report_match"), for: .normal)
+        reportLabel.text = "새싹 신고"
+        dodgeButton.setImage(UIImage(named: "dodge_match"), for: .normal)
+        dodgeLabel.text = "약속 취소"
+        rateButton.setImage(UIImage(named: "rate_match"), for: .normal)
+        rateLabel.text = "리뷰 등록"
+    }
+    
+    func setupConstraints() {
+        addSubview(mainStackView)
+        mainStackView.addArrangedSubview(reportStackView)
+        reportStackView.addArrangedSubview(reportButton)
+        reportStackView.addArrangedSubview(reportLabel)
+        
+        mainStackView.addArrangedSubview(dodgeStackView)
+        dodgeStackView.addArrangedSubview(dodgeButton)
+        dodgeStackView.addArrangedSubview(dodgeLabel)
+        
+        mainStackView.addArrangedSubview(rateStackView)
+        rateStackView.addArrangedSubview(rateButton)
+        rateStackView.addArrangedSubview(rateLabel)
+        
+        mainStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(72)
+        }
+    }
+    
+    
+}

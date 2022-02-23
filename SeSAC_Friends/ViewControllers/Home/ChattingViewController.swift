@@ -22,10 +22,11 @@ final class ChattingViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(rootBackButtonClicked))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(moreButtonClicked))
         self.navigationController?.navigationBar.tintColor = .black
+        
     }
     
     override func setupConstraints() {
-
+        
     }
     
     @objc func rootBackButtonClicked(){
