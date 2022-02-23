@@ -145,7 +145,6 @@ class ReputationButtonsView: UIView {
             }
         }
     }
-    
 }
 
 class MoreView: UIView{

@@ -47,6 +47,7 @@
 		27767E0B27BACC4000972523 /* AcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767E0A27BACC4000972523 /* AcceptViewController.swift */; };
 		27767E0D27BADC2500972523 /* CustomUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767E0C27BADC2500972523 /* CustomUIView.swift */; };
 		27767E0F27BBDE4800972523 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27767E0E27BBDE4800972523 /* CustomTableViewCell.swift */; };
+		277FC26427C697D00098FB4F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 277FC26327C697D00098FB4F /* SocketIO */; };
 		2782D94C279AFD4A00369B68 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782D94B279AFD4A00369B68 /* HomeViewController.swift */; };
 		2788B9F727A06DA1007472D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788B9F627A06DA1007472D5 /* Constants.swift */; };
 		279F1985279B253C001AAC15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 279F1984279B253C001AAC15 /* GoogleService-Info.plist */; };
@@ -144,6 +145,7 @@
 				27522EF62797178B00C7874E /* RxCocoa in Frameworks */,
 				27522EF02797173100C7874E /* SnapKit in Frameworks */,
 				27522EF82797178B00C7874E /* RxSwift in Frameworks */,
+				277FC26427C697D00098FB4F /* SocketIO in Frameworks */,
 				27522EF32797176200C7874E /* Alamofire in Frameworks */,
 				27540B5B2799578D00BA6416 /* SkyFloatingLabelTextField in Frameworks */,
 				27D19AB3279CA1BD0001CFFE /* SwiftyJSON in Frameworks */,
@@ -390,6 +392,7 @@
 				27CE5200279D58CE00972D3E /* JGProgressHUD */,
 				27767DEC27AE114900972523 /* MultiSlider */,
 				27767E0627BAC8C300972523 /* Tabman */,
+				277FC26327C697D00098FB4F /* SocketIO */,
 			);
 			productName = SeSAC_Friends;
 			productReference = 27522ECE27970C2000C7874E /* SeSAC_Friends.app */;
@@ -431,6 +434,7 @@
 				27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 				27767DEB27AE114900972523 /* XCRemoteSwiftPackageReference "MultiSlider" */,
 				27767E0527BAC8C300972523 /* XCRemoteSwiftPackageReference "Tabman" */,
+				277FC26227C697D00098FB4F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 27522ECF27970C2000C7874E /* Products */;
 			projectDirPath = "";
@@ -837,6 +841,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		277FC26227C697D00098FB4F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 16.0.1;
+			};
+		};
 		27CE51FF279D58CE00972D3E /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
@@ -905,6 +917,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 27767E0527BAC8C300972523 /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
+		};
+		277FC26327C697D00098FB4F /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 277FC26227C697D00098FB4F /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		27CE5200279D58CE00972D3E /* JGProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
