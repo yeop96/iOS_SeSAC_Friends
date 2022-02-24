@@ -172,6 +172,7 @@ class MoreView: UIView{
     
     func configure() {
         backgroundColor = .white
+        mainStackView.backgroundColor = .white
         mainStackView.distribution = .fillEqually
         mainStackView.spacing = 0
         mainStackView.axis = .horizontal
@@ -184,15 +185,16 @@ class MoreView: UIView{
             $0.font = UIFont().Title3_M14
             $0.textAlignment = .center
         }
-        reportButton.setImage(UIImage(named: "report_match"), for: .normal)
+        reportButton.setImage(UIImage(named: "siren"), for: .normal)
         reportLabel.text = "새싹 신고"
-        dodgeButton.setImage(UIImage(named: "dodge_match"), for: .normal)
+        dodgeButton.setImage(UIImage(named: "cancel_match"), for: .normal)
         dodgeLabel.text = "약속 취소"
-        rateButton.setImage(UIImage(named: "rate_match"), for: .normal)
+        rateButton.setImage(UIImage(named: "write"), for: .normal)
         rateLabel.text = "리뷰 등록"
     }
     
     func setupConstraints() {
+        
         addSubview(mainStackView)
         mainStackView.addArrangedSubview(reportStackView)
         reportStackView.addArrangedSubview(reportButton)
