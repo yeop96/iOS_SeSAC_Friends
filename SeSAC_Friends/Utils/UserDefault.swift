@@ -73,6 +73,11 @@ struct UserData {
     @UserDefault(key: keyEnum.matchingStatus.rawValue, defaultValue: MatchingStatus.search.rawValue)
     static var matchingStatus: Int
     
+    @UserDefault(key: keyEnum.myUID.rawValue, defaultValue: "")
+    static var myUID: String
+    @UserDefault(key: keyEnum.otherUID.rawValue, defaultValue: "")
+    static var otherUID: String
+    
 }
 
 enum keyEnum: String {
@@ -94,5 +99,7 @@ enum keyEnum: String {
     case long = "long"
     case region = "region"
     case matchingStatus = "matchingStatus"
+    case myUID = "myUID"
+    case otherUID = "otherUID"
 }
 
