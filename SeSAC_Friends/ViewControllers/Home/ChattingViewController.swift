@@ -8,8 +8,10 @@
 import UIKit
 import SnapKit
 import Toast
+import JGProgressHUD
 
 final class ChattingViewController: BaseViewController {
+    let progress = JGProgressHUD()
     let moreView = MoreView()
     let remainView = UIView()
     
@@ -18,8 +20,9 @@ final class ChattingViewController: BaseViewController {
     let sendingView = UIView()
     let textView = UITextView()
     let sendButton = UIButton()
-
+    
     var myState: MyState?
+    var chats: Chats?
     var matchingPartner = UserData.matchedNick
     var matchingUID = UserData.matchedUID
     var chatList = [Chat](){
@@ -37,6 +40,7 @@ final class ChattingViewController: BaseViewController {
         navigationController?.changeNavigationBar(isClear: true)
         SocketIOManager.shared.establishConnection()
         checkState()
+        getChatting()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -134,7 +138,7 @@ final class ChattingViewController: BaseViewController {
     }
     
     @objc func sendButtonClicked(){
-        
+        sendingMessage()
     }
     
     @objc func moreButtonClicked(){
@@ -169,6 +173,7 @@ final class ChattingViewController: BaseViewController {
     
     //취소
     func dodge(){
+        progress.show(in: view, animated: true)
         ServerService.shared.postDodge(uid: UserData.matchedUID) { statusCode, data in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
@@ -190,10 +195,12 @@ final class ChattingViewController: BaseViewController {
                 print("ERROR: ", statusCode)
             }
         }
+        self.progress.dismiss(animated: true)
     }
     
     //상태 확인
     @objc func checkState() {
+        progress.show(in: view, animated: true)
         ServerService.shared.getMyState(){ statusCode, data in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
@@ -221,8 +228,58 @@ final class ChattingViewController: BaseViewController {
                 print("ERROR: ", statusCode)
             }
         }
-        
+        self.progress.dismiss(animated: true)
     }
+    
+    //보내기
+    func sendingMessage(){
+        progress.show(in: view, animated: true)
+        ServerService.shared.postSendingChatting(chat: self.textView.text) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                print("보내기")
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.sendingMessage()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        self.progress.dismiss(animated: true)
+    }
+    
+    //메시지 가져오기
+    @objc func getChatting() {
+        progress.show(in: view, animated: true)
+        ServerService.shared.getChatting { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                self.chats = try? JSONDecoder().decode(Chats.self, from: data!)
+                self.chatList = self.chats!.payload
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.getChatting()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        self.progress.dismiss(animated: true)
+    }
+    
     
 }
 
@@ -239,7 +296,7 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .white
     }
-
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
