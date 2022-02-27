@@ -10,7 +10,6 @@ import SnapKit
 import Toast
 
 final class ChattingViewController: BaseViewController {
-    var matchingPartner = ""
     let moreView = MoreView()
     let remainView = UIView()
     
@@ -20,7 +19,14 @@ final class ChattingViewController: BaseViewController {
     let textView = UITextView()
     let sendButton = UIButton()
 
-    var chatList = [Chat]()
+    var myState: MyState?
+    var matchingPartner = UserData.matchedNick
+    var matchingUID = UserData.matchedUID
+    var chatList = [Chat](){
+        didSet{
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +36,7 @@ final class ChattingViewController: BaseViewController {
         self.tabBarController?.tabBar.isHidden = true
         navigationController?.changeNavigationBar(isClear: true)
         SocketIOManager.shared.establishConnection()
-        
+        checkState()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -186,6 +192,38 @@ final class ChattingViewController: BaseViewController {
         }
     }
     
+    //상태 확인
+    @objc func checkState() {
+        ServerService.shared.getMyState(){ statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                self.myState = try? JSONDecoder().decode(MyState.self, from: data!)
+                if self.myState?.matched == 1{
+                    UserData.matchingStatus = MatchingStatus.matched.rawValue
+                    UserData.matchedNick = self.myState!.matchedNick
+                    UserData.matchedUID = self.myState!.matchedUid
+                }
+                else if self.myState?.dodged == 1 || self.myState?.reviewed == 1{
+                    self.view.makeToast("\(String(describing: self.myState?.matchedNick))님과 약속이 종료되어 채팅을 보낼 수 없습니다", duration: 1.0, position: .bottom)
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.checkState()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
+        
+    }
+    
 }
 
 extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -280,7 +318,7 @@ extension ChattingViewController: UITextViewDelegate {
     }
 }
 
-class MatchingInformationCell: UITableViewHeaderFooterView{
+final class MatchingInformationCell: UITableViewHeaderFooterView{
     static let identifier = "MatchingInformationCell"
     
     let stackView: UIStackView = {
@@ -346,7 +384,7 @@ class MatchingInformationCell: UITableViewHeaderFooterView{
 
 
 
-class MyBubbleCell: UITableViewCell{
+final class MyBubbleCell: UITableViewCell{
     static let identifier = "MyBubbleCell"
     let bubbleView = UIView()
     
@@ -408,7 +446,7 @@ class MyBubbleCell: UITableViewCell{
     
 }
 
-class FriendBubbleCell: UITableViewCell{
+final class FriendBubbleCell: UITableViewCell{
     static let identifier = "FriendBubbleCell"
     
     let bubbleView = UIView()

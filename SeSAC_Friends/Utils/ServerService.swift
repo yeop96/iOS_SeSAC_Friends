@@ -29,6 +29,8 @@ enum ServerRequest {
     case HobbyAccept
     case MyState
     case Dodge
+    case SendChatting
+    case GetChatting
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -70,6 +72,12 @@ enum ServerRequest {
         case .Dodge:
             url = .endPoint("/queue/dodge")
             parm = nil
+        case .SendChatting:
+            url = .endPoint("/queue/chat")
+            parm = nil
+        case .GetChatting:
+            url = .endPoint("/queue/chat")
+            parm = nil
         }
         
         head = ["Content-Type" : "application/x-www-form-urlencoded",
@@ -90,7 +98,7 @@ extension String{
     mutating func addContentType() -> [String: String] {
         return ["Content-Type": "application/x-www-form-urlencoded"]
     }
-
+    
     public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var request = try urlRequest.asURLRequest()
         request.httpBody = data(using: .utf8, allowLossyConversion: false)
@@ -109,7 +117,7 @@ class ServerService {
     
     //싱글톤 사용시 private으로 인스턴스 생성 안되게 하기
     private init(){
-    
+        
     }
     
     func getUserInfo(_ result: @escaping CompletionHandler){
@@ -165,7 +173,7 @@ class ServerService {
         
         AF.request(server.url, method: .post, parameters: parm, headers: server.headers).validate().responseString { response in
             let statusCode = response.response?.statusCode ?? 500
-        
+            
             switch response.result {
             case .success:
                 switch statusCode {
@@ -274,6 +282,28 @@ class ServerService {
                 let statusCode = response.response?.statusCode ?? 500
                 result(statusCode, json)
             }
+    }
+    
+    func postSendingChatting(chat: String, _ result: @escaping DataCompletionHandler){
+        let server = ServerRequest.SendChatting.urlRequest
+        let parm : Parameters = ["chat": chat]
+        AF.request(server.url + "/\(UserData.matchedUID)", method: .post, parameters: parm, headers: server.headers).validate().responseJSON { response in
+            let data = response.data
+            let statusCode = response.response?.statusCode ?? 500
+            
+            result(statusCode, data)
+            
+        }
+    }
+    func getChatting(chat: String, _ result: @escaping DataCompletionHandler){
+        let server = ServerRequest.GetChatting.urlRequest
+        AF.request(server.url + "/\(UserData.matchedUID)?lastchatDate=2000-01-01T00:00:00.000Z", method: .get, headers: server.headers).validate().responseJSON { response in
+            let data = response.data
+            let statusCode = response.response?.statusCode ?? 500
+            
+            result(statusCode, data)
+            
+        }
     }
     
     static func updateIdToken(completion: @escaping (Result<String, Error>) -> Void) {

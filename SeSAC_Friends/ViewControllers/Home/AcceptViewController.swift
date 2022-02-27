@@ -27,6 +27,7 @@ final class AcceptViewController: BaseViewController {
     let tableView = UITableView()
     let progress = JGProgressHUD()
     var otherUID = ""
+    var otherNick = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +96,7 @@ final class AcceptViewController: BaseViewController {
     @objc func matchButtonClicked(sender: UIButton){
         
         otherUID = self.fromQueueDB[sender.tag].uid
+        otherNick = self.fromQueueDB[sender.tag].nick
         
         let popUpViewController = PopUpViewController(titleText: "취미 같이 하기를 수락할까요?", messageText: "요청을 수락하면 채팅창에서 대화를 나눌 수 있어요")
         popUpViewController.confirmAction = {
@@ -112,6 +114,8 @@ final class AcceptViewController: BaseViewController {
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
                     UserData.matchingStatus = MatchingStatus.matched.rawValue
+                    UserData.matchedUID = self.otherUID
+                    UserData.matchedNick = self.otherNick
                     // 1_5_chatting 변환
                     let vc = ChattingViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
