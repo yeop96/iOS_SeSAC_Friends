@@ -28,6 +28,7 @@ enum ServerRequest {
     case HobbyRequest
     case HobbyAccept
     case MyState
+    case Dodge
     
     var urlRequest: ServerModel {
         let idToken = UserData.idToken
@@ -65,6 +66,9 @@ enum ServerRequest {
             parm = nil
         case .MyState:
             url = .endPoint("/queue/myQueueState")
+            parm = nil
+        case .Dodge:
+            url = .endPoint("/queue/dodge")
             parm = nil
         }
         
@@ -257,6 +261,18 @@ class ServerService {
                 let statusCode = response.response?.statusCode ?? 500
                 
                 result(statusCode, data)
+            }
+    }
+    
+    func postDodge(uid: String, _ result: @escaping CompletionHandler){
+        let server = ServerRequest.Dodge.urlRequest
+        let parm : Parameters = ["otheruid": uid]
+        AF.request(server.url, method: .post, parameters: parm, headers: server.headers)
+            .validate()
+            .responseString { response in
+                let json = JSON(response.data as Any)
+                let statusCode = response.response?.statusCode ?? 500
+                result(statusCode, json)
             }
     }
     

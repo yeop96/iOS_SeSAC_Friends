@@ -144,21 +144,46 @@ final class ChattingViewController: BaseViewController {
     @objc func reportTap(sender: UITapGestureRecognizer){
         moreView.isHidden.toggle()
         remainView.isHidden.toggle()
-        self.view.makeToast("신고오", duration: 1.0, position: .top)
+        self.view.makeToast("1_5_1_report_user", duration: 1.0, position: .top)
     }
     @objc func dodgeTap(sender: UITapGestureRecognizer){
         moreView.isHidden.toggle()
         remainView.isHidden.toggle()
         let popUpViewController = PopUpViewController(titleText: "약속을 취소하겠습니까?", messageText: "약속을 취소하시면 패널티가 부과됩니다")
         popUpViewController.confirmAction = {
-            self.view.makeToast("취소오", duration: 1.0, position: .top)
+            self.dodge()
         }
         present(popUpViewController, animated: false, completion: nil)
     }
     @objc func rateTap(sender: UITapGestureRecognizer){
         moreView.isHidden.toggle()
         remainView.isHidden.toggle()
-        self.view.makeToast("평가아", duration: 1.0, position: .top)
+        self.view.makeToast("1_5_3_write_review", duration: 1.0, position: .top)
+    }
+    
+    //취소
+    func dodge(){
+        ServerService.shared.postDodge(uid: UserData.matchedUID) { statusCode, data in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                DispatchQueue.main.async {
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.dodge()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            default:
+                print("ERROR: ", statusCode)
+            }
+        }
     }
     
 }

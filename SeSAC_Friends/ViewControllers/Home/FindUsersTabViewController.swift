@@ -42,6 +42,7 @@ final class FindUsersTabViewController: TabmanViewController {
         settingTabBar(bar: bar)
         addBar(bar, dataSource: self, at: .top)
         
+        //5초마다
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(checkState), userInfo: nil, repeats: true)
     }
     
@@ -106,6 +107,8 @@ final class FindUsersTabViewController: TabmanViewController {
                 self.myState = try? JSONDecoder().decode(MyState.self, from: data!)
                 if self.myState?.matched == 1{
                     UserData.matchingStatus = MatchingStatus.matched.rawValue
+                    UserData.matchedNick = self.myState!.matchedNick
+                    UserData.matchedUID = self.myState!.matchedUid
                     self.view.makeToast("\(String(describing: self.myState?.matchedNick))님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다", duration: 1.0, position: .bottom)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         //1초뒤 1_5_chatting 변환

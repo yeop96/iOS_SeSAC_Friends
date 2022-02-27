@@ -75,8 +75,10 @@ struct UserData {
     
     @UserDefault(key: keyEnum.myUID.rawValue, defaultValue: "")
     static var myUID: String
-    @UserDefault(key: keyEnum.otherUID.rawValue, defaultValue: "")
-    static var otherUID: String
+    @UserDefault(key: keyEnum.matchedUID.rawValue, defaultValue: "")
+    static var matchedUID: String
+    @UserDefault(key: keyEnum.matchedNick.rawValue, defaultValue: "")
+    static var matchedNick: String
     
 }
 
@@ -100,6 +102,7 @@ enum keyEnum: String {
     case region = "region"
     case matchingStatus = "matchingStatus"
     case myUID = "myUID"
-    case otherUID = "otherUID"
+    case matchedUID = "matchedUID"
+    case matchedNick = "matchedNick"
 }
 
