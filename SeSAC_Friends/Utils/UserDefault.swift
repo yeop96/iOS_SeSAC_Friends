@@ -32,6 +32,8 @@ struct UserDefault<T> {
 struct AppFirstLaunch {
     @UserDefault(key: keyEnum.isAppFirstLaunch.rawValue, defaultValue: true)
     static var isAppFirstLaunch: Bool
+    @UserDefault(key: keyEnum.isAppLogin.rawValue, defaultValue: false)
+    static var isAppLogin: Bool
 }
 
 struct UserData {
@@ -84,6 +86,7 @@ struct UserData {
 
 enum keyEnum: String {
     case isAppFirstLaunch = "isAppFirstLaunch"
+    case isAppLogin = "isAppLogin"
     case idToken = "idToken"
     case phoneNumber = "phoneNumber"
     case fcmToken = "fcmToken"

@@ -177,8 +177,8 @@ class GenderViewController: BaseViewController {
         ServerService.shared.postSignUp{ statusCode, json in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
+                AppFirstLaunch.isAppLogin = true
                 print("회원가입 성공")
-                print(json)
                 DispatchQueue.main.async {
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     windowScene.windows.first?.rootViewController = TabBarController()

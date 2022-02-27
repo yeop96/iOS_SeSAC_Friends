@@ -175,6 +175,7 @@ final class MessageAuthViewController: BaseViewController {
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 print("로그인 성공", "홈 화면으로 이동")
+                AppFirstLaunch.isAppLogin = true
                 DispatchQueue.main.async {
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     windowScene.windows.first?.rootViewController = TabBarController()

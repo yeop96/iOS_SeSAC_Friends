@@ -357,6 +357,7 @@ final class MyInformationManagementViewController: BaseViewController {
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
+                    AppFirstLaunch.isAppLogin = false
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
                     windowScene.windows.first?.makeKeyAndVisible()
