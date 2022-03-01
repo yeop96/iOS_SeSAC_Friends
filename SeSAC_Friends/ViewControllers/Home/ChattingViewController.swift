@@ -249,7 +249,7 @@ final class ChattingViewController: BaseViewController {
                     }
                 }
             default:
-                print("ERROR: ", statusCode)
+                print("보내기 ERROR: ", statusCode)
             }
         }
         self.progress.dismiss(animated: true)
@@ -274,7 +274,7 @@ final class ChattingViewController: BaseViewController {
                     }
                 }
             default:
-                print("ERROR: ", statusCode)
+                print("채팅 가져오기 ERROR: ", statusCode)
             }
         }
         self.progress.dismiss(animated: true)
