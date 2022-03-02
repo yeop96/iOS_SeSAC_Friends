@@ -15,4 +15,15 @@ extension Date {
         
         return formatter.string(from: self)
     }
+    
+    var toString: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Locale.preferredLanguages.first ?? "ko-KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        
+        formatter.dateFormat = "a HH:mm"
+        return formatter.string(from: self)
+    }
+    
 }
+

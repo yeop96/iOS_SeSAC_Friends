@@ -177,6 +177,15 @@ final class MessageAuthViewController: BaseViewController {
                 print("로그인 성공", "홈 화면으로 이동")
                 AppFirstLaunch.isAppLogin = true
                 DispatchQueue.main.async {
+                    UserData.background = json["background"].intValue
+                    UserData.sesac = json["sesac"].intValue
+                    UserData.nickName =  json["nick"].stringValue
+                    UserData.gender = json["gender"].intValue
+                    UserData.hobby = json["hobby"].stringValue
+                    UserData.searchable = json["searchable"].intValue
+                    UserData.ageMin = json["ageMin"].intValue
+                    UserData.ageMax = json["ageMax"].intValue
+                    UserData.myUID = json["uid"].stringValue
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     windowScene.windows.first?.rootViewController = TabBarController()
                     windowScene.windows.first?.makeKeyAndVisible()

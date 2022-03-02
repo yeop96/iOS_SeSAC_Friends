@@ -179,7 +179,9 @@ final class ChattingViewController: BaseViewController {
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
                     UserData.matchingStatus = MatchingStatus.search.rawValue
-                    self.navigationController?.popToRootViewController(animated: true)
+                    self.dismiss(animated: false) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
@@ -205,14 +207,16 @@ final class ChattingViewController: BaseViewController {
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 self.myState = try? JSONDecoder().decode(MyState.self, from: data!)
-                if self.myState?.matched == 1{
+                if self.myState?.dodged == 1 || self.myState?.reviewed == 1{
+                    self.view.makeToast("\(String(describing: self.myState?.matchedNick))님과 약속이 종료되어 채팅을 보낼 수 없습니다", duration: 1.0, position: .bottom)
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                }else if self.myState?.matched == 1{
                     UserData.matchingStatus = MatchingStatus.matched.rawValue
                     UserData.matchedNick = self.myState!.matchedNick
                     UserData.matchedUID = self.myState!.matchedUid
-                }
-                else if self.myState?.dodged == 1 || self.myState?.reviewed == 1{
-                    self.view.makeToast("\(String(describing: self.myState?.matchedNick))님과 약속이 종료되어 채팅을 보낼 수 없습니다", duration: 1.0, position: .bottom)
-                    UserData.matchingStatus = MatchingStatus.search.rawValue
                 }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
@@ -258,7 +262,7 @@ final class ChattingViewController: BaseViewController {
     //메시지 가져오기
     @objc func getChatting() {
         progress.show(in: view, animated: true)
-        ServerService.shared.getChatting { statusCode, data in
+        ServerService.shared.getChatting(lastchatDate: "2000-01-01T00:00:00.000Z") { statusCode, data in
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 self.chats = try? JSONDecoder().decode(Chats.self, from: data!)
@@ -303,13 +307,13 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = chatList[indexPath.row]
-        if row.id == UserData.myUID{
+        if row.from == UserData.myUID{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendBubbleCell.identifier, for: indexPath) as? FriendBubbleCell else {
                 return UITableViewCell()
             }
             
-            cell.messageLabel.text = "message"
-            cell.timeLabel.text = "time"
+            cell.messageLabel.text = row.chat
+            cell.timeLabel.text = row.createdAt.toDate
             
             return cell
             
@@ -318,8 +322,8 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            cell.messageLabel.text = "message"
-            cell.timeLabel.text = "time?"
+            cell.messageLabel.text = row.chat
+            cell.timeLabel.text = row.createdAt.toDate
             
             return cell
         }

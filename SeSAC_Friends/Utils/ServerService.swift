@@ -73,10 +73,10 @@ enum ServerRequest {
             url = .endPoint("/queue/dodge")
             parm = nil
         case .SendChatting:
-            url = .endPoint("/queue/chat")
+            url = .endPoint("/chat/")
             parm = nil
         case .GetChatting:
-            url = .endPoint("/queue/chat")
+            url = .endPoint("/chat/")
             parm = nil
         }
         
@@ -287,16 +287,16 @@ class ServerService {
     func postSendingChatting(chat: String, _ result: @escaping CompletionHandler){
         let server = ServerRequest.SendChatting.urlRequest
         let parm : Parameters = ["chat": chat]
-        AF.request(server.url + "/\(UserData.matchedUID)", method: .post, parameters: parm, headers: server.headers).validate().responseJSON { response in
+        AF.request(server.url + "\(UserData.matchedUID)", method: .post, parameters: parm, headers: server.headers).validate().responseJSON { response in
             let json = JSON(response.data as Any)
             let statusCode = response.response?.statusCode ?? 500
             
             result(statusCode, json)
         }
     }
-    func getChatting( _ result: @escaping DataCompletionHandler){
+    func getChatting(lastchatDate: String, _ result: @escaping DataCompletionHandler){
         let server = ServerRequest.GetChatting.urlRequest
-        AF.request(server.url + "/\(UserData.matchedUID)?lastchatDate=2000-01-01T00:00:00.000Z", method: .get, headers: server.headers).validate().responseJSON { response in
+        AF.request(server.url + "\(UserData.matchedUID)?lastchatDate=\(lastchatDate)", method: .get, headers: server.headers).validate().responseJSON { response in
             let data = response.data
             let statusCode = response.response?.statusCode ?? 500
             

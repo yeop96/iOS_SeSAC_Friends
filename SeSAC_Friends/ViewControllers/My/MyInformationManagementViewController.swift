@@ -330,6 +330,7 @@ final class MyInformationManagementViewController: BaseViewController {
                     UserData.searchable = json["searchable"].intValue
                     UserData.ageMin = json["ageMin"].intValue
                     UserData.ageMax = json["ageMax"].intValue
+                    UserData.myUID = json["uid"].stringValue
                 }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
