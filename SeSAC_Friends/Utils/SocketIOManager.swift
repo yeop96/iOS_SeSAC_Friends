@@ -10,52 +10,56 @@ import SocketIO
 
 class SocketIOManager: NSObject {
     static let shared = SocketIOManager()
-    var manager: SocketManager!
     
+    //서버와 메시지를 주고받기 위한 클래스
+    var manager: SocketManager!
+    //클라이언트 소켓
     var socket: SocketIOClient!
     
     let url = URL(string: Bundle.main.baseURL)!
     
-    var chatList: [Chat] = []
+    //var chatList: [Chat] = []
     
     override init() {
         super.init()
+        
         manager = SocketManager(socketURL: url , config: [
             .log(true),
-            .compress
+            .compress,
+            .forceWebsockets(true)
         ])
         
         socket = manager.defaultSocket
+        //소켓 연결
         socket.on(clientEvent: .connect) { data, ack in
+            print("Socket is connected", data, ack)
             self.socket.emit("changesocketid", UserData.myUID)
         }
-        
+        //소켓 해제
         socket.on(clientEvent: .disconnect) { data, ack in
-        
+            print("socket is disconnected", data, ack)
         }
-        
-        socket.on("chat") { dataArr, ack in
-            print("sesac received", dataArr, ack)
+        //소켓 채팅 듣는 메소드
+        // 데이터 수신 -> 디코딩 -> 모델에 추가 -> 갱신
+        socket.on("chat") { dataArray, ack in
+            print("응답 ", dataArray, ack)
             
-            let data = dataArr[0] as! NSDictionary
-            let from = data["from"] as! String
-            let to = data["to"] as! String
-            let chat = data["chat"] as! String
-            let createdAt = data["createdAt"] as! String
+            let data = dataArray[0] as! NSDictionary
             let id = data["_id"] as! String
             let v = data["__v"] as! Int
-            
-            print("check data",from, to, chat, createdAt, id, v)
+            let to = data["to"] as! String
+            let from = data["from"] as! String
+            let chat = data["chat"] as! String
+            let createdAt = data["createdAt"] as! String
             
             NotificationCenter.default.post(name: NSNotification.Name("getMessage"), object: self, userInfo: [
-                "from" : from,
-                "to" : to,
-                "chat" : chat,
-                "createdAt" : createdAt,
                 "_id" : id,
-                "__v" : v
+                "__v" : v,
+                "to" : to,
+                "from" : from,
+                "chat" : chat,
+                "createdAt" : createdAt
             ])
-            
         }
         
     }

@@ -28,22 +28,30 @@ final class ChattingViewController: BaseViewController {
     var chatList = [Chat](){
         didSet{
             tableView.reloadData()
+            if self.chatList.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(getMessage(noti:)), name: NSNotification.Name("getMessage"), object: nil)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
         navigationController?.changeNavigationBar(isClear: true)
-        SocketIOManager.shared.establishConnection()
         checkState()
         getChatting()
+        SocketIOManager.shared.establishConnection()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         SocketIOManager.shared.closeConnection()
     }
     
@@ -267,6 +275,11 @@ final class ChattingViewController: BaseViewController {
             case ServerStatusCode.OK.rawValue:
                 self.chats = try? JSONDecoder().decode(Chats.self, from: data!)
                 self.chatList = self.chats!.payload
+                
+                if self.chatList.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.chatList.count - 1, section: 0), at: .bottom, animated: false)
+                }
+                
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {
@@ -284,6 +297,21 @@ final class ChattingViewController: BaseViewController {
         self.progress.dismiss(animated: true)
     }
     
+    @objc func getMessage(noti: NSNotification) {
+        print(#function)
+        
+        let id = noti.userInfo!["_id"] as! String
+        let v = noti.userInfo!["__v"] as! Int
+        let to = noti.userInfo!["to"] as! String
+        let from = noti.userInfo!["from"] as! String
+        let chat = noti.userInfo!["chat"] as! String
+        let createdAt = noti.userInfo!["createdAt"] as! String
+        
+        
+        let value = Chat(id: id, v: v, to: to, from: from, chat: chat, createdAt: createdAt)
+        
+        self.chatList += [value]
+    }
     
 }
 
@@ -404,7 +432,6 @@ final class MatchingInformationCell: UITableViewHeaderFooterView{
     }
     
     func configure(){
-        backgroundColor = .white
         bellImageView.image = UIImage(named: "bell")
         bellImageView.tintColor = .gray7
         
