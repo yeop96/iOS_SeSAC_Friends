@@ -23,7 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = TabBarController()
         }
         
-        //window?.rootViewController = UINavigationController(rootViewController: ChattingViewController())
         window?.makeKeyAndVisible()
         
     }

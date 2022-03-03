@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 final class TabBarController: UITabBarController , UITabBarControllerDelegate{
+    let progress = JGProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         let homeViewController = HomeViewController()
         let homeNavigation = UINavigationController(rootViewController: homeViewController)
@@ -44,9 +47,49 @@ final class TabBarController: UITabBarController , UITabBarControllerDelegate{
             tabBar.scrollEdgeAppearance = appearance
         }
         tabBar.tintColor = .green
+        
+        userCheck()
     }
     
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        print(item)
-//    }
+    func userCheck() {
+        progress.show(in: view, animated: true)
+        ServerService.shared.getUserInfo { statusCode, json in
+            switch statusCode{
+            case ServerStatusCode.OK.rawValue:
+                AppFirstLaunch.isAppLogin = true
+                DispatchQueue.main.async {
+                    UserData.background = json["background"].intValue
+                    UserData.sesac = json["sesac"].intValue
+                    UserData.nickName =  json["nick"].stringValue
+                    UserData.gender = json["gender"].intValue
+                    UserData.hobby = json["hobby"].stringValue
+                    UserData.searchable = json["searchable"].intValue
+                    UserData.ageMin = json["ageMin"].intValue
+                    UserData.ageMax = json["ageMax"].intValue
+                    UserData.myUID = json["uid"].stringValue
+                }
+            case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
+                ServerService.updateIdToken { result in
+                    switch result {
+                    case .success:
+                        self.userCheck()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    }
+                }
+            case ServerStatusCode.UNREGISTERED_ERROR.rawValue:
+                print("미가입 유저")
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+                    windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
+                    windowScene.windows.first?.makeKeyAndVisible()
+                }
+            default:
+                print("ERROR: ", statusCode, json)
+            }
+        }
+        self.progress.dismiss(animated: true)
+    }
+    
 }

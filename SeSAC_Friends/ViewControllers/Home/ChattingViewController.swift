@@ -15,6 +15,7 @@ final class ChattingViewController: BaseViewController {
     let moreView = MoreView()
     let remainView = UIView()
     
+    //let tableView = UITableView(frame: .zero, style: .plain)
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     let sendingView = UIView()
@@ -78,13 +79,16 @@ final class ChattingViewController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.register(MyBubbleCell.self, forCellReuseIdentifier: MyBubbleCell.identifier)
         tableView.register(FriendBubbleCell.self, forCellReuseIdentifier: FriendBubbleCell.identifier)
         tableView.register(MatchingInformationCell.self, forHeaderFooterViewReuseIdentifier: MatchingInformationCell.identifier)
         
+        //tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 70))
         
         sendingView.layer.cornerRadius = 8
         sendingView.backgroundColor = .gray1
@@ -250,6 +254,12 @@ final class ChattingViewController: BaseViewController {
             switch statusCode{
             case ServerStatusCode.OK.rawValue:
                 print("보내기")
+                DispatchQueue.main.async {
+                    self.textView.text = ""
+                    self.view.endEditing(true)
+                    self.sendButton.setImage(UIImage(named: "sendInact"), for: .normal)
+                    self.getChatting()
+                }
             case ServerStatusCode.FIREBASE_TOKEN_ERROR.rawValue:
                 ServerService.updateIdToken { result in
                     switch result {
@@ -298,15 +308,12 @@ final class ChattingViewController: BaseViewController {
     }
     
     @objc func getMessage(noti: NSNotification) {
-        print(#function)
-        
         let id = noti.userInfo!["_id"] as! String
         let v = noti.userInfo!["__v"] as! Int
         let to = noti.userInfo!["to"] as! String
         let from = noti.userInfo!["from"] as! String
         let chat = noti.userInfo!["chat"] as! String
         let createdAt = noti.userInfo!["createdAt"] as! String
-        
         
         let value = Chat(id: id, v: v, to: to, from: from, chat: chat, createdAt: createdAt)
         
@@ -329,9 +336,6 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
         (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .white
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 70
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = chatList[indexPath.row]
@@ -449,6 +453,11 @@ final class MatchingInformationCell: UITableViewHeaderFooterView{
         stackView.addArrangedSubview(bellImageView)
         stackView.addArrangedSubview(matchingLabel)
         contentView.addSubview(noticeLabel)
+//        contentView.snp.makeConstraints { make in
+//            make.top.equalToSuperview()
+//            make.leading.trailing.equalToSuperview().inset(16)
+//            make.height.equalTo(70)
+//        }
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.centerX.equalToSuperview()

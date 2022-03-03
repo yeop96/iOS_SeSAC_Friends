@@ -18,8 +18,6 @@ class SocketIOManager: NSObject {
     
     let url = URL(string: Bundle.main.baseURL)!
     
-    //var chatList: [Chat] = []
-    
     override init() {
         super.init()
         
