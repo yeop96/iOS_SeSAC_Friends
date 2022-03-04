@@ -359,6 +359,27 @@ final class MyInformationManagementViewController: BaseViewController {
             case ServerStatusCode.OK.rawValue:
                 DispatchQueue.main.async {
                     AppFirstLaunch.isAppLogin = false
+                    UserData.idToken = ""
+                    UserData.phoneNumber = ""
+                    UserData.fcmToken = ""
+                    UserData.nickName = ""
+                    UserData.birth = Date()
+                    UserData.email = ""
+                    UserData.gender = GenderNumber.unSelect.rawValue
+                    UserData.background = 0
+                    UserData.sesac = 0
+                    UserData.hobby = ""
+                    UserData.searchable = 1
+                    UserData.ageMin = 18
+                    UserData.ageMax = 38
+                    UserData.lat = 0.0
+                    UserData.long = 0.0
+                    UserData.region = 0
+                    UserData.matchingStatus = MatchingStatus.search.rawValue
+                    UserData.myUID = ""
+                    UserData.matchedUID = ""
+                    UserData.matchedNick = ""
+                    
                     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                     windowScene.windows.first?.rootViewController = UINavigationController(rootViewController: PhoneAuthViewController())
                     windowScene.windows.first?.makeKeyAndVisible()
