@@ -21,15 +21,15 @@
 #### 구현된 화면 구성
 |휴대폰인증 및 회원가입|
 |---|
-|<img width="50%" src="https://user-images.githubusercontent.com/48886490/156933604-97dfa099-1943-4b1d-82ca-735b0d8d2abf.gif"/>|
+|<img src="https://user-images.githubusercontent.com/48886490/156933604-97dfa099-1943-4b1d-82ca-735b0d8d2abf.gif" width="200" height="430"/>|
 
 |홈 지도|마이 페이지|
 |---|---|
-|<img width="25%" src="https://user-images.githubusercontent.com/48886490/156933882-3a3aa0e8-c844-44de-9d8c-4f4833e31b94.gif"/>|<img width="25%" src="https://user-images.githubusercontent.com/48886490/156933603-96c243db-9c13-4d71-a1e0-5b639bc2b970.gif"/>|
+|<img src="https://user-images.githubusercontent.com/48886490/156933882-3a3aa0e8-c844-44de-9d8c-4f4833e31b94.gif" width="200" height="430"/>|<img src="https://user-images.githubusercontent.com/48886490/156933603-96c243db-9c13-4d71-a1e0-5b639bc2b970.gif" width="200" height="430"/>|
 
 |취미 검색|주변 사용자|
 |---|---|
-|<img width="25%" src="https://user-images.githubusercontent.com/48886490/156933606-5209f606-8f8c-4b83-8096-cca22ace9dde.gif"/>|<img width="25%" src="https://user-images.githubusercontent.com/48886490/156934008-0f9821ed-8c0b-4b72-b458-263a2e585878.gif"/>|
+|<img src="https://user-images.githubusercontent.com/48886490/156933606-5209f606-8f8c-4b83-8096-cca22ace9dde.gif" width="200" height="430"/>|<img src="https://user-images.githubusercontent.com/48886490/156934008-0f9821ed-8c0b-4b72-b458-263a2e585878.gif" width="200" height="430"/>|
 
 |매칭 및 채팅|
 |---|
