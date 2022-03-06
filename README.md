@@ -21,7 +21,7 @@
 #### 구현된 화면 구성
 |휴대폰인증 및 회원가입|
 |---|
-|<img width="25%" src="https://user-images.githubusercontent.com/48886490/156933604-97dfa099-1943-4b1d-82ca-735b0d8d2abf.gif"/>|
+|<img width="50%" src="https://user-images.githubusercontent.com/48886490/156933604-97dfa099-1943-4b1d-82ca-735b0d8d2abf.gif"/>|
 
 |홈 지도|마이 페이지|
 |---|---|
