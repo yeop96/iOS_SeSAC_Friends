@@ -33,7 +33,7 @@
 
 |매칭 및 채팅|
 |---|
-|<img src="https://user-images.githubusercontent.com/48886490/156933604-97dfa099-1943-4b1d-82ca-735b0d8d2abf.gif" width="200" height="430"/>|
+|<img src="https://user-images.githubusercontent.com/48886490/156933567-3deb1f30-a150-4d9a-9b6c-78b06364a890.gif" width="200" height="430"/>|
 
 
 #### 협업
