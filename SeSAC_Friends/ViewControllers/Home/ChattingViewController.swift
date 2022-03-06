@@ -15,7 +15,6 @@ final class ChattingViewController: BaseViewController {
     let moreView = MoreView()
     let remainView = UIView()
     
-    //let tableView = UITableView(frame: .zero, style: .plain)
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     let sendingView = UIView()
@@ -81,14 +80,11 @@ final class ChattingViewController: BaseViewController {
         tableView.backgroundColor = .white
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.register(MyBubbleCell.self, forCellReuseIdentifier: MyBubbleCell.identifier)
         tableView.register(FriendBubbleCell.self, forCellReuseIdentifier: FriendBubbleCell.identifier)
-        tableView.register(MatchingInformationCell.self, forHeaderFooterViewReuseIdentifier: MatchingInformationCell.identifier)
         
-        //tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 70))
+        tableView.tableHeaderView = MatchingInformationHeaderView(name: UserData.matchedNick)
         
         sendingView.layer.cornerRadius = 8
         sendingView.backgroundColor = .gray1
@@ -327,15 +323,6 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatList.count
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MatchingInformationCell.identifier) as! MatchingInformationCell
-        header.matchingLabel.text = "\(matchingPartner)님과 매칭되었습니다"
-        return header
-    }
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .white
-    }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = chatList[indexPath.row]
@@ -411,9 +398,8 @@ extension ChattingViewController: UITextViewDelegate {
     }
 }
 
-final class MatchingInformationCell: UITableViewHeaderFooterView{
-    static let identifier = "MatchingInformationCell"
-    
+
+final class MatchingInformationHeaderView: UIView{
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -426,13 +412,20 @@ final class MatchingInformationCell: UITableViewHeaderFooterView{
     let matchingLabel = UILabel()
     let noticeLabel = UILabel()
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    override init(reuseIdentifier: String?){
-        super.init(reuseIdentifier: reuseIdentifier)
+    convenience init(name: String) {
+        self.init(frame: .zero)
+
         configure()
         setupConstraints()
+        matchingLabel.text = "\(name)님과 매칭되었습니다"
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func configure(){
@@ -449,15 +442,16 @@ final class MatchingInformationCell: UITableViewHeaderFooterView{
     }
     
     func setupConstraints(){
-        contentView.addSubview(stackView)
+        addSubview(stackView)
         stackView.addArrangedSubview(bellImageView)
         stackView.addArrangedSubview(matchingLabel)
-        contentView.addSubview(noticeLabel)
-//        contentView.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//            make.leading.trailing.equalToSuperview().inset(16)
-//            make.height.equalTo(70)
-//        }
+        addSubview(noticeLabel)
+        
+        self.snp.makeConstraints { make in
+            make.height.equalTo(70)
+            make.width.equalTo(UIScreen.main.bounds.size.width)
+        }
+        
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.centerX.equalToSuperview()
@@ -471,10 +465,6 @@ final class MatchingInformationCell: UITableViewHeaderFooterView{
             make.centerX.equalToSuperview()
             make.height.equalTo(22)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
