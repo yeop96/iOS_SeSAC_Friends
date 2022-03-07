@@ -21,7 +21,7 @@
 #### 구현된 화면 구성
 |휴대폰인증 및 회원가입|
 |---|
-|https://user-images.githubusercontent.com/48886490/157048209-064c062f-62a5-4a67-b182-21f635ad9161.mp4|
+https://user-images.githubusercontent.com/48886490/157048209-064c062f-62a5-4a67-b182-21f635ad9161.mp4
 </br>
 </br>
 
