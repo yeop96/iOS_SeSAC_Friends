@@ -36,7 +36,7 @@
 
 
 #### 협업
-
+ 
 * Figma : 디자인
 * Swagger : API 문서
 * Confluence : 기획서 및 스크럼
